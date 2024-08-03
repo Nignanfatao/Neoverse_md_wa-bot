@@ -4,8 +4,8 @@ const path = require('path');
 const { exec } = require("child_process");
 const { default: makeWASocket, useMultiFileAuthState, delay, makeCacheableSignalKeyStore, jidDecode, getContentType, downloadContentFromMessage, makeInMemoryStore, fetchLatestBaileysVersion, DisconnectReason } = require("@whiskeysockets/baileys");
 const boom = require("@hapi/boom");
-const { version, isLatest } = await fetchLatestBaileysVersion();
-const { state, saveCreds } = await useMultiFileAuthState('./auth');
+const { version, isLatest } = fetchLatestBaileysVersion();
+const { state, saveCreds } =  useMultiFileAuthState('./auth');
     try {
         const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store"
   })
