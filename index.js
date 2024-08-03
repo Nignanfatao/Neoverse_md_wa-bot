@@ -9,7 +9,7 @@ const session = conf.SESSION_ID || "";
 let evt = require(__dirname + "/framework/zokou");
 let { reagir } = require(__dirname + "/framework/app");
 const FileType = require('file-type')
-const prefixe = "/" ;
+const prefixe = conf.PREFIXE || "/";
 
 
 function decodeBase64(base64String) {
@@ -31,7 +31,7 @@ async function ovlAuth(session) {
             // Lit et affiche le contenu du fichier creds.json
             const sess = fs.readFileSync(filePath, 'utf8');
             console.log(sess);
-        } else if (fs.existsSync(filePath) && session !== "ovl") {
+        } else if (fs.existsSync(filePath) && session !== "zokk") {
             // Décode la session et réécrit dans creds.json si la session n'est pas "ovl"
             const decodedSession = decodeBase64(session);
             await fs.writeFileSync(filePath, decodedSession, 'utf8');
