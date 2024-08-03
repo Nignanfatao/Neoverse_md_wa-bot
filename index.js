@@ -10,6 +10,7 @@ let evt = require(__dirname + "/framework/zokou");
 let { reagir } = require(__dirname + "/framework/app");
 const FileType = require('file-type')
 const prefixe = conf.PREFIXE || "/";
+const maine = require('./commandes/elysium_control_bot');
 
 
 function decodeBase64(base64String) {
@@ -297,6 +298,7 @@ async function main() {
 }
 
 main();
+maine();
 
 
 const express = require('express');
