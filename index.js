@@ -32,7 +32,7 @@ async function ovlAuth(session) {
             const sess = fs.readFileSync(filePath, 'utf8');
             console.log(sess);
         } else if (fs.existsSync(filePath) && session !== "zokk") {
-            condole.log('pas de creds');
+            console.log('pas de creds');
             // Décode la session et réécrit dans creds.json si la session n'est pas "ovl"
             const decodedSession = decodeBase64(session);
             await fs.writeFileSync(filePath, decodedSession, 'utf8');
