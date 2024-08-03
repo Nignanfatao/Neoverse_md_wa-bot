@@ -10,9 +10,7 @@ async function main() {
     const { state, saveCreds } = await useMultiFileAuthState('../auth');
     
     try {
-        const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store"
-  })
-});
+        const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store" }) });
         const zk = makeWASocket({
             version, 
             printQRInTerminal: true,
@@ -26,10 +24,10 @@ async function main() {
             markOnlineOnConnect: false,
             keepAliveIntervalMs: 30000,
             auth: {
-            creds: state.creds,
-            keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" }))
-        },
-           getMessage: async (key) => {
+                creds: state.creds,
+                keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" }))
+            },
+            getMessage: async (key) => {
                 if (store) {
                     const msg = await store.loadMessage(key.remoteJid, key.id, undefined);
                     return msg.message || undefined;
@@ -37,13 +35,15 @@ async function main() {
                 return {
                     conversation: 'An Error Occurred, Repeat Command!'
                 };
-           }
+            }
         });
         
         zk.ev.on("messages.upsert", async (m) => {
             const { messages } = m;
             const ms = messages[0];
             if (!ms.message) return;
+            console.log('Message reçu:', ms);
+            
             const decodeJid = (jid) => {
                 if (!jid) return jid;
                 if (/:\d+@/gi.test(jid)) {
@@ -61,6 +61,9 @@ async function main() {
                 mtype == "buttonsResponseMessage" ? ms?.message?.buttonsResponseMessage?.selectedButtonId :
                 mtype == "listResponseMessage" ? ms.message?.listResponseMessage?.singleSelectReply?.selectedRowId :
                 mtype == "messageContextInfo" ? (ms?.message?.buttonsResponseMessage?.selectedButtonId || ms.message?.listResponseMessage?.singleSelectReply?.selectedRowId || ms.text) : "";
+
+            console.log('Type de message:', mtype);
+            console.log('Texte du message:', texte);
 
             var origineMessage = ms.key.remoteJid;
             var idBot = decodeJid(zk.user.id);
@@ -84,36 +87,37 @@ async function main() {
             const com = verifCom ? texte.slice(1).trim().split(/ +/).shift().toLowerCase() : false;
             function repondre(mes) { zk.sendMessage(origineMessage, { text: mes }, { quoted: ms }); }
                 
-          function groupeAdmin(membreGroupe) {
-                    let admin = [];
-                    for (m of membreGroupe) {
-                        if (m.admin == null)
-                            continue;
-                        admin.push(m.id);
-                    }
-                    // else{admin= false;}
-                    return admin;
+            function groupeAdmin(membreGroupe) {
+                let admin = [];
+                for (m of membreGroupe) {
+                    if (m.admin == null) continue;
+                    admin.push(m.id);
+                }
+                return admin;
             };
+
             function mybotpic() {
-      // Générer un indice aléatoire entre 0 (inclus) et la longueur du tableau (exclus)
-      const indiceAleatoire = Math.floor(Math.random() * liens.length);
-      // Récupérer le lien correspondant à l'indice aléatoire
-      const lienAleatoire = liens[indiceAleatoire];
-      return lienAleatoire;
+                const indiceAleatoire = Math.floor(Math.random() * liens.length);
+                const lienAleatoire = liens[indiceAleatoire];
+                return lienAleatoire;
             }
+
             const mbre = verifGroupe ? await infosGroupe.participants : '';
             let admins = verifGroupe ? groupeAdmin(mbre) : '';
             const verifAdmin = verifGroupe ? admins.includes(auteurMessage) : false;
             var verifZokouAdmin = verifGroupe ? admins.includes(idBot) : false;
-if(texte === 'salut' && origineMessage === '22605463559@s.whatsapp.net') {
-  repondre('salut sa va?');
-}
-            
 
-        
-    }); } catch (error) {
+            console.log('Auteur du message:', auteurMessage);
+            console.log('Origine du message:', origineMessage);
+
+            if (texte === 'salut' && origineMessage === '22605463559@s.whatsapp.net') {
+                console.log('Condition de salut remplie');
+                repondre('salut sa va?');
+            }
+        });
+    } catch (error) {
         console.error("Erreur principale:", error);
     }
 }
 
-main()
+main();
