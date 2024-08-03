@@ -108,6 +108,6 @@ if(texte === 'salut' && origineMessage === '22605463559@s.whatsapp.net') {
             
 
         
-    }; } catch (error) {
+    }); } catch (error) {
         console.error("Erreur principale:", error);
     }
