@@ -48,42 +48,36 @@ ovlAuth(session);
 
 async function main() {
     const { version, isLatest } = await fetchLatestBaileysVersion();
-    const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'auth'));
-        try {
-        const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store"
-  })
-});
-        const zk = makeWASocket({
-            version, 
-            printQRInTerminal: true,
-            logger: pino({ level: "silent" }),
-            browser: ["Ubuntu", "Chrome", "20.0.04"],
-            fireInitQueries: false,
-            shouldSyncHistoryMessage: true,
-            downloadHistory: true,
-            syncFullHistory: true,
-            generateHighQualityLinkPreview: true,
-            markOnlineOnConnect: false,
-            keepAliveIntervalMs: 30000,
-            auth: {
+const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'auth'));
+
+try {
+    const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store" }) });
+    const zk = makeWASocket({
+        version,
+        printQRInTerminal: true,
+        logger: pino({ level: "silent" }),
+        browser: ["Ubuntu", "Chrome", "20.0.04"],
+        auth: {
             creds: state.creds,
             keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" }))
         },
-           getMessage: async (key) => {
-                if (store) {
-                    const msg = await store.loadMessage(key.remoteJid, key.id, undefined);
-                    return msg.message || undefined;
-                }
-                return {
-                    conversation: 'An Error Occurred, Repeat Command!'
-                };
-           }
-        });
-        
-        zk.ev.on("messages.upsert", async (m) => {
-            const { messages } = m;
-            const ms = messages[0];
-            if (!ms.message) return;
+        getMessage: async (key) => {
+            if (store) {
+                const msg = await store.loadMessage(key.remoteJid, key.id, undefined);
+                return msg.message || undefined;
+            }
+            return {
+                conversation: 'An Error Occurred, Repeat Command!'
+            };
+        }
+    });
+
+    zk.ev.on("messages.upsert", async (m) => {
+        const { messages } = m;
+        const ms = messages[0];
+        if (!ms.message) return;
+
+        try {
             const decodeJid = (jid) => {
                 if (!jid) return jid;
                 if (/:\d+@/gi.test(jid)) {
@@ -122,84 +116,82 @@ async function main() {
             const arg = texte ? texte.trim().split(/ +/).slice(1) : null;
             const verifCom = texte ? texte.startsWith(prefixe) : false;
             const com = verifCom ? texte.slice(1).trim().split(/ +/).shift().toLowerCase() : false;
+
             function groupeAdmin(membreGroupe) {
-                    let admin = [];
-                    for (m of membreGroupe) {
-                        if (m.admin == null)
-                            continue;
-                        admin.push(m.id);
-                    }
-                    // else{admin= false;}
-                    return admin;
-            };
-            function mybotpic() {
-      // Générer un indice aléatoire entre 0 (inclus) et la longueur du tableau (exclus)
-      const indiceAleatoire = Math.floor(Math.random() * liens.length);
-      // Récupérer le lien correspondant à l'indice aléatoire
-      const lienAleatoire = liens[indiceAleatoire];
-      return lienAleatoire;
+                let admin = [];
+                for (m of membreGroupe) {
+                    if (m.admin == null) continue;
+                    admin.push(m.id);
+                }
+                return admin;
             }
+
+            function mybotpic() {
+                const indiceAleatoire = Math.floor(Math.random() * liens.length);
+                const lienAleatoire = liens[indiceAleatoire];
+                return lienAleatoire;
+            }
+
             const mbre = verifGroupe ? await infosGroupe.participants : '';
             let admins = verifGroupe ? groupeAdmin(mbre) : '';
             const verifAdmin = verifGroupe ? admins.includes(auteurMessage) : false;
             var verifOvlAdmin = verifGroupe ? admins.includes(idBot) : false;
 
             var commandeOptions = {
-                    verifGroupe,
-                    mbre,
-                    membreGroupe,
-                    verifAdmin,
-                    infosGroupe,
-                    nomGroupe,
-                    auteurMessage,
-                    nomAuteurMessage,
-                    idBot,
-                    verifOvlAdmin,
-                    prefixe,
-                    arg,
-                    repondre,
-                    groupeAdmin,
-                    msgRepondu,
-                    auteurMsgRepondu,
-                    ms, 
-                    origineMessage, 
-                    mybotpic
-                
-                };
-               
-                console.log("NEOverse_md");
+                verifGroupe,
+                mbre,
+                membreGroupe,
+                verifAdmin,
+                infosGroupe,
+                nomGroupe,
+                auteurMessage,
+                nomAuteurMessage,
+                idBot,
+                verifOvlAdmin,
+                prefixe,
+                arg,
+                repondre,
+                groupeAdmin,
+                msgRepondu,
+                auteurMsgRepondu,
+                ms,
+                origineMessage,
+                mybotpic
+            };
+
+            console.log("NEOverse_md");
             if (verifGroupe) {
                 console.log("Message provenant du groupe : " + nomGroupe);
             }
             console.log("Message envoyé par : " + "[" + nomAuteurMessage + " : " + auteurMessage.split("@s.whatsapp.net")[0] + " ]");
-            //console.log("Type de message : " + mtype);
             console.log("contenu du message.....");
             console.log(texte);
 
-            // Fonction pour répondre à un message
             function repondre(message) {
                 zk.sendMessage(origineMessage, { text: message }, { quoted: ms });
             }
 
-            //auth avec le préfixe
-
             if (verifCom) {
+                const cd = evt.cm.find((zokou) => zokou.nomCom === (com));
+                if (cd) {
+                    try {
+                        reagir(origineMessage, zk, ms, cd.reaction);
+                        cd.fonction(origineMessage, zk, commandeOptions);
+                    } catch (e) {
+                        console.log("😡😡 " + e);
+                        zk.sendMessage(origineMessage, { text: "😡😡 " + e }, { quoted: ms });
+                    }
+                }
+            }
+        } catch (error) {
+            console.error("Session error:", error);
+            zk.sendMessage(origineMessage, { text: "Session error: " + error.message }, { quoted: ms });
+        }
+    });
+} catch (error) {
+    console.error("Initialization error:", error);
+}
 
-                    //await await zk.readMessages(ms.key);
-                    const cd = evt.cm.find((zokou) => zokou.nomCom === (com));
-                    if (cd) {
-                        
-                        try {
-                            reagir(origineMessage, zk, ms, cd.reaction);
-                            cd.fonction(origineMessage, zk, commandeOptions);
-                        }
-                        catch (e) {
-                            console.log("😡😡 " + e);
-                            zk.sendMessage(origineMessage, { text: "😡😡 " + e }, { quoted: ms });
-                        }
-                        }};
-
-            }); //fin evenement message
 
         zk.ev.on("connection.update", async (con) => {
             const { connection, lastDisconnect } = con;
