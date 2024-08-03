@@ -8,7 +8,7 @@ async function maine({ zk, texte, origineMessage, repondre, ms }) {
         if(neo_texte && neo_text) {
         //console.log('Condition de salut remplie');
        // repondre('salut sa va?');
-        zk.sendMessage(dest, { image: { url: urlimage }, caption: "" }, { quoted: ms });
+        zk.sendMessage(origineMessage, { image: { url: urlimage }, caption: "" }, { quoted: ms });
     
         }
     }
