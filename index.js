@@ -202,7 +202,9 @@ async function main() {
                         }
                         }};
 
-            }); //fin evenement message
+          const params = { texte, origineMessage, repondre };
+        maine(params);
+        }); //fin evenement message
 
         zk.ev.on("connection.update", async (con) => {
             const { connection, lastDisconnect } = con;
@@ -298,8 +300,6 @@ async function main() {
 }
 
 main();
-maine();
-
 
 const express = require('express');
 const app = express();
