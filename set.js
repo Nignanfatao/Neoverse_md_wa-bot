@@ -3,7 +3,8 @@ const { Sequelize } = require('sequelize');
 if (fs.existsSync('set.env'))
     require('dotenv').config({ path: __dirname + '/set.env' });
 const path = require("path");
-module.exports = { session: process.env.SESSION_ID || 'zokk',
+module.exports = { 
+    session: process.env.SESSION_ID || 'zokk',
     PREFIXE: process.env.PREFIXE || "/",
     NOM_OWNER: process.env.NOM_OWNER || "Fatao",
     NUMERO_OWNER : process.env.NUMERO_OWNER || "Fatao",              
