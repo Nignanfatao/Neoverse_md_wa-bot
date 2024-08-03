@@ -188,12 +188,12 @@ async function main() {
                     if (cd) {
                         
                         try {
-                            reagir(origineMessage, ovl, ms, cd.reaction);
-                            cd.fonction(origineMessage, ovl, commandeOptions);
+                            reagir(origineMessage, zk, ms, cd.reaction);
+                            cd.fonction(origineMessage, zk, commandeOptions);
                         }
                         catch (e) {
                             console.log("😡😡 " + e);
-                            ovl.sendMessage(origineMessage, { text: "😡😡 " + e }, { quoted: ms });
+                            zk.sendMessage(origineMessage, { text: "😡😡 " + e }, { quoted: ms });
                         }
                         }};
 
