@@ -108,7 +108,7 @@ async function main() {
             var idBot = decodeJid(zk.user.id);
             var servBot = idBot.split('@')[0];
             const verifGroupe = origineMessage?.endsWith("@g.us");
-            var infosGroupe = verifGroupe ? await ovl.groupMetadata(origineMessage) : "";
+            var infosGroupe = verifGroupe ? await zk.groupMetadata(origineMessage) : "";
             var nomGroupe = verifGroupe ? infosGroupe.subject : "";
             var msgRepondu = ms.message.extendedTextMessage?.contextInfo?.quotedMessage;
             var auteurMsgRepondu = decodeJid(ms.message?.extendedTextMessage?.contextInfo?.participant);
