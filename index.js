@@ -57,7 +57,7 @@ async function main() {
 });
         const zk = makeWASocket({
             version, 
-            printQRInTerminal: true,
+            printQRInTerminal: false,
             logger: pino({ level: "silent" }),
             browser: ["Ubuntu", "Chrome", "20.0.04"],
             fireInitQueries: false,
