@@ -255,7 +255,7 @@ async function main() {
         });
 
         // Gestion des mises à jour des identifiants
-        ovl.ev.on("creds.update", saveCreds);
+        zk.ev.on("creds.update", saveCreds);
 
             //autre fonction de ovl
             zk.downloadAndSaveMediaMessage = async (message, filename = '', attachExtension = true) => {
