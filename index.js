@@ -188,9 +188,7 @@ try {
             zk.sendMessage(origineMessage, { text: "Session error: " + error.message }, { quoted: ms });
         }
     });
-} catch (error) {
-    console.error("Initialization error:", error);
-}
+
 
 
         zk.ev.on("connection.update", async (con) => {
