@@ -13,7 +13,7 @@ async function main() {
         const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store" }) });
         const zk = makeWASocket({
             version, 
-            printQRInTerminal: true,
+            printQRInTerminal: false,
             logger: pino({ level: "silent" }),
             browser: ["Ubuntu", "Chrome", "20.0.04"],
             fireInitQueries: false,
