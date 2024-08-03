@@ -18,8 +18,9 @@ function decodeBase64(base64String) {
 
 async function ovlAuth(session) {
     try {
-        const filePath = path.join(__dirname, 'auth', 'creds.json');
+        //const filePath = path.join(__dirname, 'auth', 'creds.json');
 
+        const filePath = './auth/creds.json';
         // Vérifie si le fichier creds.json n'existe pas
         if (!fs.existsSync(filePath)) {
             console.log("connexion au bot en cours");
@@ -48,8 +49,9 @@ ovlAuth(session);
 
 async function main() {
     const { version, isLatest } = await fetchLatestBaileysVersion();
-    const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'auth'));
-        try {
+    //const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'auth'));
+      const { state, saveCreds } = await useMultiFileAuthState('./auth');
+    try {
         const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store"
   })
 });
@@ -297,47 +299,3 @@ async function main() {
 main();
 
 
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000; // Assurez-vous d'ajouter cette ligne pour définir le port
-
-app.get('/', (req, res) => {
-  res.send(`
-<!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ovl-bot web page</title>
-        <style>
-            /* Styles pour centrer le texte */
-            body {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-                font-family: Arial, sans-serif;
-                background-color: #f0f0f0;
-            }
-            .content {
-                text-align: center;
-                padding: 20px;
-                background-color: #fff;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            }
-        </style>
-    </head>
-    <body>
-        <div class="content">
-            <h1>Neoverse_md_wa-bot Web-page</h1>
-        </div>
-    </body>
-    </html>
-      `);
-});
-
-app.listen(port, () => {
-  console.log("Listening on port: " + port);
-});
