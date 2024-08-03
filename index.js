@@ -221,15 +221,11 @@ async function main() {
                     delay(300);
                 });
                 delay(700);
-                let cmsg = `╔════◇◇◇◇◇◇◇◇═════╗
-║         『🄾🅅🄻-🄼🄳』 
-║            
-║    Prefixe : [ ${prefixe} ]
-║    Mode :
-║    Commandes:︎ ${evt.cm.length}︎
-║
-║          *『𝐵𝑌 Fatao』*
-╚═════════════════╝`;
+                let cmsg = `╭──❏ *🄽🄴🄾_🅆🄰-🄱🄾🅃*  ❏
+│ ✿ Prefixe : [ ${prefixe} ]
+│ ✿  Mode :
+│ ✿ Commandes:︎ ${evt.cm.length}
+╰═════════════⊷`;
                 await zk.sendMessage(zk.user.id, { text: cmsg });
             } else if (connection == "close") {
                 let raisonDeconnexion = new boom.Boom(lastDisconnect?.error)?.output.statusCode;
