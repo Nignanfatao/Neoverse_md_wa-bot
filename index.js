@@ -13,11 +13,11 @@ const prefixe = conf.PREFIXE || "/";
 const maine = require('./commandes/elysium_control_bot');
 
 
-/*function decodeBase64(base64String) {
+function decodeBase64(base64String) {
     return Buffer.from(base64String, 'base64').toString('utf8');
-}*/
+}
 
-async function authentification() {
+/*async function authentification() {
         try {
             
             //console.log("le data "+data)
@@ -35,9 +35,9 @@ async function authentification() {
             return;
         }
     }
-    authentification();
+    authentification();*/
 
-/*async function ovlAuth(session) {
+async function ovlAuth(session) {
     try {
         //const filePath = path.join(__dirname, 'auth', 'creds.json');
 
@@ -66,7 +66,7 @@ async function authentification() {
 }
 
 // Appelez la fonction avec votre variable session
-ovlAuth(session);*/
+ovlAuth(session);
 
 async function main() {
     const { version, isLatest } = await fetchLatestBaileysVersion();
