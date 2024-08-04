@@ -8,7 +8,7 @@ const dbUrl = s.DB;
 /*zokou(
   {
     nomCom: 'centralabdiel👤',
-    categorie: 'NEOverse'
+    categorie: 'CENTAL🐯🟠'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -136,7 +136,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/adcc175fdbbb640b47
 zokou(
   {
     nomCom: 'centralcovid👤',
-    categorie: 'NEOverse'
+    categorie: 'CENTAL🐯🟠'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -264,7 +264,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/2d6e0cb68518359cd8
 zokou(
   {
     nomCom: 'centralyuan👤',
-    categorie: 'NEOverse'
+    categorie: 'CENTAL🐯🟠'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -391,7 +391,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/a8c59126191a188b42
 zokou(
   {
     nomCom: 'centralmakima👤',
-    categorie: 'NEOverse'
+    categorie: 'CENTAL🐯🟠'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -515,10 +515,10 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/fdd73d041d1cd05d82
     }
   });
 
-zokou(
+/*zokou(
   {
     nomCom: 'centralobito👤',
-    categorie: 'NEOverse'
+    categorie: 'CENTAL🐯🟠'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -640,12 +640,12 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/337004ee5ae1b2e337
     } catch (error) {
       console.error("Erreur lors de la mise à jour des données de l'utilisateur:", error);
     }
-  });
+  });*/
 
 zokou(
   {
     nomCom: 'centralrudeus👤',
-    categorie: 'NEOverse'
+    categorie: 'CENTAL🐯🟠'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -772,7 +772,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/83f08871e4ca1f691b
 /*zokou(
   {
     nomCom: 'centralbads👤',
-    categorie: 'NEOverse'
+    categorie: 'CENTAL🐯🟠'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -900,7 +900,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/ba6008a4f780ee5b47
 zokou(
   {
     nomCom: 'centralirito👤',
-    categorie: 'NEOverse'
+    categorie: 'CENTAL🐯🟠'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1027,7 +1027,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/76b7ee244a55b44504
 zokou(
   {
     nomCom: 'centralhakuji👤',
-    categorie: 'NEOverse'
+    categorie: 'CENTAL🐯🟠'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1155,7 +1155,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/63ccec4a92ecc2839f
 zokou(
   {
     nomCom: 'centralyuki👤',
-    categorie: 'NEOverse'
+    categorie: 'CENTAL🐯🟠'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1283,7 +1283,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/2272e17d85e096f136
 zokou(
   {
     nomCom: 'centralhazlay👤',
-    categorie: 'NEOverse'
+    categorie: 'CENTAL🐯🟠'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
