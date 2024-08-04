@@ -8,7 +8,7 @@ const dbUrl = s.DB;
 zokou(
   {
     nomCom: 'northdamian👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -135,7 +135,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/de9d7717ef9ef7c62a
 /*zokou(
   {
     nomCom: 'northlily👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -262,7 +262,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/d48f1975b8076ba215
 zokou(
   {
     nomCom: 'northadorieru👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -389,7 +389,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/33d75752a2f4d645f8
 zokou(
   {
     nomCom: 'norththanatos👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -516,7 +516,7 @@ zokou(
 zokou(
   {
     nomCom: 'northkazuta👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -770,7 +770,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/d7b251629aa05c5aff
 zokou(
   {
     nomCom: 'northkanzen👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -897,7 +897,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/e521acd5939414d8d1
 zokou(
   {
     nomCom: 'northainz👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1024,7 +1024,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/1d119ca4b803209e84
     /* zokou(
   {
     nomCom: 'northainz👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1173,7 +1173,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/1d119ca4b803209e84
 }
 ); */      
 
-zokou(
+/*zokou(
   {
     nomCom: 'northkiller👤',
     categorie: 'NEOverse'
@@ -1298,12 +1298,12 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/a26f37961d465fd41f
     } catch (error) {
       console.error("Erreur lors de la mise à jour des données de l'utilisateur:", error);
     }
-  });
+  });*/
 
 zokou(
   {
     nomCom: 'northrukia👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1430,7 +1430,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/1979a11043529f6ce2
 zokou(
   {
     nomCom: 'northor👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1557,7 +1557,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/de942d6d04a11aa100
 zokou(
   {
     nomCom: 'northaruto👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1684,7 +1684,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/219e7e8d796b7b4e1e
 zokou(
   {
     nomCom: 'northeoza👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1811,7 +1811,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/4fc0cc36b556d4c7ad
 zokou(
   {
     nomCom: 'northlone👤',
-    categorie: 'NEOverse'
+    categorie: 'NORTH🐺🔴'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
