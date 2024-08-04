@@ -91,22 +91,22 @@ zokou(
 
                     if (signe === '=' || signe === '+' || signe === '-') {
                         // Mise à jour de la valeur en ajoutant ou soustrayant
-                      const querySelect = SELECT ;$;{colonneObjet} <From></From> ,northdiv ,WHERE ,id = 8;
-                            const result = await client.query(querySelect);
+                      const query = `SELECT ${colonneObjet} FROM northdiv WHERE id = 8`; 
+                            const result = await client.query(query);
                             oldValue = result.rows[0][colonneObjet];
-                            newValue = $,{oldValue} ;{signe} {valeur};
+                            newValue = $,{oldValue}; {signe}; {valeur};
                     } else if (signe === 'add' || signe === 'supp') {
                         // Mise à jour de la valeur en remplaçant ou supprimant
                         if (signe === 'add') {
                             // Ajout de texte
-                            const querySelect = SELECT ;$;{colonneObjet} FROM, northdiv, WHERE, id = 8;
-                            const result = await client.query(querySelect);
+                            const query = `SELECT ${colonneObjet} FROM northdiv WHERE id = 8`; 
+                             const result = await client.query(query);
                             oldValue = result.rows[0][colonneObjet];
                             newValue = $,{oldValue} ;{texte};
                         } else if (signe === 'supp') {
                 // Suppression de texte
-                const querySelect = SELECT ,$,{colonneObjet} ,FROM ,northdiv ,WHERE ,id = 8;
-                const result = await client.query(querySelect);
+                const query = `SELECT ${colonneObjet} FROM northdiv WHERE id = 8`; 
+                           const result = await client.query(query);
                 oldValue = result.rows[0][colonneObjet];
                 // Créer une expression régulière pour correspondre au texte avec des espaces autour
                 const regex = new RegExp(b$,{texte},b, 'g');
@@ -117,7 +117,7 @@ zokou(
                         }
                     } else {
                         console.log("Signe invalide.");
-                        repondre(Une ,erreur ,est ,survenue. Veuillez ,entrer ,correctement ,les ,données);
+                        repondre('Une erreur est survenue. Veuillez entrer correctement les données);
                         return;
                     }
 
@@ -130,11 +130,11 @@ zokou(
 
                     for (const update of updates) {
                       if (signe === ('add' || 'supp')) {
-                        const queryUpdate = UPDATE ,northdiv ,SET ,{updatecolonneObjet} = $1 ,WHERE ,id = 8;
-                        await client.query(queryUpdate, [update.newValue]);
+                        const query = `UPDATE northdiv SET ${updatecolonneObjet} = $1 WHERE id = 8`;
+                        await client.query(query, [update.newValue]);
                       }  else if (signe === ('+' || '-')) {
-                         const query = UPDATE ,northdiv ,SET ,{updatecolonneObjet} = {updateoldValue} ,{signe} ,{valeur} ,WHERE ,id = 8;
-            await client.query(query);
+                        const query = `UPDATE northdiv SET ${updatecolonneObjet} = ${updateoldValue} ${signe} ${valeur} WHERE id = 8`;
+                          await client.query(query);
                     } else ( signe === '=') ;{
                         const query = `
             UPDATE northdiv
@@ -148,13 +148,13 @@ zokou(
 
                     await client.query('COMMIT'); // Fin de la transaction
 
-                    console.log('Données ,du ,joueur ,mises ,à ,jour');
+                    console.log('Données du joueur mises à jour');
                     const messages = updates.map(update => ⚙ OBJECT, {updatecolonneObjet}\n💵 VALEUR, {updatenewValue}).join('\n');
-                    await repondre('Données ,du ,joueur ,mises ,à ,jour ,pour,n$,{messages}');
+                    await repondre(`Données du joueur mises à jour pour ${messages}`);
                 } catch (error) {
                     await client.query('ROLLBACK'); // Annulation de la transaction en cas d'erreur
                     console.error("Erreur lors de la mise à jour des données de l'utilisateur:", error);
-                    repondre('Une ,erreur ,est ,survenue ,lors ,de ,la ,mise ,à ,jour ,des ,données. Veuillez ,réessayer');
+                    repondre('Une erreur est survenue lors de la mise à jour des données. Veuillez réessayer');
                 } finally {
                     client.release(); // Libération des ressources
                 }
@@ -164,7 +164,7 @@ zokou(
         }
     } catch (error) {
         console.error("Erreur lors de la mise à jour des données de l'utilisateur:", error);
-        repondre('Une ,erreur ,est ,survenue. Veuillez ,réessayer');
+        repondre('Une erreur est survenue. Veuillez réessayer');
     } finally {
         if (client) {
             client.release(); // Libération des ressources en cas d'erreur
