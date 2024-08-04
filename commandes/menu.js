@@ -15,9 +15,9 @@ zokou(
     });
 
     let menu_info = `╭──❏ *🄽🄴🄾_🅆🄰-🄱🄾🅃*  ❏
-│ ✿ Prefix: ${s.PREFIXE}
-│ ✿ Commands: ${cm.length}
-│ ✿ Developer: Ainz K⚜️
+│ ✿ Prefixe: ${s.PREFIXE}
+│ ✿ Commandes: ${cm.length}
+│ ✿ Développeur: Ainz K⚜️
 ╰═════════════⊷\n\n`;
 
     for (const cat in coms) {
