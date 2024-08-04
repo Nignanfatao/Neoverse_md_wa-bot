@@ -101,16 +101,18 @@ zokou(
                     let newValue;
                     let oldValue;
 
-                    if (signe === '=' || signe === '+' || signe === '-') {
+                    if (signe === '+' || signe === '-') {
                         const query = `SELECT ${colonneObjet} FROM northdiv WHERE id = 8`; 
                         const result = await client.query(query);
                         oldValue = result.rows[0][colonneObjet];
                         newValue = eval(`${oldValue} ${signe} ${valeur}`);
-                    } else if (signe === 'add' || signe === 'supp') {
+                    } else if (signe === '=' || signe === 'add' || signe === 'supp') {
                         const query = `SELECT ${colonneObjet} FROM northdiv WHERE id = 8`; 
                         const result = await client.query(query);
                         oldValue = result.rows[0][colonneObjet];
-                        if (signe === 'add') {
+                        if(signe === '=') {
+                            newValue = `${texte.join(' ')}`;
+                        } else if (signe === 'add') {
                             newValue = `${oldValue} ${texte.join(' ')}`;
                         } else if (signe === 'supp') {
                             const regex = new RegExp(`\\b${normalizeText(texte.join(' '))}\\b`, 'gi');
