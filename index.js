@@ -177,6 +177,7 @@ async function main() {
             var verifOvlAdmin = verifGroupe ? admins.includes(idBot) : false;
 
             var commandeOptions = {
+                    superUser, 
                     verifGroupe,
                     mbre,
                     membreGroupe,
