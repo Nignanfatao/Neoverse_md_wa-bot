@@ -4,6 +4,11 @@ const s = require("../set");
 
 const dbUrl = s.DB;
 
+// Fonction pour normaliser le texte en supprimant les accents
+function normalizeText(text) {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 zokou(
   {
     nomCom: 'northainz👤',
@@ -84,7 +89,7 @@ zokou(
                     let signe = arg[i + 1];
                     let valeur = arg[i + 2];
                     let texte = [];
-                    i += 3;
+                    i += 2;
 
                     // Collecte tout le texte jusqu'à ce qu'un mot clé soit rencontré
                     while (i < arg.length && !colonnesJoueur[arg[i]]) {
@@ -108,8 +113,8 @@ zokou(
                         if (signe === 'add') {
                             newValue = `${oldValue} ${texte.join(' ')}`;
                         } else if (signe === 'supp') {
-                            const regex = new RegExp(`\\b${texte.join(' ')}\\b`, 'g');
-                            newValue = oldValue.replace(regex, '').trim();
+                            const regex = new RegExp(`\\b${normalizeText(texte.join(' '))}\\b`, 'gi');
+                            newValue = normalizeText(oldValue).replace(regex, '').trim();
                         }
                     } else {
                         console.log("Signe invalide.");
