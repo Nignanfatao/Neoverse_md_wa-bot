@@ -288,7 +288,7 @@ zokou(
                         return;
                     }
 
-                    updates.push({ colonneObjet, newValue, oldValue });
+                    updates.push({ colonneObjet, newValue, oldValue, object });
                 }
 
                 try {
@@ -301,8 +301,8 @@ zokou(
 
                     await client.query('COMMIT');
 
-                    const messages = updates.map(update => `⚙ OBJECT: ${update.colonneObjet}\n💵 VALEUR: ${update.newValue}`).join('\n');
-                    await repondre(`Données du joueur mises à jour pour ${messages}`);
+                    const messages = updates.map(update => `⚙ Object: ${update.objet}\n💵 Ancienne Valeur💵: ${update.oldvalue}\n Nouvelle Valeur: ${update.newValue}`).join('\n\n');
+                    await repondre(`Données du joueur mises à jour pour:\n\n${messages}`);
                 } catch (error) {
                     await client.query('ROLLBACK');
                     console.error("Erreur lors de la mise à jour des données de l'utilisateur:", error);
