@@ -13,11 +13,31 @@ const prefixe = conf.PREFIXE || "/";
 const maine = require('./commandes/elysium_control_bot');
 
 
-function decodeBase64(base64String) {
+/*function decodeBase64(base64String) {
     return Buffer.from(base64String, 'base64').toString('utf8');
-}
+}*/
 
-async function ovlAuth(session) {
+async function authentification() {
+        try {
+            
+            //console.log("le data "+data)
+            if (!fs.existsSync("./auth/creds.json")) {
+                console.log("connexion en cour ...");
+                await fs.writeFileSync("./auth/creds.json", atob(session), "utf8");
+                //console.log(session)
+            }
+            else if (fs.existsSync("./auth/creds.json") && session != "zokk") {
+                await fs.writeFileSync("./auth/creds.json", atob(session), "utf8");
+            }
+        }
+        catch (e) {
+            console.log("Session Invalide " + e );
+            return;
+        }
+    }
+    authentification();
+
+/*async function ovlAuth(session) {
     try {
         //const filePath = path.join(__dirname, 'auth', 'creds.json');
 
@@ -46,7 +66,7 @@ async function ovlAuth(session) {
 }
 
 // Appelez la fonction avec votre variable session
-ovlAuth(session);
+ovlAuth(session);*/
 
 async function main() {
     const { version, isLatest } = await fetchLatestBaileysVersion();
