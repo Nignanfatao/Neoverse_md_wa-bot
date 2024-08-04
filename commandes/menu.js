@@ -1,5 +1,6 @@
 const { zokou } = require("../framework/zokou");
 const s = require("../set");
+const {removeSudoNumber,addSudoNumber,issudo} = require("../bdd/sudo");
 
 zokou(
   { nomCom: "menu", reaction: "📁", categorie: "Other" },
@@ -36,3 +37,68 @@ zokou(
     await zk.sendMessage(dest, { image: { url: lien }, caption: menu_info }, { quoted: ms });
   }
 );
+
+zokou({ nomCom: "jid", categorie: "Mods" }, async (dest, zk, commandeOptions) => {
+
+  const { arg, ms, repondre, verifGroupe, msgRepondu, verifAdmin, superUser, auteurMessage,auteurMsgRepondu } = commandeOptions;
+
+         if (!superUser) {
+    repondre("commande reservée au propriétaire du bot");
+    return;
+  }
+              if(!msgRepondu) {
+                jid = dest
+              } else {
+                jid = auteurMsgRepondu
+              } ;
+   zk.sendMessage(dest,{text : jid },{quoted:ms});
+
+        }) ;
+
+zokou({
+  nomCom: 'sudo',
+  categorie: 'Mods',
+}, async (dest, zk, commandeOptions) => {
+
+  const { ms, arg, auteurMsgRepondu, msgRepondu , repondre,prefixe,superUser } = commandeOptions;
+
+  
+if (!superUser) {repondre('Cette commande n\'est permis qu\'au proprietaire du bot') ; return}
+  if (!arg[0]) {
+      // Fonction 'repondre' doit être définie pour envoyer une réponse.
+      repondre(`mentionner la personne en tappant ${prefixe}sudo add/del`);
+      return;
+  };
+
+  if (msgRepondu) {
+      switch (arg.join(' ')) {
+          case 'add':
+
+         
+ let youaresudo = await issudo(auteurMsgRepondu)
+         if(youaresudo) {repondre('Ce utilisateur est deja sudo') ; return}
+             
+         addSudoNumber(auteurMsgRepondu)
+         repondre('succes')
+              break;
+              case 'del':
+                let estsudo = await issudo(auteurMsgRepondu)
+  if (estsudo) {
+      
+      removeSudoNumber(auteurMsgRepondu);
+      repondre('Cet utilisateur est desormais non-sudo.');
+  } else {
+    repondre('Cet utilisateur n\'est pas sudo.');
+  }
+  break;
+
+
+          default:
+              repondre('mauvaise option');
+              break;
+      }
+  } else {
+      repondre('mentionner la victime')
+      return;
+  }
+});
