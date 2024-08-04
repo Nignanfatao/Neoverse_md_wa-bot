@@ -5,10 +5,10 @@ const s = require("../set");
 const dbUrl = s.DB;
 
 
-/*zokou(
+zokou(
   {
     nomCom: 'eastwhite👤',
-    categorie: 'NEOverse'
+    categorie: 'EAST🦅🟢'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -130,12 +130,12 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/5c45243eab76575302
     } catch (error) {
       console.error("Erreur lors de la mise à jour des données de l'utilisateur:", error);
     }
-  });*/
+  });
 
-zokou(
+/*zokou(
   {
     nomCom: 'eastkemael👤',
-    categorie: 'NEOverse'
+    categorie: 'EAST🦅🟢'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -262,7 +262,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/638f67854ccfaa1ee1
 zokou(
   {
     nomCom: 'eastaltheos👤',
-    categorie: 'NEOverse'
+    categorie: 'EAST🦅🟢'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -384,12 +384,12 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/5ecddffc7c18e84861
     } catch (error) {
       console.error("Erreur lors de la mise à jour des données de l'utilisateur:", error);
     }
-  });
+  });*/
 
 zokou(
   {
     nomCom: 'eastgoldy👤',
-    categorie: 'NEOverse'
+    categorie: 'EAST🦅🟢'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -516,7 +516,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/0ea9c931ba095b8d15
 zokou(
   {
     nomCom: 'eastzephyr👤',
-    categorie: 'NEOverse'
+    categorie: 'EAST🦅🟢'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -643,7 +643,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/3ac732346838ef183e
 zokou(
   {
     nomCom: 'eastatsushi👤',
-    categorie: 'NEOverse'
+    categorie: 'EAST🦅🟢'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -770,7 +770,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/1547e51cd907dd8c71
 zokou(
   {
     nomCom: 'eastadam👤',
-    categorie: 'NEOverse'
+    categorie: 'EAST🦅🟢'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -897,7 +897,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/79a4ed8f8020cd8107
 zokou(
   {
     nomCom: 'eastserena👤',
-    categorie: 'NEOverse'
+    categorie: 'EAST🦅🟢'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1021,10 +1021,10 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/0005fa4ffc1126ca9f
     }
   });
 
-zokou(
+/*zokou(
   {
     nomCom: 'easthinata👤',
-    categorie: 'NEOverse'
+    categorie: 'EAST🦅🟢'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1146,13 +1146,13 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/09063568b0971eb6e4
     } catch (error) {
       console.error("Erreur lors de la mise à jour des données de l'utilisateur:", error);
     }
-  });
+  });*/
 
 
 zokou(
   {
     nomCom: 'eastjuuzou👤',
-    categorie: 'NEOverse'
+    categorie: 'EAST🦅🟢'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
@@ -1279,7 +1279,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/463867f222bd0dcdbf
 zokou(
   {
     nomCom: 'eastmini👤',
-    categorie: 'NEOverse'
+    categorie: 'EAST🦅🟢'
   },
   async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, superUser } = commandeOptions;
