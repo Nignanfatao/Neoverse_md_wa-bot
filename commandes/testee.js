@@ -301,7 +301,7 @@ zokou(
 
                     await client.query('COMMIT');
 
-                    const messages = updates.map(update => `⚙ Object: ${update.objet}\n💵 Ancienne Valeur💵: ${update.oldvalue}\n Nouvelle Valeur: ${update.newValue}`).join('\n\n');
+                    const messages = updates.map(update => `⚙ Object: ${update.object}\n💵 Ancienne Valeur: ${update.oldValue}\n💵 Nouvelle Valeur: ${update.newValue}`).join('\n\n');
                     await repondre(`Données du joueur mises à jour pour:\n\n${messages}`);
                 } catch (error) {
                     await client.query('ROLLBACK');
