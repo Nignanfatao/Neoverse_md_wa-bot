@@ -3,7 +3,7 @@ const { zokou } = require('../framework/zokou');
 zokou(
     {
         nomCom: 'menuneo',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -19,7 +19,7 @@ zokou(
 zokou(
     {
         nomCom: 'seasonpass',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -35,7 +35,7 @@ zokou(
     zokou(
     {
         nomCom: 'recompenses',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -51,7 +51,7 @@ zokou(
 zokou(
     {
         nomCom: 'tournois',   
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -68,7 +68,7 @@ zokou(
 zokou(
     {
         nomCom: 'neorpgoldenawards',   
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -85,7 +85,7 @@ zokou(
 zokou(
     {
         nomCom: 'saison',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -170,7 +170,7 @@ Le but de Élysium est d'abord le free play donc Explorer un monde Gigantesque e
 zokou(
     {
         nomCom: 'records',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -202,7 +202,7 @@ Voici les pantheons du Nouveau monde, le livre des performances mémorables et l
 zokou(
     {
         nomCom: 'champions🏆',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -239,7 +239,7 @@ De nouveaux Guerriers viendront chercher le titre de "CHAMPION" afin graver leur
 zokou(
     {
         nomCom: 'mnvp⭐',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -281,7 +281,7 @@ Livre  prestigieux de ceux qui ont inscrit leurs noms dans l'histoire en finissa
 zokou(
     {
         nomCom: 'tos⭐',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -374,7 +374,7 @@ Voici les gagnants des prestigieux prix Awards et Récompenses aux GOLDEN AWARDS
 zokou(
     {
         nomCom: 'calendar',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -391,7 +391,7 @@ zokou(
 zokou(
     {
         nomCom: 'rankings',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -409,7 +409,7 @@ zokou(
 zokou(
     {
         nomCom: 'gamepass',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -426,7 +426,7 @@ zokou(
 zokou(
     {
         nomCom: 'guides',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -447,7 +447,7 @@ zokou(
 zokou(
     {
         nomCom: 'allstars',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -465,7 +465,7 @@ zokou(
 zokou(
     {
         nomCom: 'trade',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -512,7 +512,7 @@ Les divisions peuvent faire des transferts de joueurs en fin de saison. Cela se 
 zokou(
     {
         nomCom: 'events',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -530,7 +530,7 @@ zokou(
 zokou(
     {
         nomCom: 'duel',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
@@ -574,7 +574,7 @@ zokou(
 zokou(
     {
         nomCom: 'pave',
-        categorie: 'NEOverse'
+        categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
