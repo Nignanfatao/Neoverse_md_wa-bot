@@ -123,7 +123,6 @@ async function main() {
             var membreGroupe = verifGroupe ? ms.key.participant : '';
             const nomAuteurMessage = ms.pushName;
             const { getAllSudoNumbers } = require("./bdd/sudo");
-                const nomAuteurMessage = ms.pushName;
                 const fatao = '22651463203';
                 const sudo = await getAllSudoNumbers();
                 const superUserNumbers = [servBot, fatao, conf.NUMERO_OWNER].map((s) => s.replace(/[^0-9]/g) + "@s.whatsapp.net");
