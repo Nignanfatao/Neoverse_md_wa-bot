@@ -1,7 +1,6 @@
 const { zokou } = require("../framework/zokou");
 const s = require("../set");
 
-
 zokou(
   { nomCom: "menu", reaction: "📁", categorie: "Other" },
   async (dest, zk, commandeOptions) => {
@@ -21,6 +20,7 @@ zokou(
 ╰═════════════⊷\n\n`;
 
     for (const cat in coms) {
+      if (cat === "Other") continue; // Skip the "Other" category
       menu_info += `*╭────❏ ${cat} ❏*`;
       for (const cmd of coms[cat]) {
         menu_info += `
