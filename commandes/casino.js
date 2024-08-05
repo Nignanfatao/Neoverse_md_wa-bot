@@ -45,15 +45,15 @@ zokou(
       await repondre(message);
 
       // Attendre une entrée de l'utilisateur pour le numéro choisi
-      const repinv = await zk.awaitForMessage({
-        sender: auteurMessage,
-        chatJid: origineMessage,
-        timeout: 60000 // 60 secondes
-      });
       
       if(msgRepondu) {
       //if (repinv) {
-        let chosenNumber = parseInt(repinv.message.conversation) || parseInt(repinv.message.extendedTextMessage.text);
+        const repinv = await zk.awaitForMessage({
+        sender: auteurMsgRepondu,
+        chatJid: origineMessage,
+        timeout: 60000 // 60 secondes
+      });
+        let chosenNumber = parseInt(repinv.message.extendedTextMessage.text);
 
         if (isNaN(chosenNumber) || chosenNumber < 0 || chosenNumber > 50) {
           return repondre('Veuillez choisir un numéro valide compris entre 0 et 50.');
