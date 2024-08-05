@@ -19,7 +19,7 @@ zokou(
     reaction: '🎰',
     categorie: 'NEO_GAMES🎰'
   },
-  async (dest, zk, commandeOptions) => {
+  async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre, auteurMsgRepondu, arg } = commandeOptions;
     try {
       if (!arg || arg.length < 1) {
@@ -47,7 +47,7 @@ zokou(
       // Attendre une entrée de l'utilisateur pour le numéro choisi
       const repinv = await zk.awaitForMessage({
         sender: auteurMsgRepondu,
-        chatJid: dest,
+        chatJid: origineMessage,
         timeout: 60000 // 60 secondes
       });
 
