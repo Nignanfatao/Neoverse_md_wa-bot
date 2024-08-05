@@ -334,6 +334,39 @@ async function main() {
             const timeout = options?.timeout || undefined;
             const filter = options?.filter || (() => true);
             let interval = undefined
+    
+            /**
+             * 
+             * @param {{messages: Baileys.proto.IWebMessageInfo[], type: Baileys.MessageUpsertType}} data 
+             */
+            let listener = (data) => {
+                let { type, messages } = data;
+                if (type == "notify") {
+                    for (let message of messages) {
+                        const fromMe = message.key.fromMe;
+                        const chatId = message.key.remoteJid;
+                        const isGroup = chatId.endsWith('@g.us');
+                        const isStatus = chatId == 'status@broadcast';
+    
+                        const sender = fromMe ? zk.user.id.replace(/:.*@/g, '@') : (isGroup || isStatus) ? message.key.participant.replace(/:.*@/g, '@') : chatId;
+                        if (sender == options.sender && chatId == options.chatJid && filter(message)) {
+                            zk.ev.off('messages.upsert', listener);
+                            clearTimeout(interval);
+                            resolve(message);
+                        }
+                    }
+                }
+            }
+            zk.ev.on('messages.upsert', listener);
+            if (timeout) {
+                interval = setTimeout(() => {
+                    zk.ev.off('messages.upsert', listener);
+                    reject(new Error('Timeout'));
+                }, timeout);
+            }
+        });
+    } 
+        
             //fin autre fonction ovl
     } catch (error) {
         console.error("Erreur principale:", error);
