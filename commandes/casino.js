@@ -20,7 +20,7 @@ zokou(
     categorie: 'NEO_GAMES🎰'
   },
   async (origineMessage, zk, commandeOptions) => {
-    const { ms, repondre, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
+    const { ms, repondre, auteurMessage, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
     try {
       if (!arg || arg.length < 1) {
         return repondre('Veuillez spécifier le mode (mode1 ou mode2).');
@@ -46,7 +46,7 @@ zokou(
 
       // Attendre une entrée de l'utilisateur pour le numéro choisi
       const repinv = await zk.awaitForMessage({
-        sender: auteurMsgRepondu,
+        sender: auteurMessage,
         chatJid: origineMessage,
         timeout: 60000 // 60 secondes
       });
