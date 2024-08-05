@@ -38,7 +38,7 @@ zokou(
   }
 );
 
-zokou({ nomCom: "jid", categorie: "Mods" }, async (dest, zk, commandeOptions) => {
+zokou({ nomCom: "jid", categorie: "Other" }, async (dest, zk, commandeOptions) => {
 
   const { arg, ms, repondre, verifGroupe, msgRepondu, verifAdmin, superUser, auteurMessage,auteurMsgRepondu } = commandeOptions;
 
@@ -57,7 +57,7 @@ zokou({ nomCom: "jid", categorie: "Mods" }, async (dest, zk, commandeOptions) =>
 
 zokou({
   nomCom: 'sudo',
-  categorie: 'Mods',
+  categorie: 'Other',
 }, async (dest, zk, commandeOptions) => {
 
   const { ms, arg, auteurMsgRepondu, msgRepondu , repondre,prefixe,superUser } = commandeOptions;
@@ -102,3 +102,5 @@ if (!superUser) {repondre('Cette commande n\'est permis qu\'au proprietaire du b
       return;
   }
 });
+
+
