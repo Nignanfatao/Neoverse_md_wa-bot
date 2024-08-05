@@ -48,12 +48,19 @@ zokou(
       
       if(msgRepondu) {
       //if (repinv) {
-        const repinv = await zk.awaitForMessage({
-        sender: auteurMsgRepondu,
+        const rep = await zk.awaitForMessage({
+        sender: auteurMessage,
         chatJid: origineMessage,
         timeout: 60000 // 60 secondes
       });
-        let chosenNumber = parseInt(repinv.message.extendedTextMessage.text);
+        let chosenNumber ;  
+    try {
+        chosenNumber = rep.message.extendedTextMessage.text
+    } catch {
+        chosenNumber = rep.message.conversation
+    } ;
+        console.log('votre choix est:' chosenNumber);
+       // let chosenNumber = parseInt(repinv.message.extendedTextMessage.text);
 
         if (isNaN(chosenNumber) || chosenNumber < 0 || chosenNumber > 50) {
           return repondre('Veuillez choisir un numéro valide compris entre 0 et 50.');
