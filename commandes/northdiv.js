@@ -1449,7 +1449,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/de942d6d04a11aa100
   }
 );
 
-/*zokou(
+zokou(
   {
     nomCom: 'northaruto👤',
     categorie: 'NORTH🐺🔴'
@@ -1768,7 +1768,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/4fc0cc36b556d4c7ad
     }
   }
 );
-zokou(
+/*zokou(
   {
     nomCom: 'northlone👤',
     categorie: 'NORTH🐺🔴'
