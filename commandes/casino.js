@@ -46,21 +46,23 @@ zokou(
 
       // Attendre une entrée de l'utilisateur pour le numéro choisi
       
-      if(msgRepondu) {
-      //if (repinv) {
+      if (msgRepondu) {
         const rep = await zk.awaitForMessage({
-        sender: auteurMessage,
-        chatJid: origineMessage,
-        timeout: 60000 // 60 secondes
-      });
-        let chosenNumber ;  
-    try {
-        chosenNumber = rep.message.extendedTextMessage.text
-    } catch {
-        chosenNumber = rep.message.conversation
-    } ;
-        console.log('votre choix est:' chosenNumber);
-       // let chosenNumber = parseInt(repinv.message.extendedTextMessage.text);
+          sender: auteurMessage,
+          chatJid: origineMessage,
+          timeout: 60000 // 60 secondes
+        });
+
+        let chosenNumber;  
+        try {
+          chosenNumber = rep.message.extendedTextMessage.text;
+        } catch {
+          chosenNumber = rep.message.conversation;
+        }
+
+        console.log('votre choix est:', chosenNumber);
+
+        chosenNumber = parseInt(chosenNumber);
 
         if (isNaN(chosenNumber) || chosenNumber < 0 || chosenNumber > 50) {
           return repondre('Veuillez choisir un numéro valide compris entre 0 et 50.');
@@ -76,8 +78,8 @@ zokou(
         } else {
           message = `😢 Désolé, ${chosenNumber} n'est pas un numéro gagnant. Les numéros gagnants étaient ${winningNumbers.join(', ')}. Réessayez !`;
         }
+
         repondre(message);
-        // zk.sendMessage(dest, message, { quoted: ms });
       }
     } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
