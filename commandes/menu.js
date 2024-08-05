@@ -109,5 +109,7 @@ zokou({ nomCom: "test", reaction: "⚜️", categorie: 'Other', nomFichier: __fi
   let mseg = m + admsg;
     var img = 'https://telegra.ph/file/03ef7fa949c55d353ae24.jpg';
     await zk.sendMessage(dest, { image: { url: img }, caption: mseg });
+});
+
 
 
