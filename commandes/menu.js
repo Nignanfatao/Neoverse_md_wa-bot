@@ -110,11 +110,11 @@ zokou({ nomCom: "test", reaction: "⚜️", categorie: 'Other', nomFichier: __fi
     let m = 'Salut je me nomme NEOverse_Md* \n\n ' + 'je suis un bot Whatsapp conçu pour le Rp';
      let admsg = ' developpé par *AINZ K⚜️*';
   let mseg = m + admsg;
-    var img = 'https://telegra.ph/file/03ef7fa949c55d353ae24.jpg';
+    var img = 'https://telegra.ph/file/bd75d35e193a7cf0e300a.jpg';
     await zk.sendMessage(dest, { image: { url: img }, caption: mseg });
 });
 
-zokou({nomCom:"annonce",categorie:"Groupe",reaction:"🎤"},async(dest,zk,commandeOptions)=>{
+zokou({nomCom:"annonce",categorie:"Other",reaction:"🎤"},async(dest,zk,commandeOptions)=>{
 
 
   const {repondre,msgRepondu,verifGroupe,arg ,verifAdmin , superUser}=commandeOptions;
@@ -219,7 +219,7 @@ zokou({nomCom:"annonce",categorie:"Groupe",reaction:"🎤"},async(dest,zk,comman
 }
 });
 
-zokou({ nomCom: "appel", categorie: "Groupe", reaction: "📣" }, async (dest, zk, commandeOptions) => {
+zokou({ nomCom: "appel", categorie: "Other", reaction: "📣" }, async (dest, zk, commandeOptions) => {
 
   const { ms, repondre, arg, verifGroupe, nomGroupe, infosGroupe, nomAuteurMessage, verifAdmin, superUser } = commandeOptions
 
