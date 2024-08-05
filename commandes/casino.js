@@ -22,39 +22,69 @@ zokou(
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre, auteurMessage, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
     try {
-      if (!arg || arg.length > 1) {
-        return repondre(`*Description du mode:* Vous avez une chance de deviner un numéro gagnant.
-
-        EX: ^roulette`);
-      }
-
-      let mode = arg[0];
       let numbers = generateRandomNumbers(0, 50, 50);
       let winningNumbers = generateRandomNumbers(0, 50, 3);
       let rewards = generateRewards();
+      let liena = 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
+      let msga = `*🎰𝗧𝗘𝗡𝗧𝗘𝗭 𝗩𝗢𝗧𝗥𝗘 𝗖𝗛𝗔𝗡𝗖𝗘🥳 !!*
+▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬🎉🎉🎉
+jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro que vous choisissez parmi les *5️⃣0️⃣*. *⚠️vous n'avez que 2 chances et pour jouer:  2🔶 où 2🔷*
+▔▔🎊▔🎊▔🎊▔▔🎊▔▔🎊▔🎊▔🎊▔▔🎊▔🎊▔🎊▔🎊▔🎊▔▔
+${numbers.join(', ')}
+▔▔🎊▔🎊▔🎊▔▔🎊▔▔🎊▔🎊▔🎊▔▔🎊▔🎊▔🎊▔🎊▔🎊▔▔
+▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬🎉🎉🎉
 
-      let message = `🎰 *Roulette Game* 🎰\n\n`;
+*🎊Voulez vous tenter votre chance ?*
+✅: \`Oui\`
+❌: \`Non\``;
 
-      message += `Les numéros du jeu sont : ${numbers.join(', ')}\n\n`;
-      message += `Choisissez un numéro vous avez 1min⚠️!\n\n`;
+      await zk.sendMessage(origineMessage, { image: { url: liena }, caption: msga }, { quoted: ms });
 
-      await repondre(message);
-
-      const getChosenNumber = async () => {
+      const getConfirmation = async () => {
         const rep = await zk.awaitForMessage({
           sender: auteurMessage,
           chatJid: origineMessage,
           timeout: 60000 // 60 secondes
         });
 
-        let chosenNumber;  
+        let response;
+        try {
+          response = rep.message.extendedTextMessage.text;
+        } catch {
+          response = rep.message.conversation;
+        }
+
+        if (response.toLowerCase() === 'oui') {
+          return true;
+        } else if (response.toLowerCase() === 'non') {
+          return false;
+        } else {
+          await repondre('Veuillez répondre par Oui ou Non.');
+          return await getConfirmation();
+        }
+      };
+
+      if (!(await getConfirmation())) {
+        return repondre('Jeu annulé. À la prochaine !');
+      }
+
+      const getChosenNumber = async () => {
+        let msgb = '🎊😃: *Choissez un numéro vous avez 1min⚠️*(Répondre à ce message)';
+        let lienb = 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
+        await zk.sendMessage(origineMessage, { image: { url: lienb }, caption: msgb }, { quoted: ms });
+
+        const rep = await zk.awaitForMessage({
+          sender: auteurMessage,
+          chatJid: origineMessage,
+          timeout: 60000 // 60 secondes
+        });
+
+        let chosenNumber;
         try {
           chosenNumber = rep.message.extendedTextMessage.text;
         } catch {
           chosenNumber = rep.message.conversation;
         }
-
-        console.log('votre choix est:', chosenNumber);
 
         chosenNumber = parseInt(chosenNumber);
 
@@ -72,15 +102,28 @@ zokou(
         if (winningNumbers.includes(number)) {
           let rewardIndex = winningNumbers.indexOf(number);
           let reward = rewards[rewardIndex];
-          let otherWinningNumbers = winningNumbers.filter(num => num !== number);
-          return `🎉 Félicitations ! Vous avez deviné l'un des numéros gagnants ${number}. Les autres numéros gagnants étaient ${otherWinningNumbers.join(', ')}\n\nVous remportez ${reward} !`;
+          let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
+          let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg';
+          return zk.sendMessage(origineMessage, { image: { url: lienc }, caption: msgc }, { quoted: ms });
+
         } else {
-          return `😢 Désolé, ${number} n'est pas un numéro gagnant. Les numéros gagnants étaient ${winningNumbers.join(', ')}. Réessayez !`;
+          let msgd = `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`;
+          let liend = 'https://telegra.ph/file/222cefbcd18ba50012d05.jpg';
+          return zk.sendMessage(origineMessage, { image: { url: liend }, caption: msgd }, { quoted: ms });
+
         }
       };
 
-      message = checkWinningNumber(chosenNumber);
-      repondre(message);
+      let messageResult = await checkWinningNumber(chosenNumber);
+
+      if (!winningNumbers.includes(chosenNumber)) {
+        await repondre('Vous avez une deuxième chance ! Choisissez un autre numéro.');
+
+        chosenNumber = await getChosenNumber();
+        messageResult = await checkWinningNumber(chosenNumber);
+      }
+
+      repondre(messageResult);
     } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
       repondre('Une erreur est survenue. Veuillez réessayer.');
