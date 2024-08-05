@@ -23,7 +23,7 @@ zokou(
     const { ms, repondre, auteurMessage, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
     try {
       if (!arg || arg.length < 1) {
-        return repondre('Veuillez spécifier le mode (mode1 ou mode2).');
+        return repondre('Veuillez spécifier le mode (mode1, mode2 ou mode3).');
       }
 
       let mode = arg[0];
@@ -33,10 +33,11 @@ zokou(
 
       let message = `🎰 *Roulette Game* 🎰\n\n`;
 
-      if (mode === 'mode2') {
-        let minHint = Math.max(0, Math.min(...winningNumbers) - 10);
-        let maxHint = Math.min(50, Math.max(...winningNumbers) + 10);
-        message += `*Indice*: Le numéro gagnant est entre ${minHint} et ${maxHint}\n\n`;
+      if (mode === 'mode2' || mode === 'mode3') {
+        let hintNumber = winningNumbers[Math.floor(Math.random() * winningNumbers.length)];
+        let minHint = Math.max(0, hintNumber - 3);
+        let maxHint = Math.min(50, hintNumber + 3);
+        message += `*Indice*: L'un des numéros gagnants est entre ${minHint} et ${maxHint}\n\n`;
       }
 
       message += `Les numéros du jeu sont : ${numbers.join(', ')}\n\n`;
@@ -44,9 +45,7 @@ zokou(
 
       await repondre(message);
 
-      // Attendre une entrée de l'utilisateur pour le numéro choisi
-      
-    //if (msgRepondu) {
+      const getChosenNumber = async () => {
         const rep = await zk.awaitForMessage({
           sender: auteurMessage,
           chatJid: origineMessage,
@@ -65,22 +64,39 @@ zokou(
         chosenNumber = parseInt(chosenNumber);
 
         if (isNaN(chosenNumber) || chosenNumber < 0 || chosenNumber > 50) {
-          return repondre('Veuillez choisir un numéro valide compris entre 0 et 50.');
+          await repondre('Veuillez choisir un numéro valide compris entre 0 et 50.');
+          return await getChosenNumber();
         }
 
-        if (winningNumbers.includes(chosenNumber)) {
-          let rewardIndex = winningNumbers.indexOf(chosenNumber);
+        return chosenNumber;
+      };
+
+      let chosenNumber = await getChosenNumber();
+
+      const checkWinningNumber = (number) => {
+        if (winningNumbers.includes(number)) {
+          let rewardIndex = winningNumbers.indexOf(number);
           let reward = rewards[rewardIndex];
-          let otherWinningNumbers = winningNumbers.filter(num => num !== chosenNumber);
-          message = `🎉 Félicitations ! Vous avez deviné l'un des numéros gagnants ${chosenNumber}. Les autres numéros gagnants étaient ${otherWinningNumbers.join(', ')}\n\nVous remportez ${reward} !`;
-          // Ajoutez la logique pour attribuer la récompense au joueur
-          // Exemple : await updateData('neocoins', userId, rewardValue);
+          let otherWinningNumbers = winningNumbers.filter(num => num !== number);
+          return `🎉 Félicitations ! Vous avez deviné l'un des numéros gagnants ${number}. Les autres numéros gagnants étaient ${otherWinningNumbers.join(', ')}\n\nVous remportez ${reward} !`;
         } else {
-          message = `😢 Désolé, ${chosenNumber} n'est pas un numéro gagnant. Les numéros gagnants étaient ${winningNumbers.join(', ')}. Réessayez !`;
+          return `😢 Désolé, ${number} n'est pas un numéro gagnant.`;
         }
+      };
 
-        repondre(message);
-      //
+      message = checkWinningNumber(chosenNumber);
+
+      if (!winningNumbers.includes(chosenNumber) && (mode === 'mode1' || mode === 'mode3')) {
+        await repondre(message);
+        await repondre('Vous avez une deuxième chance ! Choisissez un autre numéro.');
+
+        chosenNumber = await getChosenNumber();
+        message = checkWinningNumber(chosenNumber);
+      } else {
+        message += ` Les numéros gagnants étaient ${winningNumbers.join(', ')}. Réessayez !`;
+      }
+
+      repondre(message);
     } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
       repondre('Une erreur est survenue. Veuillez réessayer.');
