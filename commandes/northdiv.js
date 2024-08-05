@@ -808,7 +808,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/473bd0c7659ce1b082
 );
 
 // supp 6 Lord of apocalyse
-zokou(
+/*zokou(
   {
     nomCom: 'northkanzen👤',
     categorie: 'NORTH🐺🔴'
@@ -966,7 +966,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/e521acd5939414d8d1
         }
     }
   }
-);
+);*/
 
 zokou(
   {
@@ -1129,7 +1129,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/1d119ca4b803209e84
 );
 
 // supp killer 9
-/*zokou(
+zokou(
   {
     nomCom: 'northrukia👤',
     categorie: 'NORTH🐺🔴'
@@ -1449,7 +1449,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/de942d6d04a11aa100
   }
 );
 
-zokou(
+/*zokou(
   {
     nomCom: 'northaruto👤',
     categorie: 'NORTH🐺🔴'
