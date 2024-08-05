@@ -20,7 +20,7 @@ zokou(
     categorie: 'NEO_GAMES🎰'
   },
   async (origineMessage, zk, commandeOptions) => {
-    const { ms, repondre, auteurMsgRepondu, arg } = commandeOptions;
+    const { ms, repondre, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
     try {
       if (!arg || arg.length < 1) {
         return repondre('Veuillez spécifier le mode (mode1 ou mode2).');
@@ -50,8 +50,9 @@ zokou(
         chatJid: origineMessage,
         timeout: 60000 // 60 secondes
       });
-
-      if (repinv) {
+      
+      if(msgRepondu) {
+      //if (repinv) {
         let chosenNumber = parseInt(repinv.message.conversation) || parseInt(repinv.message.extendedTextMessage.text);
 
         if (isNaN(chosenNumber) || chosenNumber < 0 || chosenNumber > 50) {
