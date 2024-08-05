@@ -405,6 +405,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/33d75752a2f4d645f8
                     cards: "e17",
                     globes: "e22", 
                     pos: "e18"
+                };
 
                 let updates = [];
                 let i = 0;
