@@ -9,7 +9,7 @@ const generateRandomNumbers = (min, max, count) => {
 };
 
 const generateRewards = () => {
-  const rewards = ['10 neocoins', '10K golds', 'tour gratuit'];
+  const rewards = ['10🔷', '50.000 G🧭', '10🎟'];
   return rewards.sort(() => 0.5 - Math.random()).slice(0, 3);
 };
 
@@ -22,8 +22,10 @@ zokou(
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre, auteurMessage, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
     try {
-      if (!arg || arg.length < 1) {
-        return repondre('Veuillez spécifier le mode (mode1, mode2 ou mode3).');
+      if (!arg || arg.length > 1) {
+        return repondre(`*Description du mode:* Vous avez une chance de deviner un numéro gagnant.
+
+        EX: ^roulette`);
       }
 
       let mode = arg[0];
@@ -33,15 +35,8 @@ zokou(
 
       let message = `🎰 *Roulette Game* 🎰\n\n`;
 
-      if (mode === 'mode2' || mode === 'mode3') {
-        let hintNumber = winningNumbers[Math.floor(Math.random() * winningNumbers.length)];
-        let minHint = Math.max(0, hintNumber - 3);
-        let maxHint = Math.min(50, hintNumber + 3);
-        message += `*Indice*: L'un des numéros gagnants est entre ${minHint} et ${maxHint}\n\n`;
-      }
-
       message += `Les numéros du jeu sont : ${numbers.join(', ')}\n\n`;
-      message += `Choisissez un numéro entre 0 et 50. Si vous devinez un des numéros gagnants, vous remportez une récompense !\n\n`;
+      message += `Choisissez un numéro vous avez 1min⚠️!\n\n`;
 
       await repondre(message);
 
@@ -64,7 +59,7 @@ zokou(
         chosenNumber = parseInt(chosenNumber);
 
         if (isNaN(chosenNumber) || chosenNumber < 0 || chosenNumber > 50) {
-          await repondre('Veuillez choisir un numéro valide compris entre 0 et 50.');
+          await repondre('Veuillez choisir un des numéros proposés');
           return await getChosenNumber();
         }
 
@@ -80,22 +75,11 @@ zokou(
           let otherWinningNumbers = winningNumbers.filter(num => num !== number);
           return `🎉 Félicitations ! Vous avez deviné l'un des numéros gagnants ${number}. Les autres numéros gagnants étaient ${otherWinningNumbers.join(', ')}\n\nVous remportez ${reward} !`;
         } else {
-          return `😢 Désolé, ${number} n'est pas un numéro gagnant.`;
+          return `😢 Désolé, ${number} n'est pas un numéro gagnant. Les numéros gagnants étaient ${winningNumbers.join(', ')}. Réessayez !`;
         }
       };
 
       message = checkWinningNumber(chosenNumber);
-
-      if (!winningNumbers.includes(chosenNumber) && (mode === 'mode1' || mode === 'mode3')) {
-        await repondre(message);
-        await repondre('Vous avez une deuxième chance ! Choisissez un autre numéro.');
-
-        chosenNumber = await getChosenNumber();
-        message = checkWinningNumber(chosenNumber);
-      } else {
-        message += ` Les numéros gagnants étaient ${winningNumbers.join(', ')}. Réessayez !`;
-      }
-
       repondre(message);
     } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
