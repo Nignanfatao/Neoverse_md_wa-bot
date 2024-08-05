@@ -1768,6 +1768,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/4fc0cc36b556d4c7ad
     }
   }
 );
+
 /*zokou(
   {
     nomCom: 'northlone👤',
