@@ -966,7 +966,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/e521acd5939414d8d1
         }
     }
   }
-);*/
+);
 
 zokou(
   {
@@ -1927,4 +1927,4 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/5901ab31b72ad80f1c
         }
     }
   }
-);
+);*/
