@@ -1814,7 +1814,7 @@ ${data.e17}
 ░░░░░░░░░░░░░░░░░░░
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
                                        *🔷𝗡Ξ𝗢🔝*`;
-zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/4fc0cc36b556d4c7ad4d9.jpg' }, caption: mesg }, { quoted: ms });
+zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/5901ab31b72ad80f1c498.jpg' }, caption: mesg }, { quoted: ms });
        } else {
         const proConfig = {
                 connectionString: dbUrl,
