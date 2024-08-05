@@ -46,7 +46,7 @@ zokou(
 
       // Attendre une entrée de l'utilisateur pour le numéro choisi
       
-      if (msgRepondu) {
+    //if (msgRepondu) {
         const rep = await zk.awaitForMessage({
           sender: auteurMessage,
           chatJid: origineMessage,
@@ -80,7 +80,7 @@ zokou(
         }
 
         repondre(message);
-      }
+      //
     } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
       repondre('Une erreur est survenue. Veuillez réessayer.');
