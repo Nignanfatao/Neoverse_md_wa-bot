@@ -323,6 +323,17 @@ async function main() {
         throw error; // Rethrow pour que l'appelant puisse gérer l'erreur s'il le souhaite
     }
 };
+        zk.awaitForMessage = async (options = {}) =>{
+        return new Promise((resolve, reject) => {
+            if (typeof options !== 'object') reject(new Error('Options must be an object'));
+            if (typeof options.sender !== 'string') reject(new Error('Sender must be a string'));
+            if (typeof options.chatJid !== 'string') reject(new Error('ChatJid must be a string'));
+            if (options.timeout && typeof options.timeout !== 'number') reject(new Error('Timeout must be a number'));
+            if (options.filter && typeof options.filter !== 'function') reject(new Error('Filter must be a function'));
+    
+            const timeout = options?.timeout || undefined;
+            const filter = options?.filter || (() => true);
+            let interval = undefined
             //fin autre fonction ovl
     } catch (error) {
         console.error("Erreur principale:", error);
