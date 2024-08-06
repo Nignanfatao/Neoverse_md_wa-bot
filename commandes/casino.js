@@ -155,7 +155,17 @@ ${numbers.join(', ')}
         }
       };
 
-      let messageResult = checkWinningNumber(chosenNumber);
+      const checkWinningNumberfirstchance = (number) => {
+        if (winningNumbers.includes(number)) {
+          let rewardIndex = winningNumbers.indexOf(number);
+          let reward = rewards[rewardIndex];
+          let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
+          let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg'
+          return zk.sendMessage(origineMessage, { image: { url: lienc }, caption: msgc }, { quoted: ms });
+          
+        } 
+      };
+      let messageResult = checkWinningNumberfirstchance(chosenNumber);
 
       if (!winningNumbers.includes(chosenNumber)) {
         delete ongoingGames[auteurMessage];
