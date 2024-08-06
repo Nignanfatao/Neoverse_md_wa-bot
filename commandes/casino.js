@@ -1,7 +1,5 @@
 const { zokou } = require('../framework/zokou');
 
-const ongoingGames = {}; // Suivi des parties en cours pour chaque joueur
-
 const generateRandomNumbers = (min, max, count) => {
   const numbers = new Set();
   while (numbers.size < count) {
@@ -15,6 +13,9 @@ const generateRewards = () => {
   return rewards.sort(() => 0.5 - Math.random()).slice(0, 3);
 };
 
+// Suivi des parties en cours pour chaque joueur
+const ongoingGames = {};
+
 zokou(
   {
     nomCom: 'roulette',
@@ -23,14 +24,15 @@ zokou(
   },
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre, auteurMessage, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
-
     try {
-      // Annuler la partie en cours pour le joueur
+      // Annuler une partie en cours pour le joueur s'il en lance une nouvelle
       if (ongoingGames[auteurMessage]) {
-        const { messageId } = ongoingGames[auteurMessage];
-        await zk.sendMessage(origineMessage, { text: 'Votre précédente partie a été annulée.' }, { quoted: messageId });
+        await zk.sendMessage(origineMessage, { text: 'Votre précédente partie a été annulée.' });
         delete ongoingGames[auteurMessage];
       }
+
+      // Démarrer une nouvelle partie
+      ongoingGames[auteurMessage] = { status: 'started' };
 
       let numbers = generateRandomNumbers(0, 50, 50);
       let winningNumbers = generateRandomNumbers(0, 50, 3);
@@ -48,8 +50,7 @@ ${numbers.join(', ')}
 ✅: \`Oui\`
 ❌: \`Non\``;
 
-      let sentMessage = await zk.sendMessage(origineMessage, { image: { url: liena }, caption: msga }, { quoted: ms });
-      ongoingGames[auteurMessage] = { messageId: sentMessage };
+      await zk.sendMessage(origineMessage, { image: { url: liena }, caption: liena }, { quoted: ms });
 
       const getConfirmation = async () => {
         const rep = await zk.awaitForMessage({
@@ -81,9 +82,9 @@ ${numbers.join(', ')}
       }
 
       const getChosenNumber = async () => {
-        let msgb = '🎊😃: *Choissez un numéro vous avez 1min⚠️*(Répondre à ce message)';
+        let msgb = '🎊😃: *Choisissez un numéro vous avez 1min⚠️*(Répondre à ce message)';
         let lienb = 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
-        await zk.sendMessage(origineMessage, { image: { url: lienb }, caption: msgb }, { quoted: sentMessage });
+        await zk.sendMessage(origineMessage, { image: { url: lienb }, caption: msgb }, { quoted: ms });
 
         const rep = await zk.awaitForMessage({
           sender: auteurMessage,
@@ -114,30 +115,29 @@ ${numbers.join(', ')}
         if (winningNumbers.includes(number)) {
           let rewardIndex = winningNumbers.indexOf(number);
           let reward = rewards[rewardIndex];
-          let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
-          let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg';
-          return zk.sendMessage(origineMessage, { image: { url: lienc }, caption: msgc }, { quoted: sentMessage });
+          let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
+          let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg'
+          return zk.sendMessage(origineMessage, { image: { url: lienc }, caption: msgc }, { quoted: ms });
           
         } else {
           let msgd = `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`;
-          let liend = 'https://telegra.ph/file/222cefbcd18ba50012d05.jpg';
-          return zk.sendMessage(origineMessage, { image: { url: liend }, caption: msgd }, { quoted: sentMessage });
+          let liend = 'https://telegra.ph/file/222cefbcd18ba50012d05.jpg'
+          return zk.sendMessage(origineMessage, { image: { url: liend }, caption: msgd }, { quoted: ms });
+          
         }
       };
 
-      let messageResult = await checkWinningNumber(chosenNumber);
+      let messageResult = checkWinningNumber(chosenNumber);
 
       if (!winningNumbers.includes(chosenNumber)) {
         delete ongoingGames[auteurMessage];
-        await repondre(messageResult);
         await repondre('Vous avez une deuxième chance ! Choisissez un autre numéro.');
-
         chosenNumber = await getChosenNumber();
-        messageResult = await checkWinningNumber(chosenNumber);
+        messageResult = checkWinningNumber(chosenNumber);
       }
 
-      delete ongoingGames[auteurMessage];
-      repondre(messageResult);
+      await repondre(messageResult);
+      delete ongoingGames[auteurMessage]; // Fin de la partie
     } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
       repondre('Une erreur est survenue. Veuillez réessayer.');
