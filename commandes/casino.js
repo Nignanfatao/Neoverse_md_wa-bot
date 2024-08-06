@@ -50,7 +50,7 @@ ${numbers.join(', ')}
 ✅: \`Oui\`
 ❌: \`Non\``;
 
-      await zk.sendMessage(origineMessage, { image: { url: liena }, caption: liena }, { quoted: ms });
+      await zk.sendMessage(origineMessage, { image: { url: liena }, caption: msga }, { quoted: ms });
 
       const getConfirmation = async () => {
         const rep = await zk.awaitForMessage({
@@ -109,6 +109,34 @@ ${numbers.join(', ')}
         return chosenNumber;
       };
 
+      const getChosenNumberchance = async () => {
+        //let msgb = '🎊😃: *Choisissez un numéro vous avez 1min⚠️*(Répondre à ce message)';
+       // let lienb = 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
+       // await zk.sendMessage(origineMessage, { image: { url: lienb }, caption: msgb }, { quoted: ms });
+
+        const rep = await zk.awaitForMessage({
+          sender: auteurMessage,
+          chatJid: origineMessage,
+          timeout: 60000 // 60 secondes
+        });
+
+        let chosenNumber;
+        try {
+          chosenNumber = rep.message.extendedTextMessage.text;
+        } catch {
+          chosenNumber = rep.message.conversation;
+        }
+
+        chosenNumber = parseInt(chosenNumber);
+
+        if (isNaN(chosenNumber) || chosenNumber < 0 || chosenNumber > 50) {
+          await repondre('Veuillez choisir un des numéros proposés.');
+          return await getChosenNumber();
+        }
+
+        return chosenNumber;
+      };
+
       let chosenNumber = await getChosenNumber();
 
       const checkWinningNumber = (number) => {
@@ -132,7 +160,7 @@ ${numbers.join(', ')}
       if (!winningNumbers.includes(chosenNumber)) {
         delete ongoingGames[auteurMessage];
         await repondre('Vous avez une deuxième chance ! Choisissez un autre numéro.');
-        chosenNumber = await getChosenNumber();
+        chosenNumber = await getChosenNumberchance();
         messageResult = checkWinningNumber(chosenNumber);
       }
 
