@@ -107,7 +107,7 @@ if (!superUser) {repondre('Cette commande n\'est permis qu\'au proprietaire du b
 });
 
 zokou({ nomCom: "test", reaction: "⚜️", categorie: 'Other', nomFichier: __filename }, async (dest, zk, commandeOptions) => {
-    let m = 'Salut je me nomme NEOverse_Md* \n\n ' + 'je suis un bot Whatsapp conçu pour le Rp';
+    let m = 'Salut je me nomme *NEOverse_Md* \n\n ' + 'je suis un bot Whatsapp conçu pour le Rp';
      let admsg = ' developpé par *AINZ K⚜️*';
   let mseg = m + admsg;
     var img = 'https://telegra.ph/file/bd75d35e193a7cf0e300a.jpg';
