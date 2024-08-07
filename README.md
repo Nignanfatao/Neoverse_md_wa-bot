@@ -1,6 +1,5 @@
 # Neoverse_md_wa-bot
-![Typing SVG](https://readme-typing-svg.demolab.com?font=Ribeye&size=50&pause=1000&color=#2b82ff&center=true&width=900&height=100&lines=Its%20Neoverse_md_wa-bot) 
-<p align="center">
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=40&pause=1000&center=FAUX&vCenter=FAUX&repeat=vrai&random=FAUX&width=435&lines=Neoverse_md_wa-bot)](https://git.io/typing-svg)
 
 ![banner](https://telegra.ph/file/bd75d35e193a7cf0e300a.jpg)
 
