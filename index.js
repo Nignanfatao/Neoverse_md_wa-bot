@@ -11,7 +11,6 @@ let { reagir } = require(__dirname + "/framework/app");
 const FileType = require('file-type')
 const prefixe = conf.PREFIXE || "/";
 const maine = require('./commandes/elysium_control_bot');
-const axios = require('axios');
 
 
 function decodeBase64(base64String) {
@@ -236,33 +235,7 @@ async function main() {
           const params = { zk, texte, origineMessage, repondre, ms };
         maine(params);
 
-            // Chat_bot 
-// Chat_bot 
-if (conf.CHAT_BOT === 'oui') {
-  const traduction = require("./framework/traduction");
-  
-  const trdmsg = await traduction(texte, { 'to': 'en' });
-  const apiUrl = `https://api.brainshop.ai/get?bid=182939&key=Je69ped2ZzbfNf3g&uid=[uid]&msg=[${trdmsg}]`;
-
-  axios.get(apiUrl)
-    .then(response => {
-      const respmsg = response.data.cnt;
-      return traduction(respmsg, { 'to': 'fr' });
-    })
-    .then(finalMessage => {
-      repondre(finalMessage);
-    })
-    .catch(error => {
-      if (error.response) {
-        console.error("Erreur lors de la requête à BrainShop :", error.response.data);
-      } else if (error.request) {
-        console.error("Aucune réponse reçue :", error.request);
-      } else {
-        console.error("Erreur lors de la traduction en français :", error.message);
-      }
-    });
-}
-        }); //fin evenement message
+            }); //fin evenement message
 
         zk.ev.on("connection.update", async (con) => {
             const { connection, lastDisconnect } = con;
