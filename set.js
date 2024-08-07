@@ -10,6 +10,7 @@ module.exports = {
     NUMERO_OWNER : process.env.NUMERO_OWNER || "Fatao",              
     MODE: process.env.MODE_PUBLIC || "oui",
     BOT : process.env.NOM_BOT || 'Zokou_MD',
+    CHAT_BOT: process.env.CHAT_BOT || 'oui';
     URL : process.env.LIENS_MENU || 'https://static.animecorner.me/2023/08/op2.jpg',
     HEROKU_APP_NAME : process.env.HEROKU_APP_NAME,
     HEROKU_APY_KEY : process.env.HEROKU_APY_KEY ,
