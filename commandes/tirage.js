@@ -55,23 +55,23 @@ zokou(
       switch (niveau) {
         case "sparking":
           probabilities = [
-            { grade: "A", probability: 10 },
-            { grade: "B", probability: 40 },
-            { grade: "C", probability: 50 }
+            { grade: "or", probability: 10 },
+            { grade: "argent", probability: 30 },
+            { grade: "bronze", probability: 60 }
           ]; 
           break;
         case "ultra":
           probabilities = [
-            { grade: "A", probability: 20 },
-            { grade: "B", probability: 30 },
-            { grade: "C", probability: 50 }
+            { grade: "or", probability: 5 },
+            { grade: "argent", probability: 25 },
+            { grade: "bronze", probability: 70 }
           ]; 
           break;
         case "legends":
           probabilities = [
-            { grade: "A", probability: 30 },
-            { grade: "B", probability: 20 },
-            { grade: "C", probability: 50 }
+            { grade: "or", probability: 2 },
+            { grade: "argent", probability: 18 },
+            { grade: "bronze", probability: 80 }
           ]; 
           break;
         default:
