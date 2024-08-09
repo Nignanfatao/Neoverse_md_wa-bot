@@ -25,7 +25,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -73,7 +73,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/a8c59126191a188b42
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -82,7 +82,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/a8c59126191a188b42
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -185,7 +185,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -233,7 +233,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/fdd73d041d1cd05d82
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -242,7 +242,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/fdd73d041d1cd05d82
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -343,11 +343,10 @@ zokou(
       let texte = arg.slice(5).join(' ');
       let client;
       if (!arg || arg.length === 0) {
-        let mesg = `${data.e1}
-◇ *Division🛡️*: .                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
+        let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -395,7 +394,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/83f08871e4ca1f691b
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -404,7 +403,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/83f08871e4ca1f691b
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -507,7 +506,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -555,7 +554,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/76b7ee244a55b44504
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -564,7 +563,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/76b7ee244a55b44504
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -667,7 +666,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -715,7 +714,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/63ccec4a92ecc2839f
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -724,7 +723,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/63ccec4a92ecc2839f
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -828,7 +827,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -876,7 +875,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/a667b7fab7a455e1b7
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -885,7 +884,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/a667b7fab7a455e1b7
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
