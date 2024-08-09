@@ -69,7 +69,7 @@ async function insertData1() {
     client.release();
   }
 }
-insertData1()
+//insertData1()
 // Fonction pour insérer des données
 async function insertData() {
   const client = await pool.connect();
