@@ -25,7 +25,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -73,7 +73,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/5c45243eab76575302
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -82,7 +82,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/5c45243eab76575302
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -185,7 +185,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/5c45243eab76575302
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -233,7 +233,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/638f67854ccfaa1ee1
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -242,7 +242,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/638f67854ccfaa1ee1
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -346,7 +346,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -394,7 +394,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/5ecddffc7c18e84861
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -403,7 +403,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/5ecddffc7c18e84861
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -507,7 +507,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -555,7 +555,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/0ea9c931ba095b8d15
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -564,7 +564,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/0ea9c931ba095b8d15
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -668,7 +668,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -716,7 +716,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/3ac732346838ef183e
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -725,7 +725,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/3ac732346838ef183e
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -828,7 +828,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -876,7 +876,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/1547e51cd907dd8c71
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -885,7 +885,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/1547e51cd907dd8c71
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -989,7 +989,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -1037,7 +1037,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/79a4ed8f8020cd8107
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -1046,7 +1046,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/79a4ed8f8020cd8107
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -1150,7 +1150,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -1198,7 +1198,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/0005fa4ffc1126ca9f
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -1207,7 +1207,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/0005fa4ffc1126ca9f
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -1311,7 +1311,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/0005fa4ffc1126ca9f
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -1359,7 +1359,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/09063568b0971eb6e4
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -1368,7 +1368,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/09063568b0971eb6e4
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -1473,7 +1473,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -1521,7 +1521,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/463867f222bd0dcdbf
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -1530,7 +1530,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/463867f222bd0dcdbf
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
@@ -1634,7 +1634,7 @@ zokou(
         let mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
 ▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
 ◇ *Pseudo👤*: ${data.e1}
-◇ *Position Continentale🌍:* ${data.e18}
+◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*:${data.e4}
@@ -1682,7 +1682,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/a7887046083eb04106
                     neocoins: "e6",
                     gift_box: "e7",
                     coupons: "e8",
-                    neopass: "e9",
+                    np: "e9",
                     talent: "e10",
                     victoires: "e12",
                     defaites: "e13",
@@ -1691,7 +1691,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/a7887046083eb04106
                     awards: "e16",
                     cards: "e17",
                     globes: "e22", 
-                    pos: "e18"
+                    pos: "e23"
                 };
 
                 let updates = [];
