@@ -40,7 +40,8 @@ async function createCentralDivTable() {
         e19 INTEGER DEFAULT 0,
         e20 INTEGER DEFAULT 0,
         e21 INTEGER DEFAULT 0,
-        e22 INTEGER DEFAULT 0
+        e22 INTEGER DEFAULT 0,
+        e23 TEXT DEFAULT 'aucun'
         );
     `);
     console.log('Table centraldiv créée avec succès');
@@ -58,11 +59,7 @@ async function insertData1() {
     // Modifiez la définition de la table pour ajouter les colonnes
     await client.query(`
       ALTER TABLE centraldiv
-      ADD COLUMN e18 INTEGER DEFAULT 0,
-      ADD COLUMN e19 INTEGER DEFAULT 0,
-      ADD COLUMN e20 INTEGER DEFAULT 0,
-      ADD COLUMN e21 INTEGER DEFAULT 0,
-      ADD COLUMN e22 INTEGER DEFAULT 0
+      ADD COLUMN e23 TEXT DEFAULT 'aucun'
      `);
 
     console.log('Colonnes ajoutées avec succès');
@@ -72,19 +69,19 @@ async function insertData1() {
     client.release();
   }
 }
-//insertData1()
+insertData1()
 // Fonction pour insérer des données
 async function insertData() {
   const client = await pool.connect();
   try {
     for (let i = 1; i <= 50; i++) {
       const query = `
-        INSERT INTO centraldiv(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15, e16, e17, e18, e19, e20, e21, e22)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)
+        INSERT INTO centraldiv(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15, e16, e17, e18, e19, e20, e21, e22, e23)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)
       `;
 
       const values = [
-        'aucun', 'aucun', 'aucun', 'aucun', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'aucun', 0, 0, 0, 0, 0
+        'aucun', 'aucun', 'aucun', 'aucun', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'aucun', 0, 0, 0, 0, 0, 'aucun'
       ];
 
       await client.query(query, values);
@@ -101,7 +98,7 @@ async function getData(ide) {
   const client = await pool.connect();
 
   try {
-   const query = 'SELECT e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15, e16, e17, e18, e19, e20, e21, e22 FROM centraldiv WHERE id = $1';
+   const query = 'SELECT e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15, e16, e17, e18, e19, e20, e21, e22, e23 FROM centraldiv WHERE id = $1';
     const result = await client.query(query, [ide]);
 
     return result.rows[0];
