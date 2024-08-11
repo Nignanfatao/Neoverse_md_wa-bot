@@ -432,7 +432,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const liena = 'https://telegra.ph/file/b61c82ab1e673a2ca0c06.jpg';
+            const liena = 'https://telegra.ph/file/5038644724cd4465fd6d6.jpg';
             const lienb = 'https://telegra.ph/file/2c398443910157c5bc1ce.jpg';
             const lienc = 'https://telegra.ph/file/afdf3edbf04aa236a5c30.jpg';
             const msg = ``;
