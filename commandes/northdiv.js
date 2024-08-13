@@ -330,7 +330,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/d48f1975b8076ba215
         }
     }
   }
-);*/
+);
 
 zokou(
   {
@@ -491,7 +491,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/33d75752a2f4d645f8
     }
   }
 );
-
+*/
 zokou(
   {
     nomCom: 'norththanatos👤',
