@@ -168,7 +168,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/5c45243eab76575302
   }
 );
 
-/*zokou(
+zokou(
   {
     nomCom: 'eastkemael👤',
     categorie: 'EAST🦅🟢'
@@ -487,7 +487,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/5ecddffc7c18e84861
         }
     }
   }
-);*/
+);
 
 
 zokou(
@@ -651,7 +651,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/0ea9c931ba095b8d15
 );
 
 
-zokou(
+/*zokou(
   {
     nomCom: 'eastzephyr👤',
     categorie: 'EAST🦅🟢'
@@ -809,7 +809,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/3ac732346838ef183e
         }
     }
   }
-);
+);*/
 
 zokou(
   {
