@@ -33,7 +33,7 @@ zokou(
 
         // Gérer l'initialisation d'un nouveau duel
         if (arg && arg.length > 0) {
-            const args = arg.split(" ");
+            const args = arg.join(" ");
             
             // Vérifier si c'est une commande pour arrêter le combat
             if (args[0] === 'combat') {
