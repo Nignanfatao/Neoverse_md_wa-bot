@@ -62,7 +62,7 @@ zokou(
                     }
                 });
                 
-                repondre(`Le combat entre ${joueur1} et ${joueur2} commence !\n\n` + afficherStats(idDuel));
+                repondre(`Le combat entre ${joueur1} et ${joueur2} commence !\n\n`, afficherStats(idDuel));
                 return;
             }
 
@@ -97,7 +97,7 @@ zokou(
                 return;
             }
         } else {
-            repondre("Commande invalide. Utilisez 'duel joueur1 joueur2' pour commencer un duel ou 'duel combat terminé idDuel' pour terminer un duel.");
+            repondre("Commande invalide. Utilisez 'duel joueur1 joueur2' pour commencer un duel ou '+duel combat ' pour terminer un duel.");
         }
     }
 );
