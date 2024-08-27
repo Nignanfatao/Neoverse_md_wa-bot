@@ -1,3 +1,4 @@
+const { zokou } = require('../framework/zokou');
 const duels = new Map();  // Stocke les duels en cours
 
 zokou(
