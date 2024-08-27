@@ -2,7 +2,7 @@ const duels = new Map();  // Stocke les duels en cours
 
 zokou(
     {
-        nomCom: 'duel',
+        nomCom: 'dul',
         categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
@@ -35,7 +35,7 @@ zokou(
             const args = arg.split(" ");
             
             // Vérifier si c'est une commande pour arrêter le combat
-            if (args[0] === 'combat' && args[1] === 'terminé') {
+            if (args[0] === 'combat') {
                 const idDuel = args[2];
                 if (duels.has(idDuel)) {
                     duels.delete(idDuel);  // Arrêter le combat
