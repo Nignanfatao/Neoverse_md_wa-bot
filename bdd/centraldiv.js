@@ -112,7 +112,7 @@ async function getData(ide) {
 
 // Appeler la fonction createNorth1FicheTable après la création de la table
 createCentralDivTable();
-//insertData();
+insertData();
 
 module.exports = {
   createCentralDivTable,
