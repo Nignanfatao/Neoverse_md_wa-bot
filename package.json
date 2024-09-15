@@ -21,6 +21,7 @@
     "@types/node": "^18.0.6",
     "@whiskeysockets/baileys": "^6.5.0",
     "axios": "^1.4.0",
+    "cloudinary": "^2.4.0",
     "dotenv": "^16.3.1",
     "file-type": "16.5.3",
     "fs-extra": "^11.1.1",
