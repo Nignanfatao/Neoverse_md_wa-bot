@@ -30,8 +30,8 @@ function tirerCategorie(probabilities) {
 }
 
 //trouver une card aléatoire 
-function getRandomCard(category, grade, SubCategory) {
-    const cardsArray = cards[category].filter(card => card.grade === grade && card.SubCategory === SubCategory);
+function getRandomCard(Acategory, grade, Category) {
+    const cardsArray = cards[Acategory].filter(card => card.grade === grade && card.Category === Category);
     const randomIndex = Math.floor(Math.random() * cardsArray.length);
     return cardsArray[randomIndex];
 }
