@@ -26,6 +26,7 @@ zokou(
     const { ms, repondre, auteurMessage, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
     try {
       // Annuler une partie en cours pour le joueur s'il en lance une nouvelle
+      if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {
       if (ongoingGames[auteurMessage]) {
         await zk.sendMessage(origineMessage, { text: 'Votre précédente partie a été annulée.' });
         delete ongoingGames[auteurMessage];
@@ -179,7 +180,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
 
       await repondre(messageResult);
       delete ongoingGames[auteurMessage]; // Fin de la partie
-    } catch (error) {
+      } } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
       //repondre('Une erreur est survenue. Veuillez réessayer.');
     }
@@ -194,7 +195,9 @@ zokou(
   },
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre } = commandeOptions;
+    if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {   
     let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
     let msg = '';
     zk.sendMessage(origineMessage, { image: { url: lien }, caption: msg }, { quoted: ms });
+    }
     });
