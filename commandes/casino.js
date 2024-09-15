@@ -78,7 +78,7 @@ ${numbers.join(', ')}
 
       if (!(await getConfirmation())) {
         delete ongoingGames[auteurMessage];
-        return repondre('Jeu annulé. À la prochaine !');
+        return repondre('*\`❌Délai d\'attente expiré\`*');
       }
 
       const getChosenNumber = async () => {
