@@ -172,7 +172,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/850ad81f1b22ee98d4
     }
   }
 );
-/*zokou(
+zokou(
   {
     nomCom: 'northlily👤',
     categorie: 'NORTH🐺🔴'
@@ -332,7 +332,7 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/d48f1975b8076ba215
   }
 );
 
-zokou(
+/*zokou(
   {
     nomCom: 'northadorieru👤',
     categorie: 'NORTH🐺🔴'
@@ -490,8 +490,8 @@ zk.sendMessage(dest, { image: { url: 'https://telegra.ph/file/33d75752a2f4d645f8
         }
     }
   }
-);
-*/
+);*/
+
 zokou(
   {
     nomCom: 'norththanatos👤',
