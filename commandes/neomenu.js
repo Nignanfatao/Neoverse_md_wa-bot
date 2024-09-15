@@ -518,7 +518,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://telegra.ph/file/532190fb0d8410903a80d.jpg';
+            const lien = 'https://i.ibb.co/c8npsnW/image.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
