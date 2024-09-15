@@ -181,7 +181,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
       delete ongoingGames[auteurMessage]; // Fin de la partie
     } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
-      repondre('Une erreur est survenue. Veuillez réessayer.');
+      //repondre('Une erreur est survenue. Veuillez réessayer.');
     }
   }
 );
