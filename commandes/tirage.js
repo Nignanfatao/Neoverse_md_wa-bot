@@ -30,8 +30,8 @@ function tirerCategorie(probabilities) {
 }
 
 //trouver une card aléatoire 
-function getRandomCard(category, grade, subCategory) {
-    const cardsArray = cards[category].filter(card => card.grade === grade && card.subCategory === subCategory);
+function getRandomCard(category, grade, SubCategory) {
+    const cardsArray = cards[category].filter(card => card.grade === grade && card.SubCategory === SubCategory);
     const randomIndex = Math.floor(Math.random() * cardsArray.length);
     return cardsArray[randomIndex];
 }
@@ -40,13 +40,13 @@ function getRandomCard(category, grade, subCategory) {
 async function envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, subCategoryProbabilities) {
     const grade = tirerProbabilite(gradeProbabilities);
     const subCategory = tirerCategorie(subCategoryProbabilities);
-    const card = getRandomCard(imageCategory, grade, subCategory);
+    const card = getRandomCard(imageCategory, grade, Category);
 
     if (card) {
         try {
             await zk.sendMessage(dest, { 
                 image: { url: card.image }, 
-                caption: `Grade: ${card.grade}\nCategory: ${card.subCategory}\nName: ${card.name}\nPrix: $${card.price}` 
+                caption: `Grade: ${card.grade}\nCategory: ${card.Category}\nName: ${card.name}\nPrix: $${card.price}` 
             }, { quoted: ms });
         } catch (error) {
             throw new Error(`Erreur lors de l'envoi de la carte : ${error.message}`);
