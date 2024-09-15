@@ -9,7 +9,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://telegra.ph/file/201aa2dc22b1fb47ba885.jpg';
+            const lien = 'https://i.ibb.co/CwZz0KK/image.jpg';
             const msg = '';
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
         }
@@ -25,7 +25,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://telegra.ph/file/b2ec0bd5bdda41e5e59ac.jpg';
+            const lien = 'https://i.ibb.co/cg9Gb6h/image.jpg';
             const msg = '';
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
         }
@@ -41,7 +41,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://telegra.ph/file/dc6eac838589d174cad0e.jpg';
+            const lien = 'https://i.ibb.co/74xq1jX/image.jpg';
             const msg = '';
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
         }
@@ -57,7 +57,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0) {
-            const lien = 'https://telegra.ph/file/48b4a8a540d5086d912ba.jpg';
+            const lien = 'https://i.ibb.co/8mD5h4v/image.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -74,7 +74,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0) {
-            const lien = 'https://telegra.ph/file/d2eba04f75778d8066179.jpg';
+            const lien = 'https://i.ibb.co/CWfLcr4/image.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -380,7 +380,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://telegra.ph/file/d565291e5dd411e2bec15.jpg';
+            const lien = 'https://i.ibb.co/GWvn4C5/image.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -397,7 +397,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://telegra.ph/file/513f3e586c6c78da11fff.jpg';
+            const lien = 'https://i.ibb.co/1bj0nWf/image.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -415,7 +415,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://telegra.ph/file/04aa2cc80308f7ea976ca.jpg';
+            const lien = 'https://i.ibb.co/xG1rDqs/image.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -453,7 +453,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://telegra.ph/file/ff6043eb05b582bac93fb.jpg';
+            const lien = 'https://i.ibb.co/XZbCqqR/image.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -471,7 +471,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://telegra.ph/file/b079839567a940a4fa7d1.jpg';
+            const lien = 'https://i.ibb.co/qJS32Vc/image.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
