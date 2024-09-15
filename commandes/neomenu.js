@@ -67,7 +67,7 @@ zokou(
 
 zokou(
     {
-        nomCom: 'neorpgoldenawards',   
+        nomCom: 'awards',   
         categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
@@ -432,9 +432,9 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const liena = 'https://telegra.ph/file/5038644724cd4465fd6d6.jpg';
-            const lienb = 'https://telegra.ph/file/2c398443910157c5bc1ce.jpg';
-            const lienc = 'https://telegra.ph/file/afdf3edbf04aa236a5c30.jpg';
+            const liena = 'https://i.ibb.co/PzKS13f/image.jpg';
+            const lienb = 'https://i.ibb.co/FnR6hYj/image.jpg';
+            const lienc = 'https://i.ibb.co/tZTSpTH/image.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: liena }, caption: msg }, { quoted: ms });
             zk.sendMessage(dest, { image: { url: lienb }, caption: msg }, { quoted: ms });
@@ -578,7 +578,7 @@ zokou(
                          
 💬🎧𝗖𝗵𝗮𝘁: 
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-🌀 \`\`: 
+🌀: \`\`
 
 ▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭
 
