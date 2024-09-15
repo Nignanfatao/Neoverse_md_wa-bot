@@ -40,15 +40,16 @@ zokou(
       let liena = 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
       let msga = `*🎰𝗧𝗘𝗡𝗧𝗘𝗭 𝗩𝗢𝗧𝗥𝗘 𝗖𝗛𝗔𝗡𝗖𝗘🥳 !!*
 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬🎉🎉🎉
-jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro que vous choisissez parmi les *5️⃣0️⃣*. *⚠️vous n'avez que 2 chances et pour jouer:  2🔶 où 2🔷*
-▔▔🎊▔🎊▔🎊▔▔🎊▔▔🎊▔🎊▔🎊▔▔🎊▔🎊▔🎊▔🎊▔🎊▔▔
-${numbers.join(', ')}
-▔▔🎊▔🎊▔🎊▔▔🎊▔▔🎊▔🎊▔🎊▔▔🎊▔🎊▔🎊▔🎊▔🎊▔▔
+jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro que vous choisissez parmi les *5️⃣0️⃣*. *⚠️vous avez 2 tentatives et pour jouer vous devez payer 2🔶*
+▔▔🎊▔🎊▔🎊▔▔🎊▔▔🎊▔🎊▔🎊
+*\`${numbers.join(', ')}\`*
+▔▔🎊▔🎊▔🎊▔▔🎊▔▔🎊▔🎊▔🎊
 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬🎉🎉🎉
+*\`+Cadeaux\`* (🎁Pour voir les Récompenses possibles) 
 
-*🎊Voulez vous tenter votre chance ?*
+*🎊Voulez vous tenter votre chance ?* (1min) 
 ✅: \`Oui\`
-❌: \`Non\``;
+❌: \`Non\``
 
       await zk.sendMessage(origineMessage, { image: { url: liena }, caption: msga }, { quoted: ms });
 
@@ -169,7 +170,9 @@ ${numbers.join(', ')}
 
       if (!winningNumbers.includes(chosenNumber)) {
         delete ongoingGames[auteurMessage];
-        await repondre('Vous avez une deuxième chance ! Choisissez un autre numéro.');
+        let liend = 'https://i.ibb.co/SPY5b86/image.jpg';
+        let msgd = 'Vous avez une deuxième chance ! Choisissez un autre numéro.';
+        await zk.sendMessage(origineMessage, { image: { url: liend }, caption: msgd }, { quoted: ms });
         chosenNumber = await getChosenNumberchance();
         messageResult = checkWinningNumber(chosenNumber);
       }
@@ -182,3 +185,16 @@ ${numbers.join(', ')}
     }
   }
 );
+
+zokou(
+  {
+    nomCom: 'cadeaux',
+    reaction: '🎁',
+    categorie: 'Other'
+  },
+  async (origineMessage, zk, commandeOptions) => {
+    const { ms, repondre } = commandeOptions;
+    let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
+    let msg = '';
+    zk.sendMessage(origineMessage, { image: { url: lien }, caption: msg }, { quoted: ms });
+    });
