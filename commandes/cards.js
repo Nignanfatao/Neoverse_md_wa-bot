@@ -38,32 +38,32 @@ module.exports = {
                 price: "400.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "bronze",
+                name: "Haruta",
+                category: "s-",
+                image: "../Card_data/Haruta_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "bronze",
+                name: "Higurama",
+                category: "s-",
+                image: "../Card_data/Higuruma_bronze_sparking_sm_150k.jpg",
+                price: "150.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "bronze",
+                name: "Ino",
+                category: "s-",
+                image: "../Card_data/Ino_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "bronze",
+                name: "Inosuke",
+                category: "s-",
+                image: "Inosuke_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
             },
         ],
         // sparking fin ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
