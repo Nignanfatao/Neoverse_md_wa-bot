@@ -39,7 +39,7 @@ function getRandomCard(Acategory, grade, Category) {
 // Fonction pour envoyer une carte
 async function envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, subCategoryProbabilities) {
     const grade = tirerProbabilite(gradeProbabilities);
-    const subCategory = tirerCategorie(subCategoryProbabilities);
+    const Category = tirerCategorie(subCategoryProbabilities);
     const card = getRandomCard(imageCategory, grade, Category);
 
     if (card) {
