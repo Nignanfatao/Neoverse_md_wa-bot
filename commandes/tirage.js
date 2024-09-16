@@ -15,7 +15,7 @@ function tirerProbabilite(probabilities) {
     return probabilities[probabilities.length - 1].grade;
 }
 
-//fonction pour tirer une sous catégorie
+// Fonction pour tirer une sous catégorie
 function tirerCategorie(probabilities) {
     const random = Math.random() * 100;
     let cumulativeProbability = 0;
@@ -29,7 +29,7 @@ function tirerCategorie(probabilities) {
     return probabilities[probabilities.length - 1].subCategory;
 }
 
-//trouver une card aléatoire 
+// Fonction pour trouver une carte aléatoire
 function getRandomCard(Acategory, grade, Category) {
     const cardsArray = cards[Acategory].filter(card => card.grade === grade && card.Category === Category);
     const randomIndex = Math.floor(Math.random() * cardsArray.length);
@@ -56,6 +56,14 @@ async function envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, sub
     }
 }
 
+// Fonction pour envoyer une vidéo
+async function envoyerVideo(dest, zk, videoUrl) {
+    try {
+        await zk.sendMessage(dest, { video: { url: videoUrl } });
+    } catch (error) {
+        throw new Error(`Erreur lors de l'envoi de la vidéo : ${error.message}`);
+    }
+}
 
 zokou(
   { 
@@ -71,10 +79,12 @@ zokou(
       let imageCategory = niveau;
       let gradeProbabilities = [];
       let subCategoryProbabilities = [];
+      let videoUrl = '';
 
-      // Définir les probabilités pour les grades
+      // Définir les probabilités pour les grades et les vidéos pour chaque niveau
       switch (niveau) {
         case "sparking":
+          videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394328/ny7bi7f8gcfufwervg0t.mp4";
           gradeProbabilities = [
             { grade: "or", probability: 10 },
             { grade: "argent", probability: 30 },
@@ -90,6 +100,7 @@ zokou(
           ];
           break;
         case "ultra":
+          videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394332/eika1gamq371hqv0ckvb.mp4";
           gradeProbabilities = [
             { grade: "or", probability: 5 },
             { grade: "argent", probability: 25 },
@@ -105,6 +116,7 @@ zokou(
           ];
           break;
         case "legends":
+          videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394338/djjffqiiejs6rrwkrywa.mp4";
           gradeProbabilities = [
             { grade: "or", probability: 2 },
             { grade: "argent", probability: 18 },
@@ -123,6 +135,9 @@ zokou(
           repondre("Niveau de tirage inconnu.");
           return;
       }
+
+      // Envoyer la vidéo correspondante
+      await envoyerVideo(dest, zk, videoUrl);
 
       // Envoyer deux cartes
       await envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, subCategoryProbabilities);
