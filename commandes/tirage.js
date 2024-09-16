@@ -87,9 +87,9 @@ zokou(
         case "sparking":
           videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394328/ny7bi7f8gcfufwervg0t.mp4";
           gradeProbabilities = [
-            { grade: "or", probability: 10 },
+            { grade: "bronze", probability: 10 },
             { grade: "argent", probability: 30 },
-            { grade: "bronze", probability: 60 }
+            { grade: "or", probability: 60 }
           ]; 
           subCategoryProbabilities = [
             { subCategory: "s-", probability: 50 },
