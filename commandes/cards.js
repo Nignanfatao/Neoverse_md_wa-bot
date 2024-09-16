@@ -80,6 +80,97 @@ module.exports = {
                 price: "100.000🧭"
             },
             {
+                grade: "bronze",
+                name: "Kusakabe",
+                category: "s-",
+                image: "../Card_data/Kusakabe_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Larue",
+                category: "s-",
+                image: "../Card_data/Larue_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
+            },
+            {
+                grade: "argent",
+                name: "Maki",
+                category: "s-",
+                image: "../Card_data/Maki_argent_sparking_sm_500k.jpg",
+                price: "500.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Megumi",
+                category: "s-",
+                image: "../Card_data/Megumi_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Miguel",
+                category: "s-",
+                image: "../Card_data/Miguel_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Nanami",
+                category: "s-",
+                image: "../Card_data/Nanami_bronze_sparking_sm_150k.jpg",
+                price: "150.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Naobito",
+                category: "s",
+                image: "../Card_data/Naobito_bronze_sparking_s_250k.jpg",
+                price: "250.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Naoya",
+                category: "s",
+                image: "../Card_data/Naoya_bronze_sparking_s_300k.jpg",
+                price: "300.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Nezuko",
+                category: "s-",
+                image: "../Card_data/Nezuko_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Panda",
+                category: "s-",
+                image: "Panda_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
+            },
+            {
+                grade: "argent",
+                name: "Ryu",
+                category: "s-",
+                image: "Ryu_argent_sparking_sm_500k.jpg",
+                price: "500.000🧭"
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
                 grade: "",
                 name: "",
                 category: "s",
@@ -88,6 +179,7 @@ module.exports = {
             },
         ],
         // sparking fin ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+        // début ultra ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
         ultra: [
             {
                 grade: "bronze",
@@ -139,18 +231,39 @@ module.exports = {
                 price: "500.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "argent",
+                name: "Kenjaku",
+                category: "s-",
+                image: "../Card_data/Kenjaku_argent_ultra_sm_500k.jpg",
+                price: "500.000🧭"
             },
             {
-                grade: "",
-                name: "",
+                grade: "bronze",
+                name: "Mahito",
+                category: "s-",
+                image: "../Card_data/Mahito_bronze_ultra_sm_350k.jpg",
+                price: "350.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Mahito",
+                category: "s+",
+                image: "Mahito_bronze_ultra_sp_400k.jpg",
+                price: "400.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Maki",
                 category: "s",
-                image: "",
-                price: ""
+                image: "Maki_bronze_ultra_s_300k.jpg",
+                price: "300.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Mechamaru",
+                category: "s-",
+                image: "../Card_data/Mechamaru_bronze_sparking_sm_150k.jpg",
+                price: "150.000🧭"
             },
             {
                 grade: "",
@@ -160,6 +273,8 @@ module.exports = {
                 price: ""
             },
         ],
+        //fin ultra ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
+        //début legends ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
         legends: [
             {
                 grade: "argent",
@@ -181,7 +296,43 @@ module.exports = {
                 category: "s+",
                 image: "../Card_data/Gojo_bronze_legend_sp_50nc.jpg",
                 price: "50🔷"
-            }
-        ]
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+        ] 
+        //fin legends ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
     }
 };
