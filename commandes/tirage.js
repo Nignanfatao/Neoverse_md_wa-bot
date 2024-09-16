@@ -30,8 +30,28 @@ function tirerCategorie(probabilities) {
 }
 
 // Fonction pour trouver une carte aléatoire
-function getRandomCard(Acategory, grade, Category) {
+/*function getRandomCard(Acategory, grade, Category) {
     const cardsArray = cards[Acategory].filter(card => card.grade === grade && card.Category === Category);
+    const randomIndex = Math.floor(Math.random() * cardsArray.length);
+    return cardsArray[randomIndex];
+}*/
+function getRandomCard(Acategory, grade, Category) {
+    // Affichez les cartes disponibles avant le filtrage
+    console.log('Cartes disponibles avant filtrage:', cards[Acategory]);
+    
+    // Filtrez les cartes en fonction du grade et de la catégorie
+    const cardsArray = cards[Acategory].filter(card => card.grade === grade && card.Category === Category);
+    
+    // Affichez les cartes après filtrage
+    console.log('Cartes disponibles après filtrage:', cardsArray);
+    
+    // Vérifiez si des cartes ont été trouvées avant de sélectionner une carte au hasard
+    if (cardsArray.length === 0) {
+        console.log('Aucune carte trouvée avec le grade:', grade, 'et la catégorie:', Category);
+        return null;  // ou toute autre valeur indiquant qu'aucune carte n'a été trouvée
+    }
+    
+    // Sélectionnez une carte aléatoire
     const randomIndex = Math.floor(Math.random() * cardsArray.length);
     return cardsArray[randomIndex];
 }
@@ -87,9 +107,9 @@ zokou(
         case "sparking":
           videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394328/ny7bi7f8gcfufwervg0t.mp4";
           gradeProbabilities = [
-            { grade: "bronze", probability: 10 },
+            { grade: "or", probability: 10 },
             { grade: "argent", probability: 30 },
-            { grade: "or", probability: 60 }
+            { grade: "bronze", probability: 60 }
           ]; 
           subCategoryProbabilities = [
             { subCategory: "s-", probability: 50 },
