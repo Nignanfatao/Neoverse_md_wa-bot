@@ -1,72 +1,165 @@
 module.exports = {
     cards: {
+        // sparking début ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
         sparking: [
             {
-                grade: "or",
-                name: "Sparking Card 1",
-                category: "s-",
-                image: "http://example.com/sparking1.jpg",
-                price: 20.99
+                grade: "bronze",
+                name: "Asta",
+                category: "s",
+                image: "../Card_data/Asta_bronze_sparking_s_300k.jpg",
+                price: "300.000🧭"
             },
             {
-                grade: "argent",
-                name: "Sparking Card 2",
-                category: "s-",
-                image: "http://example.com/sparking2.jpg",
-                price: 18.99
-            }, 
+                grade: "bronze",
+                name: "Choso",
+                category: "s",
+                image: "../Card_data/Choso_bronze_sparking_s_300k.jpg",
+                price: "300.000🧭"
+            },
             {
                 grade: "bronze",
-                name: "Sparking Card 3",
+                name: "Dagon",
+                category: "s",
+                image: "../Card_data/Dagon_bronze_sparking_s_300k.jpg",
+                price: "300.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Gauche",
                 category: "s-",
-                image: "http://example.com/sparking2.jpg",
-                price: 18.99
-            }
+                image: "../Card_data/Gauche_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
         ],
+        // sparking fin ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
         ultra: [
             {
-                grade: "or",
-                name: "Ultra Card 1",
-                category: "s-",
-                image: "http://example.com/sparking1.jpg",
-                price: 20.99
+                grade: "bronze",
+                name: "Aoi",
+                category: "s",
+                image: "../Card_data/Aoi_bronze_ultra_s_350k.jpg",
+                price: "350.000🧭"
             },
             {
-                grade: "argent",
-                name: "Ultra Card 2",
-                category: "s-",
-                image: "http://example.com/sparking2.jpg",
-                price: 18.99
-            }, 
+                grade: "bronze",
+                name: "Asta",
+                category: "s+",
+                image: "../Card_data/Asta_bronze_ultra_sp_450k.jpg",
+                price: "450.000🧭"
+            },
             {
                 grade: "bronze",
-                name: "Ultra Card 3",
-                category: "s-",
-                image: "http://example.com/sparking2.jpg",
-                price: 18.99
+                name: "Geto(jujutsu kayen 0)",
+                category: "s+",
+                image: "../Card_data/GetoJjk0_bronze_ultra_sp_400k.jpg",
+                price: "400.000🧭"
             }
+            {
+                grade: "bronze",
+                name: "Geto",
+                category: "s",
+                image: "../Card_data/Geto_bronze_ultra_s_350k.jpg",
+                price: "350.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Giyu",
+                category: "s",
+                image: "../Card_data/Giyu_bronze_ultra_s_300k.jpg",
+                price: "300.000🧭"
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
+            },
         ],
         legends: [
             {
-                grade: "or",
-                name: "Legends Card 1",
-                category: "s-",
-                image: "http://example.com/sparking1.jpg",
-                price: 20.99
+                grade: "argent",
+                name: "Gojo",
+                category: "s",
+                image: "../Card_data/Gojo_argent_legend_s_800k.jpg",
+                price: "800.000🧭"
             },
             {
                 grade: "argent",
-                name: "Legends Card 2",
-                category: "s-",
-                image: "http://example.com/sparking2.jpg",
-                price: 18.99
+                name: "Gojo",
+                category: "s+",
+                image: "../Card_data/Gojo_argent_legend_sp_100nc.jpg",
+                price: "100🔷"
             }, 
             {
                 grade: "bronze",
-                name: "Legends Card 3",
-                category: "s-",
-                image: "http://example.com/sparking2.jpg",
-                price: 18.99
+                name: "Gojo",
+                category: "s+",
+                image: "../Card_data/Gojo_bronze_legend_sp_50nc.jpg",
+                price: "50🔷"
             }
         ]
     }
