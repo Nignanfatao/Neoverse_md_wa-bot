@@ -109,6 +109,13 @@ module.exports = {
             },
             {
                 grade: "bronze",
+                name: "Mechamaru",
+                category: "s-",
+                image: "../Card_data/Mechamaru_bronze_sparking_sm_150k.jpg",
+                price: "150.000🧭"
+            },
+            {
+                grade: "bronze",
                 name: "Miguel",
                 category: "s-",
                 image: "../Card_data/Miguel_bronze_sparking_sm_100k.jpg",
@@ -146,28 +153,28 @@ module.exports = {
                 grade: "bronze",
                 name: "Panda",
                 category: "s-",
-                image: "Panda_bronze_sparking_sm_100k.jpg",
+                image: "../Card_data/Panda_bronze_sparking_sm_100k.jpg",
                 price: "100.000🧭"
             },
             {
                 grade: "argent",
                 name: "Ryu",
                 category: "s-",
-                image: "Ryu_argent_sparking_sm_500k.jpg",
+                image: "../Card_data/Ryu_argent_sparking_sm_500k.jpg",
                 price: "500.000🧭"
             },
             {
                 grade: "bronze",
                 name: "Tanjiro",
                 category: "s-",
-                image: "Tanjiro_bronze_sparking_sm_100k.jpg",
+                image: "../Card_data/Tanjiro_bronze_sparking_sm_100k.jpg",
                 price: "100.000🧭"
             },
             {
                 grade: "bronze",
                 name: "Tatako",
                 category: "s-",
-                image: "Tatako_argent_sparking_sm_500k.jpg",
+                image: "../Card_data/Tatako_argent_sparking_sm_500k.jpg",
                 price: "500.000🧭"
             },
             {
@@ -176,6 +183,27 @@ module.exports = {
                 category: "s-",
                 image: "../Card_data/Toge_bronze_sparking_sm_100k.jpg",
                 price: "100.000🧭"
+            },
+            {
+                grade: "argent",
+                name: "Yorozu",
+                category: "s-",
+                image: "../Card_data/Yorozu_argent_sparking_sm_500k.jpg",
+                price: "500.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Yuji(shibuya-Incident)",
+                category: "s",
+                image: "../Card_data/YujiShibuyaIncident_bronze_sparking_s_200k.jpg",
+                price: "200.000🧭"
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
             },
         ],
         // sparking fin ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
@@ -259,11 +287,18 @@ module.exports = {
                 price: "300.000🧭"
             },
             {
-                grade: "bronze",
-                name: "Mechamaru",
+                grade: "argent",
+                name: "Toji",
                 category: "s-",
-                image: "../Card_data/Mechamaru_bronze_sparking_sm_150k.jpg",
-                price: "150.000🧭"
+                image: "Toji_argent_ultra_sm_600k.jpg",
+                price: "600.000🧭"
+            },
+            {
+                grade: "argent",
+                name: "Uraume",
+                category: "s-",
+                image: "../Card_data/Uraume_argent_ultra_sm_500k.jpg",
+                price: "500.000🧭"
             },
             {
                 grade: "",
@@ -271,7 +306,7 @@ module.exports = {
                 category: "s",
                 image: "",
                 price: ""
-            },
+            }
         ],
         //fin ultra ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
         //début legends ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
