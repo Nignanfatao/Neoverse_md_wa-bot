@@ -92,9 +92,9 @@ zokou(
             { grade: "bronze", probability: 60 }
           ]; 
           subCategoryProbabilities = [
-            { subCategory: "s-", probability: 80 },
-            { subCategory: "s", probability: 60 },
-            { subCategory: "s+", probability: 40 }
+            { subCategory: "s-", probability: 50 },
+            { subCategory: "s", probability: 30 },
+            { subCategory: "s+", probability: 20 }
             /*{ subCategory: "ss-", probability: 20 },
             { subCategory: "ss", probability: 10 },
             { subCategory: "ss+", probability: 5 }*/
@@ -108,9 +108,9 @@ zokou(
             { grade: "bronze", probability: 70 }
           ];
           subCategoryProbabilities = [
-            { subCategory: "s-", probability: 80 },
-            { subCategory: "s", probability: 60 },
-            { subCategory: "s+", probability: 40 }
+            { subCategory: "s-", probability: 50 },
+            { subCategory: "s", probability: 30 },
+            { subCategory: "s+", probability: 20 }
            /* { subCategory: "ss-", probability: 20 },
             { subCategory: "ss", probability: 10 },
             { subCategory: "ss+", probability: 5 }*/
@@ -124,9 +124,9 @@ zokou(
             { grade: "bronze", probability: 80 }
           ];
           subCategoryProbabilities = [
-            { subCategory: "s-", probability: 80 },
-            { subCategory: "s", probability: 60 },
-            { subCategory: "s+", probability: 40 }
+            { subCategory: "s-", probability: 50 },
+            { subCategory: "s", probability: 30 },
+            { subCategory: "s+", probability: 20 }
             /*{ subCategory: "ss-", probability: 20 },
             { subCategory: "ss", probability: 10 },
             { subCategory: "ss+", probability: 5 }*/
