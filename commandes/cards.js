@@ -157,25 +157,25 @@ module.exports = {
                 price: "500.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "bronze",
+                name: "Tanjiro",
+                category: "s-",
+                image: "Tanjiro_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "bronze",
+                name: "Tatako",
+                category: "s-",
+                image: "Tatako_argent_sparking_sm_500k.jpg",
+                price: "500.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "bronze",
+                name: "Toge",
+                category: "s-",
+                image: "../Card_data/Toge_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
             },
         ],
         // sparking fin ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
@@ -298,11 +298,11 @@ module.exports = {
                 price: "50🔷"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "bronze",
+                name: "Sukuna(4 Fingers)",
+                category: "s+",
+                image: "Sukuna4Fingers_bronze_legend_sp_50nc.jpg",
+                price: "50🔷"
             },
             {
                 grade: "",
