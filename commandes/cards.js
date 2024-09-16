@@ -31,11 +31,11 @@ module.exports = {
                 price: "100.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "bronze",
+                name: "Hanami",
+                category: "s+",
+                image: "../Card_data/Hanami_bronze_sparking_sp_400k.jpg",
+                price: "400.000🧭"
             },
             {
                 grade: "",
@@ -104,11 +104,11 @@ module.exports = {
                 price: "300.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "bronze",
+                name: "Hakari",
+                category: "s+",
+                image: "../Card_data/Hakari_bronze_ultra_sp_400k.jpg",
+                price: "400.000🧭"
             },
             {
                 grade: "",
