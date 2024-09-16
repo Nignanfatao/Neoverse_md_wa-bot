@@ -92,12 +92,12 @@ zokou(
             { grade: "bronze", probability: 60 }
           ]; 
           subCategoryProbabilities = [
-            { subCategory: "S-", probability: 80 },
-            { subCategory: "S", probability: 60 },
-            { subCategory: "S+", probability: 40 },
-            { subCategory: "SS-", probability: 20 },
-            { subCategory: "SS", probability: 10 },
-            { subCategory: "SS+", probability: 5 }
+            { subCategory: "s-", probability: 80 },
+            { subCategory: "s", probability: 60 },
+            { subCategory: "s+", probability: 40 },
+            { subCategory: "ss-", probability: 20 },
+            { subCategory: "ss", probability: 10 },
+            { subCategory: "ss+", probability: 5 }
           ];
           break;
         case "ultra":
@@ -108,12 +108,12 @@ zokou(
             { grade: "bronze", probability: 70 }
           ];
           subCategoryProbabilities = [
-            { subCategory: "S-", probability: 80 },
-            { subCategory: "S", probability: 60 },
-            { subCategory: "S+", probability: 40 },
-            { subCategory: "SS-", probability: 20 },
-            { subCategory: "SS", probability: 10 },
-            { subCategory: "SS+", probability: 5 }
+            { subCategory: "s-", probability: 80 },
+            { subCategory: "s", probability: 60 },
+            { subCategory: "s+", probability: 40 },
+            { subCategory: "ss-", probability: 20 },
+            { subCategory: "ss", probability: 10 },
+            { subCategory: "ss+", probability: 5 }
           ];
           break;
         case "legends":
@@ -124,12 +124,12 @@ zokou(
             { grade: "bronze", probability: 80 }
           ];
           subCategoryProbabilities = [
-            { subCategory: "S-", probability: 80 },
-            { subCategory: "S", probability: 60 },
-            { subCategory: "S+", probability: 40 },
-            { subCategory: "SS-", probability: 20 },
-            { subCategory: "SS", probability: 10 },
-            { subCategory: "SS+", probability: 5 }
+            { subCategory: "s-", probability: 80 },
+            { subCategory: "s", probability: 60 },
+            { subCategory: "s+", probability: 40 },
+            { subCategory: "ss-", probability: 20 },
+            { subCategory: "ss", probability: 10 },
+            { subCategory: "ss+", probability: 5 }
           ];
           break;
         default:
