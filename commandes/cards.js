@@ -62,8 +62,29 @@ module.exports = {
                 grade: "bronze",
                 name: "Inosuke",
                 category: "s-",
-                image: "Inosuke_bronze_sparking_sm_100k.jpg",
+                image: "../Card_data/Inosuke_bronze_sparking_sm_100k.jpg",
                 price: "100.000🧭"
+            },
+            {
+                grade: "argent",
+                name: "Jogo",
+                category: "s-",
+                image: "../Card_data/Jogo_argent_sparking_sm_500k.jpg",
+                price: "500.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Kamo",
+                category: "s-",
+                image: "../Card_data/Kamo_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
+            },
+            {
+                grade: "",
+                name: "",
+                category: "s",
+                image: "",
+                price: ""
             },
         ],
         // sparking fin ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
@@ -111,11 +132,11 @@ module.exports = {
                 price: "400.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "argent",
+                name: "Kashimo",
+                category: "s-",
+                image: "../Card_data/Kashimo_argent_ultra_sm_500k.jpg",
+                price: "500.000🧭"
             },
             {
                 grade: "",
