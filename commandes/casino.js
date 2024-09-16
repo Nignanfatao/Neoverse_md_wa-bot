@@ -217,7 +217,7 @@ zokou(
   },
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre } = commandeOptions;
-    if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {   
+   // if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {   
       let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
       let msg = 'Sélectionnez un cadeau ci-dessous 🎁';
 
@@ -235,6 +235,6 @@ zokou(
         buttons: buttons, 
         headerType: 4  // Type 4 pour une image avec des boutons
       }, { quoted: ms });
-    }
+    //}
   }
 );
