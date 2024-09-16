@@ -199,12 +199,26 @@ module.exports = {
                 price: "200.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "bronze",
+                name: "Yuji",
+                category: "s-",
+                image: "../Card_data/Yuji_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
             },
+            {
+                grade: "bronze",
+                name: "Zenitsu",
+                category: "s-",
+                image: "../Card_data/Zenitsu_bronze_sparking_sm_200k.jpg",
+                price: "200.000🧭"
+            },
+            {
+                grade: "bronze",
+                name: "Zora",
+                category: "s-",
+                image: "../Card_data/Zora_bronze_sparking_sm_100k.jpg",
+                price: "100.000🧭"
+            }
         ],
         // sparking fin ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
         // début ultra ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
@@ -301,11 +315,11 @@ module.exports = {
                 price: "500.000🧭"
             },
             {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
+                grade: "argent",
+                name: "Yuta",
+                category: "s-",
+                image: "../Card_data/Yuta_argent_ultra_sm_50nc.jpg",
+                price: "50🔷"
             }
         ],
         //fin ultra ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
@@ -336,10 +350,17 @@ module.exports = {
                 grade: "bronze",
                 name: "Sukuna(4 Fingers)",
                 category: "s+",
-                image: "Sukuna4Fingers_bronze_legend_sp_50nc.jpg",
+                image: "../Card_data/Sukuna4Fingers_bronze_legend_sp_50nc.jpg",
                 price: "50🔷"
             },
             {
+                grade: "bronze",
+                name: "Yuta (jujutsu kaisen 0)",
+                category: "s+",
+                image: "../Card_data/YutaJjk0_bronze_legend_sp_400k.jpg",
+                price: "400.000🧭"
+            }
+           /* {
                 grade: "",
                 name: "",
                 category: "s",
@@ -359,14 +380,7 @@ module.exports = {
                 category: "s",
                 image: "",
                 price: ""
-            },
-            {
-                grade: "",
-                name: "",
-                category: "s",
-                image: "",
-                price: ""
-            },
+            },*/
         ] 
         //fin legends ∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆
     }
