@@ -187,7 +187,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
   }
 );
 
-/*zokou(
+zokou(
   {
     nomCom: 'cadeaux',
     reaction: '🎁',
@@ -203,13 +203,13 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
       zk.sendMessage(origineMessage, { 
         image: { url: lien }, 
         caption: msg, 
-        viewOnce: true 
+       // viewOnce: true 
       }, { quoted: ms });
     }
   }
-);*/
+);
 
-zokou(
+/*zokou(
   {
     nomCom: 'cadeaux',
     reaction: '🎁',
@@ -238,3 +238,4 @@ zokou(
     //}
   }
 );
+*/
