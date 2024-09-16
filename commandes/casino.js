@@ -218,7 +218,7 @@ zokou(
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre } = commandeOptions;
     //if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {   
-      let lien = '../Card_data/Dagon_bronze_sparking_s_300k.jpg';
+      let lien = '../Card_data/Dagon_bronze_sparking_s_300k';
       let msg = '';
       
       // Envoyer l'image en vue unique
