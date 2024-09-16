@@ -243,7 +243,7 @@ module.exports = {
                 category: "s+",
                 image: "../Card_data/GetoJjk0_bronze_ultra_sp_400k.jpg",
                 price: "400.000🧭"
-            }
+            },
             {
                 grade: "bronze",
                 name: "Geto",
