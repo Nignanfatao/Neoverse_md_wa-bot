@@ -94,10 +94,10 @@ zokou(
           subCategoryProbabilities = [
             { subCategory: "s-", probability: 80 },
             { subCategory: "s", probability: 60 },
-            { subCategory: "s+", probability: 40 },
-            { subCategory: "ss-", probability: 20 },
+            { subCategory: "s+", probability: 40 }
+            /*{ subCategory: "ss-", probability: 20 },
             { subCategory: "ss", probability: 10 },
-            { subCategory: "ss+", probability: 5 }
+            { subCategory: "ss+", probability: 5 }*/
           ];
           break;
         case "ultra":
@@ -110,10 +110,10 @@ zokou(
           subCategoryProbabilities = [
             { subCategory: "s-", probability: 80 },
             { subCategory: "s", probability: 60 },
-            { subCategory: "s+", probability: 40 },
-            { subCategory: "ss-", probability: 20 },
+            { subCategory: "s+", probability: 40 }
+           /* { subCategory: "ss-", probability: 20 },
             { subCategory: "ss", probability: 10 },
-            { subCategory: "ss+", probability: 5 }
+            { subCategory: "ss+", probability: 5 }*/
           ];
           break;
         case "legends":
@@ -126,10 +126,10 @@ zokou(
           subCategoryProbabilities = [
             { subCategory: "s-", probability: 80 },
             { subCategory: "s", probability: 60 },
-            { subCategory: "s+", probability: 40 },
-            { subCategory: "ss-", probability: 20 },
+            { subCategory: "s+", probability: 40 }
+            /*{ subCategory: "ss-", probability: 20 },
             { subCategory: "ss", probability: 10 },
-            { subCategory: "ss+", probability: 5 }
+            { subCategory: "ss+", probability: 5 }*/
           ];
           break;
         default:
