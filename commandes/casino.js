@@ -196,8 +196,15 @@ zokou(
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre } = commandeOptions;
     if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {   
-    let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
-    let msg = '';
-    zk.sendMessage(origineMessage, { image: { url: lien }, caption: msg }, { quoted: ms });
+      let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
+      let msg = '';
+      
+      // Envoyer l'image en vue unique
+      zk.sendMessage(origineMessage, { 
+        image: { url: lien }, 
+        caption: msg, 
+        viewOnce: true 
+      }, { quoted: ms });
     }
-    });
+  }
+);
