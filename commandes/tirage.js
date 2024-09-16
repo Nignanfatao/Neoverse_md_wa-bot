@@ -59,7 +59,8 @@ async function envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, sub
 // Fonction pour envoyer une vidéo
 async function envoyerVideo(dest, zk, videoUrl) {
     try {
-        await zk.sendMessage(dest, { video: { url: videoUrl } });
+        await zk.sendMessage(dest, { video: { url: videoUrl }, gifPlayback : true});
+          }
     } catch (error) {
         throw new Error(`Erreur lors de l'envoi de la vidéo : ${error.message}`);
     }
