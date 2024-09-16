@@ -40,7 +40,7 @@ function getRandomCard(Acategory, grade, Category) {
     console.log('Cartes disponibles avant filtrage:', cards[Acategory]);
     
     // Filtrez les cartes en fonction du grade et de la catégorie
-    const cardsArray = cards[Acategory].filter(card => card.grade === grade && card.Category === Category);
+    const cardsArray = cards[Acategory].filter(card => card.grade == grade && card.Category == Category);
     
     // Affichez les cartes après filtrage
     console.log('Cartes disponibles après filtrage:', cardsArray);
