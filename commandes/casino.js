@@ -209,27 +209,6 @@ zokou(
   }
 );
 
-zokou(
-  {
-    nomCom: 'cad',
-    reaction: '🎁',
-    categorie: 'Other'
-  },
-  async (origineMessage, zk, commandeOptions) => {
-    const { ms, repondre } = commandeOptions;
-    //if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {   
-      let lien = './Card_data/Dagon_bronze_sparking_s_300k.jpg';
-      let msg = '';
-      
-      // Envoyer l'image en vue unique
-      zk.sendMessage(origineMessage, { 
-        image: { url: lien }, 
-        caption: msg, 
-       // viewOnce: true 
-      }, { quoted: ms });
-   // }
-  }
-);
 /*zokou(
   {
     nomCom: 'cadeaux',
