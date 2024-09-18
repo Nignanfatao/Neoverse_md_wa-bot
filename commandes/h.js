@@ -60,7 +60,7 @@ zokou(
                 await repondre("Aucun duel trouvé avec cet ID.");
             }
             return;
-        } else if (arg[0] === "récap") {
+        } else if (arg[0] === "recap") {
             // Récapitulatif des duels en cours
             const recap = recupDuel();
             await repondre(recap);
