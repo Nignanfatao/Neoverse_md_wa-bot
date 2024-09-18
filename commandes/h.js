@@ -49,7 +49,6 @@ zokou(
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
-        let areneT;
 
         if (arg[0] === "supp") {
             // Suppression d'un duel
@@ -61,7 +60,7 @@ zokou(
                 await repondre("Aucun duel trouvé avec cet ID.");
             }
             return;
-        } else if (arg[0] === "recap") {
+        } else if (arg[0] === "list") {
             // Récapitulatif des duels en cours
             const recap = recupDuel();
             await repondre(recap);
@@ -89,7 +88,7 @@ zokou(
 
                 // Ajouter les infos sur l'arène tirée
                 ficheDuel += `▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n
-*🌍𝐀𝐫𝐞̀𝐧𝐞*: ${duel.areneT.nom}
+*🌍𝐀𝐫𝐞̀𝐧𝐞*: ${duel.arene.nom}
 *🚫𝐇𝐚𝐧𝐝𝐢𝐜𝐚𝐩𝐞*: Boost 1 fois chaque 2 tours!
 *⚖️𝐒𝐭𝐚𝐭𝐬*: ${duel.statsCustom}
 *🏞️ 𝐀𝐢𝐫 𝐝𝐞 𝐜𝐨𝐦𝐛𝐚𝐭*: 300m max
@@ -116,7 +115,7 @@ zokou(
         const equipe2 = joueursApresVs.split(',').map(joueur => joueur.trim());
 
         // Tirer une arène aléatoire
-        areneT = tirerAr();
+       const areneT = tirerAr();
 
         // Générer un ID unique pour le duel
         const duelID = genererID();
