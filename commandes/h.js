@@ -1,22 +1,18 @@
 const arenes = [
-    { nom: 'Arène du désert', image: 'https://example.com/desert.jpg' },
-    { nom: 'Arène de la forêt', image: 'https://example.com/foret.jpg' },
-    { nom: 'Arène de la montagne', image: 'https://example.com/montagne.jpg' },
-    { nom: 'Arène sous-marine', image: 'https://example.com/sous_marine.jpg' },
-    { nom: 'Arène du désert', image: 'https://example.com/desert.jpg' },
-    { nom: 'Arène de la forêt', image: 'https://example.com/foret.jpg' },
-    { nom: 'Arène de la montagne', image: 'https://example.com/montagne.jpg' },
-    { nom: 'Arène sous-marine', image: 'https://example.com/sous_marine.jpg' },
-    { nom: 'Arène du désert', image: 'https://example.com/desert.jpg' },
-    { nom: 'Arène de la forêt', image: 'https://example.com/foret.jpg' },
-    { nom: 'Arène de la montagne', image: 'https://example.com/montagne.jpg' },
-    { nom: 'Arène sous-marine', image: 'https://example.com/sous_marine.jpg' },
-];
+    { nom: 'plaine vide', image: 'https://i.ibb.co/3h71nT1/image.jpg' },
+    { nom: 'Desert', image: 'https://i.ibb.co/z2gwsMQ/image.jpg' },
+    { nom: 'Zone de glace', image: 'https://i.ibb.co/3F0mK1s/image.jpg' },
+    { nom: 'Vallée de la fin', image: 'https://i.ibb.co/VqFgGzF/image.jpg' },
+    { nom: 'Au dela', image: 'https://i.ibb.co/4Wkr6mT/image.jpg' },
+    { nom: 'Budokai tenkaichi', image: 'https://i.ibb.co/B429M3M/image.jpg' },
+    { nom: 'ville de jour', image: 'https://i.ibb.co/LRDRH9k/image.jpg' },
+    { nom: 'Ville detruite', image: 'https://i.ibb.co/80R07hR/image.jpg' }
+    ];
 
 // Fonction pour tirer une arène aléatoire
-function tirerArène() {
-    const arèneAleatoire = arenes[Math.floor(Math.random() * arenes.length)];
-    return arèneAleatoire;
+function tirerAr() {
+    const areneAleatoire = arenes[Math.floor(Math.random() * arenes.length)];
+    return areneAleatoire;
 }
 
 const { zokou } = require('../framework/zokou');
@@ -44,7 +40,7 @@ zokou(
         const equipe2 = joueursApresVs.split(',').map(joueur => joueur.trim());
 
         // Tirer une arène aléatoire
-        const arèneTirée = tirerArène();
+        const areneT= tirerAr();
 
         // Générer la fiche de duel
         let ficheDuel = `*🆚𝗩𝗘𝗥𝗦𝗨𝗦 𝗔𝗥𝗘𝗡𝗔 𝗕𝗔𝗧𝗧𝗟𝗘🏆🎮*\n░░░░░░░░░░░░░░░░░░░\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n`;
@@ -64,7 +60,7 @@ zokou(
         // Ajouter les infos sur l'arène tirée
         ficheDuel += `
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-*🌍𝐀𝐫𝐞̀𝐧𝐞*: ${arèneTirée.nom}
+*🌍𝐀𝐫𝐞̀𝐧𝐞*: ${areneT.nom}
 *🚫𝐇𝐚𝐧𝐝𝐢𝐜𝐚𝐩𝐞*: Boost 1 fois chaque 2 tours! 
 
 `;
@@ -85,6 +81,7 @@ zokou(
 `;
 
         // Envoyer l'image avec le texte de la fiche de duel
-        await zk.sendButtonImage(dest, arèneTirée.image, ficheDuel, 'Arena Battle');
+      await zk.sendMessage(dest, { image: { url: areneT.image }, caption: ficheDuel }, { quoted: ms });
+         
     }
 );
