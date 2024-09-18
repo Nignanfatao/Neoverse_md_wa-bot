@@ -48,7 +48,7 @@ zokou(
         categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
-        const { repondre, arg } = commandeOptions;
+        const { repondre, arg, ms} = commandeOptions;
 
         if (arg[0] === "supp") {
             // Suppression d'un duel
