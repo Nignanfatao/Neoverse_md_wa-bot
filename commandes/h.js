@@ -48,7 +48,8 @@ zokou(
         categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
-        const { repondre, arg, ms} = commandeOptions;
+        const { repondre, arg, ms } = commandeOptions;
+        let areneT;
 
         if (arg[0] === "supp") {
             // Suppression d'un duel
@@ -65,6 +66,45 @@ zokou(
             const recap = recupDuel();
             await repondre(recap);
             return;
+        } else if (!isNaN(arg[0])) {
+            // Gestion de la récupération d'un duel par ID
+            const duelID = parseInt(arg[0], 10);
+            if (duels.has(duelID)) {
+                const duel = duels.get(duelID);
+                let ficheDuel = `*🆚𝗩𝗘𝗥𝗦𝗨𝗦 𝗔𝗥𝗘𝗡𝗔 𝗕𝗔𝗧𝗧𝗟𝗘🏆🎮*
+░░░░░░░░░░░░░░░░░░░
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n`;
+                
+                // Ajouter les joueurs de l'équipe 1 avec leurs statistiques
+                duel.equipe1.forEach((joueur) => {
+                    ficheDuel += `🔷 *${joueur}*: 🫀:100% 🌀:100% ❤️:100%\n`;
+                });
+
+                ficheDuel += `                                   ~  *🆚*  ~\n`;
+
+                // Ajouter les joueurs de l'équipe 2 avec leurs statistiques
+                duel.equipe2.forEach((joueur) => {
+                    ficheDuel += `🔷 *${joueur}*: 🫀:100% 🌀:100% ❤️:100%\n`;
+                });
+
+                // Ajouter les infos sur l'arène tirée
+                ficheDuel += `▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n
+*🌍𝐀𝐫𝐞̀𝐧𝐞*: ${duel.areneT.nom}
+*🚫𝐇𝐚𝐧𝐝𝐢𝐜𝐚𝐩𝐞*: Boost 1 fois chaque 2 tours!
+*⚖️𝐒𝐭𝐚𝐭𝐬*: ${duel.statsCustom}
+*🏞️ 𝐀𝐢𝐫 𝐝𝐞 𝐜𝐨𝐦𝐛𝐚𝐭*: 300m max
+*🦶🏼𝐃𝐢𝐬𝐭𝐚𝐧𝐜𝐞 𝐢𝐧𝐢𝐭𝐢𝐚𝐥𝐞*📌: 5m
+*⌚𝐋𝐚𝐭𝐞𝐧𝐜𝐞*: 6mins+ 1⚠️
+*⭕𝐏𝐨𝐫𝐭𝐞́𝐞*: 10m\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n
+*⚠️Vous avez 🔟 tours max pour finir votre Adversaire! Sinon la victoire sera donnée par décision selon celui qui a dominé le combat ou qui a été le plus offensif !*
+`;
+
+                // Envoyer l'image avec le texte de la fiche de duel
+                await zk.sendMessage(dest, { image: { url: duel.arene.image }, caption: ficheDuel }, { quoted: ms });
+            } else {
+                await repondre(`Aucun duel trouvé avec l'ID : ${duelID}`);
+            }
+            return;
         }
 
         // Gestion d'un nouveau duel
@@ -76,7 +116,7 @@ zokou(
         const equipe2 = joueursApresVs.split(',').map(joueur => joueur.trim());
 
         // Tirer une arène aléatoire
-        const areneT = tirerAr();
+        areneT = tirerAr();
 
         // Générer un ID unique pour le duel
         const duelID = genererID();
@@ -89,43 +129,30 @@ zokou(
         let ficheDuel = `*🆚𝗩𝗘𝗥𝗦𝗨𝗦 𝗔𝗥𝗘𝗡𝗔 𝗕𝗔𝗧𝗧𝗟𝗘🏆🎮*
 ░░░░░░░░░░░░░░░░░░░
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n`;
-
-        // Ajouter les joueurs de l'équipe 1 avec leurs statistiques
         equipe1.forEach((joueur) => {
             ficheDuel += `🔷 *${joueur}*: 🫀:100% 🌀:100% ❤️:100%\n`;
         });
 
         ficheDuel += `                                   ~  *🆚*  ~\n`;
-
-        // Ajouter les joueurs de l'équipe 2 avec leurs statistiques
         equipe2.forEach((joueur) => {
             ficheDuel += `🔷 *${joueur}*: 🫀:100% 🌀:100% ❤️:100%\n`;
         });
 
-        // Ajouter les infos sur l'arène tirée
-        ficheDuel += `
-▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+        ficheDuel += `▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n
 *🌍𝐀𝐫𝐞̀𝐧𝐞*: ${areneT.nom}
-*🚫𝐇𝐚𝐧𝐝𝐢𝐜𝐚𝐩𝐞*: Boost 1 fois chaque 2 tours! 
-
-`;
-
-        // Ajouter le texte des stats personnalisées, si fourni
-        if (statsCustom) {
-            ficheDuel += `*⚖️𝐒𝐭𝐚𝐭𝐬*: ${statsCustom}\n`;
-        }
-
-        ficheDuel += `
+*🚫𝐇𝐚𝐧𝐝𝐢𝐜𝐚𝐩𝐞*: Boost 1 fois chaque 2 tours!
+*⚖️𝐒𝐭𝐚𝐭𝐬*: ${statsCustom}
 *🏞️ 𝐀𝐢𝐫 𝐝𝐞 𝐜𝐨𝐦𝐛𝐚𝐭*: 300m max
 *🦶🏼𝐃𝐢𝐬𝐭𝐚𝐧𝐜𝐞 𝐢𝐧𝐢𝐭𝐢𝐚𝐥𝐞*📌: 5m
 *⌚𝐋𝐚𝐭𝐞𝐧𝐜𝐞*: 6mins+ 1⚠️
-*⭕𝐏𝐨𝐫𝐭𝐞́𝐞*: 10m
-
-▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+*⭕𝐏𝐨𝐫𝐭𝐞́𝐞*: 10m\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n
 *⚠️Vous avez 🔟 tours max pour finir votre Adversaire! Sinon la victoire sera donnée par décision selon celui qui a dominé le combat ou qui a été le plus offensif !*
 `;
 
-        // Envoyer l'image avec le texte de la fiche de duel
+      /*  if (statsCustom) {
+            ficheDuel += `*\n`;
+        }*/
+
         await zk.sendMessage(dest, { image: { url: areneT.image }, caption: ficheDuel }, { quoted: ms });
     }
 );
