@@ -1,3 +1,7 @@
+const { zokou } = require('../framework/zokou');
+const duels = new Map(); // Stocke les duels en cours
+
+// Liste des arènes
 const arenes = [
     { nom: 'plaine vide', image: 'https://i.ibb.co/3h71nT1/image.jpg' },
     { nom: 'Desert', image: 'https://i.ibb.co/z2gwsMQ/image.jpg' },
@@ -7,16 +11,36 @@ const arenes = [
     { nom: 'Budokai tenkaichi', image: 'https://i.ibb.co/B429M3M/image.jpg' },
     { nom: 'ville de jour', image: 'https://i.ibb.co/LRDRH9k/image.jpg' },
     { nom: 'Ville detruite', image: 'https://i.ibb.co/80R07hR/image.jpg' }
-    ];
+];
 
 // Fonction pour tirer une arène aléatoire
 function tirerAr() {
-    const areneAleatoire = arenes[Math.floor(Math.random() * arenes.length)];
-    return areneAleatoire;
+    return arenes[Math.floor(Math.random() * arenes.length)];
 }
 
-const { zokou } = require('../framework/zokou');
-const duels = new Map();  // Stocke les duels en cours
+// Génère un ID unique à partir de deux chiffres
+function genererID() {
+    let id;
+    do {
+        id = Math.floor(Math.random() * 21); // Génère un nombre entre 10 et 99
+    } while (duels.has(id)); // S'assure que l'ID n'est pas déjà utilisé
+    return id;
+}
+
+// Fonction pour supprimer un duel
+function supprimerDuel(id) {
+    duels.delete(id);
+}
+
+// Fonction pour récupérer un récapitulatif des duels en cours
+function recupDuel() {
+    if (duels.size === 0) return "Aucun duel en cours.";
+    let recap = "*🔹 Duels en cours :*\n";
+    duels.forEach((_, id) => {
+        recap += `- Duel ID: ${id}\n`;
+    });
+    return recap;
+}
 
 zokou(
     {
@@ -26,35 +50,55 @@ zokou(
     async (dest, zk, commandeOptions) => {
         const { repondre, arg } = commandeOptions;
 
-        // Joindre tous les arguments en une chaîne
+        if (arg[0] === "supp") {
+            // Suppression d'un duel
+            const id = parseInt(arg[1], 10);
+            if (duels.has(id)) {
+                supprimerDuel(id);
+                await repondre(`Le duel ID: ${id} a été supprimé.`);
+            } else {
+                await repondre("Aucun duel trouvé avec cet ID.");
+            }
+            return;
+        } else if (arg[0] === "récap") {
+            // Récapitulatif des duels en cours
+            const recap = recupDuel();
+            await repondre(recap);
+            return;
+        }
+
+        // Gestion d'un nouveau duel
         const input = arg.join(' ');
-
-        // Découper la chaîne en deux parties : avant 'vs' et après '/'
         const [joueursInput, statsCustom] = input.split('/').map(part => part.trim());
-
-        // Découper la partie des joueurs en deux, avant et après 'vs'
         const [joueursAvantVs, joueursApresVs] = joueursInput.split('vs').map(part => part.trim());
 
-        // Liste des joueurs de l'équipe 1 (avant le 'vs') et de l'équipe 2 (après le 'vs')
         const equipe1 = joueursAvantVs.split(',').map(joueur => joueur.trim());
         const equipe2 = joueursApresVs.split(',').map(joueur => joueur.trim());
 
         // Tirer une arène aléatoire
-        const areneT= tirerAr();
+        const areneT = tirerAr();
+
+        // Générer un ID unique pour le duel
+        const duelID = genererID();
+        repondre(`🔑 Votre clé d'accès au duel est : *${duelID}*`);
+
+        // Stocker le duel en cours
+        duels.set(duelID, { equipe1, equipe2, arene: areneT });
 
         // Générer la fiche de duel
-        let ficheDuel = `*🆚𝗩𝗘𝗥𝗦𝗨𝗦 𝗔𝗥𝗘𝗡𝗔 𝗕𝗔𝗧𝗧𝗟𝗘🏆🎮*\n░░░░░░░░░░░░░░░░░░░\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n`;
+        let ficheDuel = `*🆚𝗩𝗘𝗥𝗦𝗨𝗦 𝗔𝗥𝗘𝗡𝗔 𝗕𝗔𝗧𝗧𝗟𝗘🏆🎮*\n`;
+        ficheDuel += `▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n`;
 
         // Ajouter les joueurs de l'équipe 1 avec leurs statistiques
-        equipe1.forEach((joueur, index) => {
-            ficheDuel += `🔷   *${joueur}*: 🫀:100% 🌀:100% ❤️:100%\n`;
+        equipe1.forEach((joueur) => {
+            ficheDuel += `🔷 *${joueur}*: 🫀:100% 🌀:100% ❤️:100%\n`;
         });
 
         ficheDuel += `                                   ~  *🆚*  ~\n`;
 
         // Ajouter les joueurs de l'équipe 2 avec leurs statistiques
-        equipe2.forEach((joueur, index) => {
-            ficheDuel += `🔷   *${joueur}*: 🫀:100% 🌀:100% ❤️:100%\n`;
+        equipe2.forEach((joueur) => {
+            ficheDuel += `🔷 *${joueur}*: 🫀:100% 🌀:100% ❤️:100%\n`;
         });
 
         // Ajouter les infos sur l'arène tirée
@@ -81,7 +125,6 @@ zokou(
 `;
 
         // Envoyer l'image avec le texte de la fiche de duel
-      await zk.sendMessage(dest, { image: { url: areneT.image }, caption: ficheDuel }, { quoted: ms });
-         
+        await zk.sendMessage(dest, { image: { url: areneT.image }, caption: ficheDuel }, { quoted: ms });
     }
 );
