@@ -50,7 +50,7 @@ zokou(
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
 
-        if (arg[0] === "supp") {
+        if (arg[0] === "del") {
             // Suppression d'un duel
             const id = parseInt(arg[1], 10);
             if (duels.has(id)) {
@@ -90,8 +90,8 @@ zokou(
                 ficheDuel += `▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n
 *🌍𝐀𝐫𝐞̀𝐧𝐞*: ${duel.arene.nom}
 *🚫𝐇𝐚𝐧𝐝𝐢𝐜𝐚𝐩𝐞*: Boost 1 fois chaque 2 tours!
-*⚖️𝐒𝐭𝐚𝐭𝐬*: ${duel.statsCustom}
-*🏞️ 𝐀𝐢𝐫 𝐝𝐞 𝐜𝐨𝐦𝐛𝐚𝐭*: 300m max
+*⚖️𝐒𝐭𝐚𝐭𝐬*: ${duel.stats}
+*🏞️ 𝐀𝐢𝐫 𝐝𝐞 𝐜𝐨𝐦𝐛𝐚𝐭*: illimitée
 *🦶🏼𝐃𝐢𝐬𝐭𝐚𝐧𝐜𝐞 𝐢𝐧𝐢𝐭𝐢𝐚𝐥𝐞*📌: 5m
 *⌚𝐋𝐚𝐭𝐞𝐧𝐜𝐞*: 6mins+ 1⚠️
 *⭕𝐏𝐨𝐫𝐭𝐞́𝐞*: 10m\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n
@@ -122,7 +122,7 @@ zokou(
         repondre(`🔑 Votre clé d'accès au duel est : *${duelID}*`);
 
         // Stocker le duel en cours
-        duels.set(duelID, { equipe1, equipe2, arene: areneT });
+        duels.set(duelID, { equipe1, equipe2, arene: areneT, stats: statsCustom });
 
         // Générer la fiche de duel
         let ficheDuel = `*🆚𝗩𝗘𝗥𝗦𝗨𝗦 𝗔𝗥𝗘𝗡𝗔 𝗕𝗔𝗧𝗧𝗟𝗘🏆🎮*
@@ -141,7 +141,7 @@ zokou(
 *🌍𝐀𝐫𝐞̀𝐧𝐞*: ${areneT.nom}
 *🚫𝐇𝐚𝐧𝐝𝐢𝐜𝐚𝐩𝐞*: Boost 1 fois chaque 2 tours!
 *⚖️𝐒𝐭𝐚𝐭𝐬*: ${statsCustom}
-*🏞️ 𝐀𝐢𝐫 𝐝𝐞 𝐜𝐨𝐦𝐛𝐚𝐭*: 300m max
+*🏞️ 𝐀𝐢𝐫 𝐝𝐞 𝐜𝐨𝐦𝐛𝐚𝐭*: illimitée
 *🦶🏼𝐃𝐢𝐬𝐭𝐚𝐧𝐜𝐞 𝐢𝐧𝐢𝐭𝐢𝐚𝐥𝐞*📌: 5m
 *⌚𝐋𝐚𝐭𝐞𝐧𝐜𝐞*: 6mins+ 1⚠️
 *⭕𝐏𝐨𝐫𝐭𝐞́𝐞*: 10m\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n
