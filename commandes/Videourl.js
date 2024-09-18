@@ -31,7 +31,7 @@ async function uploadVideoToCloudinary(filePath) {
 }
 
 // Commande dédiée à l'upload des vidéos
-zokou({ nomCom: "urlv", categorie: "Conversion", reaction: "🎥" }, async (origineMessage, zk, commandeOptions) => {
+zokou({ nomCom: "urlv", categorie: "Other", reaction: "🎥" }, async (origineMessage, zk, commandeOptions) => {
     const { msgRepondu, repondre } = commandeOptions;
 
     if (!msgRepondu || !msgRepondu.videoMessage) {
@@ -87,7 +87,7 @@ async function uploadToImgBB(Path) {
 }
 
 // Utilisation de la fonction dans ta commande
-zokou({ nomCom: "urls", categorie: "Conversion", reaction: "👨🏿‍💻" }, async (origineMessage, zk, commandeOptions) => {
+zokou({ nomCom: "urls", categorie: "Other", reaction: "👨🏿‍💻" }, async (origineMessage, zk, commandeOptions) => {
     const { msgRepondu, repondre } = commandeOptions;
 
     if (!msgRepondu) {
