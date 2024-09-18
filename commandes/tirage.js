@@ -90,7 +90,7 @@ zokou(
   { 
     nomCom: "tirage", 
     reaction: "🎰", 
-    categorie: "NEOverse" 
+    categorie: "NEO_GAMES🎰" 
   }, 
   async (dest, zk, commandeOptions) => {
     const { repondre, arg, ms } = commandeOptions;
