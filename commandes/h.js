@@ -86,8 +86,9 @@ zokou(
         duels.set(duelID, { equipe1, equipe2, arene: areneT });
 
         // Générer la fiche de duel
-        let ficheDuel = `*🆚𝗩𝗘𝗥𝗦𝗨𝗦 𝗔𝗥𝗘𝗡𝗔 𝗕𝗔𝗧𝗧𝗟𝗘🏆🎮*\n`;
-        ficheDuel += `▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n`;
+        let ficheDuel = `*🆚𝗩𝗘𝗥𝗦𝗨𝗦 𝗔𝗥𝗘𝗡𝗔 𝗕𝗔𝗧𝗧𝗟𝗘🏆🎮*
+░░░░░░░░░░░░░░░░░░░
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n`;
 
         // Ajouter les joueurs de l'équipe 1 avec leurs statistiques
         equipe1.forEach((joueur) => {
