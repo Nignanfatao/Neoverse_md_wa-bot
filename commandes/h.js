@@ -229,7 +229,7 @@ zokou(
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
-
+        let client;
         if (arg[0] === "del") {
             // Suppression d'un duel
             const id = parseInt(arg[1], 10);
@@ -355,7 +355,7 @@ const proConfig = {
 
 const pool = new Pool(proConfig);
 
-const client = await pool.connect();
+client = await pool.connect();
 
 // Enregistrement des détails du duel dans la base de données
 const queryText = `
@@ -369,8 +369,7 @@ try {
     console.log(`Duel ${duelID} enregistré dans la base de données`);
 } catch (err) {
     console.error('Erreur lors de l\'enregistrement du duel:', err);
+} finally {
+    client.release(); // Libérer la connexion proprement
 }
-
-// Fermeture de la connexion après l'enregistrement
-await client.end();
     });
