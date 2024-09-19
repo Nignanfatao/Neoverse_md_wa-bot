@@ -1,4 +1,4 @@
-const { zokou } = require('../framework/zokou');
+/*const { zokou } = require('../framework/zokou');
 const duels = new Map(); // Stocke les duels en cours
 
 // Liste des arènes
@@ -148,13 +148,9 @@ zokou(
 *⚠️Vous avez 🔟 tours max pour finir votre Adversaire! Sinon la victoire sera donnée par décision selon celui qui a dominé le combat ou qui a été le plus offensif !*
 `;
 
-      /*  if (statsCustom) {
-            ficheDuel += `*\n`;
-        }*/
-
         await zk.sendMessage(dest, { image: { url: areneT.image }, caption: ficheDuel }, { quoted: ms });
     }
-);
+);*/
 
 
 
@@ -164,7 +160,7 @@ zokou(
 
 // bot.js
 const { zokou } = require('../framework/zokou');
-const { sauvegarderDuel, restaurerDuels, supprimerDuel } = require('./db');
+const { sauvegarderDuel, restaurerDuels, supprimerDuel } = require('../bdd/duel');
 const duels = new Map(); // Stocke les duels en cours
 
 // Liste des arènes
