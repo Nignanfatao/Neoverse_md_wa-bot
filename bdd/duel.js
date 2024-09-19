@@ -89,6 +89,8 @@ async function supprimerDuel(id) {
     }
 }
 
+createDuelsTable()
+
 module.exports = {
     sauvegarderDuel,
     restaurerDuels,
