@@ -373,3 +373,4 @@ try {
 
 // Fermeture de la connexion après l'enregistrement
 await client.end();
+    });
