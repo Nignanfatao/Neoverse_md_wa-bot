@@ -11,7 +11,6 @@ const proConfig = {
 };
 
 const pool = new Pool(proConfig);
-const client = await pool.connect();
 
 async function createDuelsTable() {
   const client = await pool.connect();
