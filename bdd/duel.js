@@ -14,6 +14,7 @@ const pool = new Pool(proConfig);
 const client = await pool.connect();
 
 async function createDuelsTable() {
+  const client = await pool.connect();
   try {
     // Créez la table northdiv si elle n'existe pas déjà
     await client.query(`
@@ -37,6 +38,7 @@ async function createDuelsTable() {
 
 // Sauvegarder ou mettre à jour un duel dans la base de données
 async function sauvegarderDuel(duel) {
+  const client = await pool.connect();
     const query = `
         INSERT INTO duels(duel_id, equipe1, equipe2, arene, stats)
         VALUES($1, $2, $3, $4, $5)
@@ -61,6 +63,7 @@ async function sauvegarderDuel(duel) {
 
 // Restaurer tous les duels depuis la base de données
 async function restaurerDuels() {
+  const client = await pool.connect();
     const query = `SELECT * FROM duels`;
     try {
         const result = await client.query(query);
@@ -80,6 +83,7 @@ async function restaurerDuels() {
 
 // Supprimer un duel en fonction de son duel_id
 async function supprimerDuel(id) {
+  const client = await pool.connect();
     const query = `DELETE FROM duels WHERE duel_id = $1`;
     try {
         await client.query(query, [id]);
