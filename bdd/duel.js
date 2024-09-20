@@ -103,3 +103,12 @@ const client = await pool.connect();
     console.error(err);
   }
 }
+
+createDuelsTable()
+
+module.exports = {
+    initDuel,
+    updateStats,
+    getDuel,
+    endDuel
+};
