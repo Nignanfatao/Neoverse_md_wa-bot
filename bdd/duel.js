@@ -1,5 +1,4 @@
 const { Pool } = require("pg");
-
 const s = require("../set");
 
 var dbUrl = s.DB;
@@ -12,23 +11,24 @@ const proConfig = {
 
 const pool = new Pool(proConfig);
 
+// Fonction pour créer la table duels
 async function createDuelsTable() {
   const client = await pool.connect();
   try {
-    // Créez la table northdiv si elle n'existe pas déjà
+    // Crée la table duels si elle n'existe pas déjà
     await client.query(`
-    CREATE TABLE IF NOT EXISTS duels (
-      id SERIAL PRIMARY KEY,
-  player1 TEXT NOT NULL,
-  player2 TEXT NOT NULL,
-  vie_player1 INT DEFAULT 100,
-  vie_player2 INT DEFAULT 100,
-  energie_player1 INT DEFAULT 100,
-  energie_player2 INT DEFAULT 100,
-  stamina_player1 INT DEFAULT 100,
-  stamina_player2 INT DEFAULT 100,
-  status TEXT DEFAULT 'en cours'
-);
+      CREATE TABLE IF NOT EXISTS duels (
+        id SERIAL PRIMARY KEY,
+        player1 TEXT NOT NULL,
+        player2 TEXT NOT NULL,
+        vie_player1 INT DEFAULT 100,
+        vie_player2 INT DEFAULT 100,
+        energie_player1 INT DEFAULT 100,
+        energie_player2 INT DEFAULT 100,
+        stamina_player1 INT DEFAULT 100,
+        stamina_player2 INT DEFAULT 100,
+        status TEXT DEFAULT 'en cours'
+      );
     `);
     console.log('Table duels créée avec succès');
   } catch (error) {
@@ -38,6 +38,7 @@ async function createDuelsTable() {
   }
 }
 
+// Fonction pour initialiser un duel entre deux joueurs
 async function initDuel(player1, player2) {
   const client = await pool.connect();
   const query = `
@@ -48,12 +49,16 @@ async function initDuel(player1, player2) {
   const values = [player1, player2];
   try {
     const res = await client.query(query, values);
-    return res.rows[0];  // Retourne la ligne du duel initialisé
+    console.log('Duel initialisé avec succès');
+    return res.rows[0];  // Retourne le duel initialisé
   } catch (err) {
-    console.error(err);
+    console.error('Erreur lors de l\'initialisation du duel:', err);
+  } finally {
+    client.release();
   }
 }
 
+// Fonction pour mettre à jour les statistiques d'un joueur
 async function updateStats(duelId, player, stat, value) {
   const client = await pool.connect();
   const column = `${stat}_player${player === 'player1' ? 1 : 2}`;
@@ -66,12 +71,16 @@ async function updateStats(duelId, player, stat, value) {
   const values = [value, duelId];
   try {
     const res = await client.query(query, values);
-    return res.rows[0];  // Retourne la ligne du duel mis à jour
+    console.log(`Statistique ${stat} du ${player} mise à jour`);
+    return res.rows[0];  // Retourne le duel mis à jour
   } catch (err) {
-    console.error(err);
+    console.error(`Erreur lors de la mise à jour des statistiques de ${player}:`, err);
+  } finally {
+    client.release();
   }
 }
 
+// Fonction pour récupérer un duel spécifique
 async function getDuel(duelId) {
   const client = await pool.connect();
   const query = `
@@ -80,14 +89,18 @@ async function getDuel(duelId) {
   const values = [duelId];
   try {
     const res = await client.query(query, values);
-    return res.rows[0];  // Retourne la ligne du duel
+    console.log(`Duel ID ${duelId} récupéré avec succès`);
+    return res.rows[0];  // Retourne les informations du duel
   } catch (err) {
-    console.error(err);
+    console.error(`Erreur lors de la récupération du duel ID ${duelId}:`, err);
+  } finally {
+    client.release();
   }
 }
 
+// Fonction pour terminer un duel
 async function endDuel(duelId) {
-const client = await pool.connect();
+  const client = await pool.connect();
   const query = `
     UPDATE duels
     SET status = 'terminé'
@@ -97,18 +110,21 @@ const client = await pool.connect();
   const values = [duelId];
   try {
     const res = await client.query(query, values);
-    return res.rows[0];  // Retourne la ligne du duel terminé
+    console.log(`Duel ID ${duelId} terminé avec succès`);
+    return res.rows[0];  // Retourne le duel terminé
   } catch (err) {
-    console.error(err);
+    console.error(`Erreur lors de la terminaison du duel ID ${duelId}:`, err);
+  } finally {
+    client.release();
   }
 }
 
-
-createDuelsTable()
+// Créer la table duels au démarrage
+createDuelsTable();
 
 module.exports = {
-    initDuel,
-    updateStats,
-    getDuel,
-    endDuel
+  initDuel,
+  updateStats,
+  getDuel,
+  endDuel,
 };
