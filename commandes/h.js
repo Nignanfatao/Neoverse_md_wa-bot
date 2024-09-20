@@ -1,5 +1,5 @@
 const { zokou } = require('../framework/zokou');
-const { initDuel, updatePlayerStat, getDuel, endDuel } = require('bdd/duel');
+const { initDuel, updatePlayerStat, getDuel, endDuel } = require('../bdd/duel');
 const { Pool } = require("pg");
         const s = require("../set");
         var dbUrl = s.DB;
