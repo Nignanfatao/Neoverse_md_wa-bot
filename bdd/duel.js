@@ -41,90 +41,65 @@ async function createDuelsTable() {
 // Fonction pour initialiser un duel entre deux joueurs
 async function initDuel(player1, player2) {
   const client = await pool.connect();
-  const query = `
+  const query = 
     INSERT INTO duels (player1, player2)
     VALUES ($1, $2)
     RETURNING *;
-  `;
+  ;
   const values = [player1, player2];
   try {
     const res = await client.query(query, values);
-    console.log('Duel initialisé avec succès');
-    return res.rows[0];  // Retourne le duel initialisé
+    return res.rows[0];  // Retourne la ligne du duel initialisé
   } catch (err) {
-    console.error('Erreur lors de l\'initialisation du duel:', err);
-  } finally {
-    client.release();
+    console.error(err);
   }
 }
 
-// Fonction pour mettre à jour les statistiques d'un joueur
 async function updateStats(duelId, player, stat, value) {
   const client = await pool.connect();
-  const column = `${stat}_player${player === 'player1' ? 1 : 2}`;
-  const query = `
+  const column = ${stat}_player${player === 'player1' ? 1 : 2};
+  const query = 
     UPDATE duels
     SET ${column} = $1
     WHERE id = $2
     RETURNING *;
-  `;
+  ;
   const values = [value, duelId];
   try {
     const res = await client.query(query, values);
-    console.log(`Statistique ${stat} du ${player} mise à jour`);
-    return res.rows[0];  // Retourne le duel mis à jour
+    return res.rows[0];  // Retourne la ligne du duel mis à jour
   } catch (err) {
-    console.error(`Erreur lors de la mise à jour des statistiques de ${player}:`, err);
-  } finally {
-    client.release();
+    console.error(err);
   }
 }
 
-// Fonction pour récupérer un duel spécifique
 async function getDuel(duelId) {
   const client = await pool.connect();
-  const query = `
+  const query = 
     SELECT * FROM duels WHERE id = $1;
-  `;
+  ;
   const values = [duelId];
   try {
     const res = await client.query(query, values);
-    console.log(`Duel ID ${duelId} récupéré avec succès`);
-    return res.rows[0];  // Retourne les informations du duel
+    return res.rows[0];  // Retourne la ligne du duel
   } catch (err) {
-    console.error(`Erreur lors de la récupération du duel ID ${duelId}:`, err);
-  } finally {
-    client.release();
+    console.error(err);
   }
 }
 
-// Fonction pour terminer un duel
 async function endDuel(duelId) {
-  const client = await pool.connect();
-  const query = `
+const client = await pool.connect();
+  const query = 
     UPDATE duels
-    SET status = 'close'
+    SET status = 'terminé'
     WHERE id = $1
     RETURNING *;
-  `;
+  ;
   const values = [duelId];
   try {
     const res = await client.query(query, values);
-    console.log(`Duel ID ${duelId} terminé avec succès`);
-    return res.rows[0];  // Retourne le duel terminé
+    return res.rows[0];  // Retourne la ligne du duel terminé
   } catch (err) {
-    console.error(`Erreur lors de la terminaison du duel ID ${duelId}:`, err);
-  } finally {
-    client.release();
+    console.error(err);
   }
 }
-
-// Créer la table duels au démarrage
-createDuelsTable();
-
-module.exports = {
-  initDuel,
-  updateStats,
-  getDuel,
-  endDuel,
-};
