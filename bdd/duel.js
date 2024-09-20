@@ -18,12 +18,16 @@ async function createDuelsTable() {
     // Créez la table northdiv si elle n'existe pas déjà
     await client.query(`
     CREATE TABLE IF NOT EXISTS duels (
-    id SERIAL PRIMARY KEY,
-    equipe1 JSONB NOT NULL,
-    equipe2 JSONB NOT NULL,
-    arene JSONB NOT NULL,
-    stats JSONB,
-    duel_id INTEGER UNIQUE NOT NULL
+      id SERIAL PRIMARY KEY,
+  player1 TEXT NOT NULL,
+  player2 TEXT NOT NULL,
+  vie_player1 INT DEFAULT 100,
+  vie_player2 INT DEFAULT 100,
+  energie_player1 INT DEFAULT 100,
+  energie_player2 INT DEFAULT 100,
+  stamina_player1 INT DEFAULT 100,
+  stamina_player2 INT DEFAULT 100,
+  status TEXT DEFAULT 'en cours'
 );
     `);
     console.log('Table duels créée avec succès');
@@ -34,68 +38,77 @@ async function createDuelsTable() {
   }
 }
 
-
-// Sauvegarder ou mettre à jour un duel dans la base de données
-async function sauvegarderDuel(duel) {
+async function initDuel(player1, player2) {
   const client = await pool.connect();
-    const query = `
-        INSERT INTO duels(duel_id, equipe1, equipe2, arene, stats)
-        VALUES($1, $2, $3, $4, $5)
-        ON CONFLICT (duel_id)
-        DO UPDATE SET equipe1 = $2, equipe2 = $3, arene = $4, stats = $5
-    `;
-    const values = [
-        duel.duel_id,
-        JSON.stringify(duel.equipe1),
-        JSON.stringify(duel.equipe2),
-        duel.arene,
-        JSON.stringify(duel.stats)
-    ];
-
-    try {
-        await client.query(query, values);
-        console.log(`Duel ${duel.duel_id} sauvegardé avec succès.`);
-    } catch (err) {
-        console.error('Erreur lors de la sauvegarde du duel:', err);
-    }
+  const query = `
+    INSERT INTO duels (player1, player2)
+    VALUES ($1, $2)
+    RETURNING *;
+  `;
+  const values = [player1, player2];
+  try {
+    const res = await client.query(query, values);
+    return res.rows[0];  // Retourne la ligne du duel initialisé
+  } catch (err) {
+    console.error(err);
+  }
 }
 
-// Restaurer tous les duels depuis la base de données
-async function restaurerDuels() {
+async function updateStats(duelId, player, stat, value) {
   const client = await pool.connect();
-    const query = `SELECT * FROM duels`;
-    try {
-        const result = await client.query(query);
-        const duels = result.rows.map(row => ({
-            duel_id: row.duel_id,
-            equipe1: JSON.parse(row.equipe1),
-            equipe2: JSON.parse(row.equipe2),
-            arene: row.arene,
-            stats: JSON.parse(row.stats)
-        }));
-        return duels;
-    } catch (err) {
-        console.error('Erreur lors de la restauration des duels:', err);
-        return [];
-    }
+  const column = `${stat}_player${player === 'player1' ? 1 : 2}`;
+  const query = `
+    UPDATE duels
+    SET ${column} = $1
+    WHERE id = $2
+    RETURNING *;
+  `;
+  const values = [value, duelId];
+  try {
+    const res = await client.query(query, values);
+    return res.rows[0];  // Retourne la ligne du duel mis à jour
+  } catch (err) {
+    console.error(err);
+  }
 }
 
-// Supprimer un duel en fonction de son duel_id
-async function supprimerDuel(id) {
+async function getDuel(duelId) {
   const client = await pool.connect();
-    const query = `DELETE FROM duels WHERE duel_id = $1`;
-    try {
-        await client.query(query, [id]);
-        console.log(`Duel ${id} supprimé avec succès.`);
-    } catch (err) {
-        console.error('Erreur lors de la suppression du duel:', err);
-    }
+  const query = `
+    SELECT * FROM duels WHERE id = $1;
+  `;
+  const values = [duelId];
+  try {
+    const res = await client.query(query, values);
+    return res.rows[0];  // Retourne la ligne du duel
+  } catch (err) {
+    console.error(err);
+  }
 }
+
+async function endDuel(duelId) {
+const client = await pool.connect();
+  const query = `
+    UPDATE duels
+    SET status = 'terminé'
+    WHERE id = $1
+    RETURNING *;
+  `;
+  const values = [duelId];
+  try {
+    const res = await client.query(query, values);
+    return res.rows[0];  // Retourne la ligne du duel terminé
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 
 createDuelsTable()
 
 module.exports = {
-    sauvegarderDuel,
-    restaurerDuels,
-    supprimerDuel
+    initDuel,
+    updateStats,
+    getDuel,
+    endDuel
 };
