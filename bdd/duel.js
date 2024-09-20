@@ -18,16 +18,16 @@ async function createDuelsTable() {
     // Crée la table duels si elle n'existe pas déjà
     await client.query(`
       CREATE TABLE IF NOT EXISTS duels (
-        id SERIAL PRIMARY KEY,
-        player1 TEXT NOT NULL,
-        player2 TEXT NOT NULL,
-        vie_player1 INT DEFAULT 100,
-        vie_player2 INT DEFAULT 100,
-        energie_player1 INT DEFAULT 100,
-        energie_player2 INT DEFAULT 100,
-        stamina_player1 INT DEFAULT 100,
-        stamina_player2 INT DEFAULT 100,
-        status TEXT DEFAULT 'en cours'
+        id SERIAL PRIMARY KEY,           
+        team1 TEXT[],                    
+        team2 TEXT[],                    
+        vie_team1 INT[],                 
+        vie_team2 INT[],                 
+        energie_team1 INT[],             
+        energie_team2 INT[],             
+        stamina_team1 INT[],        
+        stamina_team2 INT[],             
+        status TEXT DEFAULT 'open'
       );
     `);
     console.log('Table duels créée avec succès');
@@ -103,7 +103,7 @@ async function endDuel(duelId) {
   const client = await pool.connect();
   const query = `
     UPDATE duels
-    SET status = 'terminé'
+    SET status = 'close'
     WHERE id = $1
     RETURNING *;
   `;
