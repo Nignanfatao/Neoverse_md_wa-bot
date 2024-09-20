@@ -91,10 +91,41 @@ zokou(
             await repondre(recap);
             return;
         } else if (!isNaN(arg[arg.length - 1])) {
+                try {
         // Récupérer l'ID du duel à partir des arguments
-        const duelID = parseInt(arg[arg.length - 1], 10);
+        const duelID = parseInt(arg[arg.length - 1], 10);          
         const duel = getDuel(duelID);
            if (duel) {
+                   if(arg.length === 1) {
+                        let ficheDuel = `*🆚𝗩𝗘𝗥𝗦𝗨𝗦 𝗔𝗥𝗘𝗡𝗔 𝗕𝗔𝗧𝗧𝗟𝗘🏆🎮*
+░░░░░░░░░░░░░░░░░░░
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n`;
+
+                duel.equipe1.forEach(joueur => {
+                    ficheDuel += `🔷 *${joueur.nom}*: 🫀:${joueur.stats.sta}% 🌀:${joueur.stats.energie}% ❤️:${joueur.stats.vie}%\n`;
+                });
+
+                ficheDuel += `                                   ~  *🆚*  ~\n`;
+
+                duel.equipe2.forEach(joueur => {
+                    ficheDuel += `🔷 *${joueur.nom}*: 🫀:${joueur.stats.sta}% 🌀:${joueur.stats.energie}% ❤️:${joueur.stats.vie}%\n`;
+                });
+
+                ficheDuel += `▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n
+*🌍𝐀𝐫𝐞̀𝐧𝐞*: ${duel.arene.nom}
+*🚫𝐇𝐚𝐧𝐝𝐢𝐜𝐚𝐩𝐞*: Boost 1 fois chaque 2 tours!
+*⚖️𝐒𝐭𝐚𝐭𝐬*: ${statsCustom}
+*🏞️ 𝐀𝐢𝐫 𝐝𝐞 𝐜𝐨𝐦𝐛𝐚𝐭*: illimitée
+*🦶🏼𝐃𝐢𝐬𝐭𝐚𝐧𝐜𝐞 𝐢𝐧𝐢𝐭𝐢𝐚𝐥𝐞*📌: 5m
+*⌚𝐋𝐚𝐭𝐞𝐧𝐜𝐞*: 6mins+ 1⚠️
+*⭕𝐏𝐨𝐫𝐭𝐞́𝐞*: 10m\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n
+*⚠️Vous avez 🔟 tours max pour finir votre Adversaire! Sinon la victoire sera donnée par décision selon celui qui a dominé le combat ou qui a été le plus offensif !*
+`;
+
+                // 5. Envoyer la fiche de duel mise à jour
+                await zk.sendMessage(dest, { image: { url: duel.arene.image }, caption: ficheDuel }, { quoted: ms });
+
+                } else {            
                  const modifications = extraireModifications(arg.slice(0, arg.length - 1));
                 for (let { joueur, stat, operation, valeur } of modifications) {
                     let cible = duel.equipe1.find(j => j.nom === joueur) || duel.equipe2.find(j => j.nom === joueur);
@@ -136,16 +167,15 @@ zokou(
                 // 5. Envoyer la fiche de duel mise à jour
                 await zk.sendMessage(dest, { image: { url: duel.arene.image }, caption: ficheDuel }, { quoted: ms });
 
-            } else {
+                   }   } else {
                 await repondre(`Aucun duel trouvé avec l'ID : ${duelID}`);
-            }
+           }
         } catch (err) {
             console.error('Erreur lors de la mise à jour du duel :', err);
         } finally {
             // Libérer la connexion à la base de données
             client.release();
-        }
-    }
+                }
     }
 
         // Gestion d'un nouveau duel
@@ -211,4 +241,3 @@ try {
     client.release(); // Libérer la connexion proprement
 }
     });
-
