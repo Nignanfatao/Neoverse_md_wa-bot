@@ -39,32 +39,33 @@ async function createDuelsTable() {
 }
 
 // Fonction pour initialiser un duel entre deux joueurs
-async function initDuel(player1, player2) {
+async function initDuel(team1, team2) {
   const client = await pool.connect();
-  const query = 
-    INSERT INTO duels (player1, player2)
-    VALUES ($1, $2)
+  const defaultStats = Array(team1.length).fill(100);  // Vie, énergie, et stamina initialisées à 100 pour chaque joueur
+  const query = `
+    INSERT INTO duels (team1, team2, vie_team1, vie_team2, energie_team1, energie_team2, stamina_team1, stamina_team2)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *;
-  ;
-  const values = [player1, player2];
+  `;
+  const values = [team1, team2, defaultStats, defaultStats, defaultStats, defaultStats, defaultStats, defaultStats];
   try {
     const res = await client.query(query, values);
-    return res.rows[0];  // Retourne la ligne du duel initialisé
+    return res.rows[0];  // Retourne le duel initialisé avec les équipes
   } catch (err) {
     console.error(err);
   }
 }
 
-async function updateStats(duelId, player, stat, value) {
+async function updatePlayerStat(duelId, team, playerIndex, stat, value) {
   const client = await pool.connect();
-  const column = ${stat}_player${player === 'player1' ? 1 : 2};
-  const query = 
+  const column = `${stat}_team${team === 'team1' ? 1 : 2}`;
+  const query = `
     UPDATE duels
-    SET ${column} = $1
-    WHERE id = $2
+    SET ${column}[$1] = $2
+    WHERE id = $3
     RETURNING *;
-  ;
-  const values = [value, duelId];
+  `;
+  const values = [playerIndex + 1, value, duelId];  // Les index SQL commencent à 1
   try {
     const res = await client.query(query, values);
     return res.rows[0];  // Retourne la ligne du duel mis à jour
@@ -73,25 +74,34 @@ async function updateStats(duelId, player, stat, value) {
   }
 }
 
+
 async function getDuel(duelId) {
   const client = await pool.connect();
-  const query = 
+  const query = `
     SELECT * FROM duels WHERE id = $1;
-  ;
+  `;
   const values = [duelId];
   try {
     const res = await client.query(query, values);
-    return res.rows[0];  // Retourne la ligne du duel
+    const duel = res.rows[0];
+    if (duel) {
+      duel.team1.forEach((player, index) => {
+         });
+      duel.team2.forEach((player, index) => {
+        });
+    }
+    return duel;
   } catch (err) {
     console.error(err);
   }
 }
 
+
 async function endDuel(duelId) {
 const client = await pool.connect();
   const query = 
     UPDATE duels
-    SET status = 'terminé'
+    SET status = 'close'
     WHERE id = $1
     RETURNING *;
   ;
@@ -108,7 +118,7 @@ createDuelsTable()
 
 module.exports = {
     initDuel,
-    updateStats,
+    updatePlayerStat,
     getDuel,
     endDuel
 };
