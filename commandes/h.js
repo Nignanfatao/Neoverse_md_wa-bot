@@ -1,5 +1,5 @@
 const { zokou } = require('../framework/zokou');
-const { initDuel, updatePlayerStat, getDuel, endDuel } = require('../bdd/duel');
+const { initDuel, updatePlayerStat, getDuel, getDuelIds, endDuel } = require('../bdd/duel');
 const { Pool } = require("pg");
         const s = require("../set");
         var dbUrl = s.DB;
@@ -31,10 +31,11 @@ function tirerAr() {
 
 // Génère un ID unique à partir de deux chiffres
 function genererID() {
+     let du = getDuelIds()
     let id;
     do {
         id =  Math.floor(Math.random() * 20); // Génère un nombre entre 0 et 20
-    } while (duels.has(id)); // S'assure que l'ID n'est pas déjà utilisé
+    } while (du.has(id)); // S'assure que l'ID n'est pas déjà utilisé
     return id;
 }
 
@@ -78,8 +79,8 @@ zokou(
         if (arg[0] === "del") {
             // Suppression d'un duel
             const id = parseInt(arg[1], 10);
-          let duels = getDuel(id)
-                    if (duels.length === 0) {
+          let dueldel = getDuel(id)
+                    if (dueldel.length === 0) {
                 await repondre("Aucun duel trouvé avec cet ID.");
              } else {
                         await endDuel(id);
