@@ -42,18 +42,18 @@ async function recupDuel() {
   client = await pool.connect(); // Connexion à la base de données
   const query = `
     SELECT id FROM duels WHERE status = 'open';
-    `;
+  `;
   
   try {
     const res = await client.query(query);  // Exécute la requête SQL
-    const duels = res.rows;
+    const duelRows = res.rows; // Changez ici
 
-    if (duels.length === 0) {
+    if (duelRows.length === 0) {
       return "Aucun duel en cours.";
     }
 
     let recap = "*🔹 Duels en cours :*\n";
-    duels.forEach((duel) => {
+    duelRows.forEach((duel) => {
       recap += `- Duel ID: ${duel.id}\n`;
     });
 
@@ -65,6 +65,7 @@ async function recupDuel() {
     client.release();  // Libération de la connexion à la base de données
   }
 }
+
 
 zokou(
     {
