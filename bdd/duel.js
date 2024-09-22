@@ -59,8 +59,26 @@ async function enregistrerDuel(ide, equipe1, equipe2, arene, statsCustom, status
     }
 }
 
+async function getDuelIds() {
+    const client = await pool.connect();
+    const query = `
+        SELECT ide FROM duels WHERE status = 'open';
+    `;
+    try {
+        const res = await client.query(query);
+        return res.rows.map(row => row.ide); // Retourne un tableau des ide
+    } catch (error) {
+        console.error('Erreur lors de la récupération des duels ouverts', error);
+        return []; // Retourne un tableau vide en cas d'erreur
+    } finally {
+        client.release();
+    }
+}
+
+
 createDuelsTable();
 
 module.exports = {
-    enregistrerDuel
+    enregistrerDuel, 
+    getDuelIds
 };
