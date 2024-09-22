@@ -1,5 +1,5 @@
 const { zokou } = require("../framework/zokou");
-const { enregistrerDuel } = require('../bdd/duel');
+const { enregistrerDuel, getDuelIds } = require('../bdd/duel');
 // Liste des arènes
 const arenes = [
     { nom: 'plaine vide', image: 'https://i.ibb.co/3h71nT1/image.jpg' },
