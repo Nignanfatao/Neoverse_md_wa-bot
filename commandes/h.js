@@ -21,7 +21,7 @@ function genererID() {
     let id;
     do {
         id = Math.floor(Math.random() * 20); // Génère un nombre entre 0 et 20
-    } while (du.has(id)); // S'assure que l'ID n'est pas déjà utilisé
+    } while (du.includes(id)); // S'assure que l'ID n'est pas déjà utilisé
     return id;
 }
 
