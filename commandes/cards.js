@@ -86,7 +86,7 @@ function groupCardsByPlacement(cards) {
 
 // Fonction principale pour lire les fichiers et générer les cartes
 function generateCards() {
-    const cardDirectory = './Card_data';
+    const cardDirectory = './Card_data/';
     
     // Lire tous les fichiers du répertoire Card_data
     const files = fs.readdirSync(cardDirectory);
