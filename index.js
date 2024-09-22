@@ -152,10 +152,14 @@ async function main() {
                 var dev = [fatao].map((t) => t.replace(/[^0-9]/g) + "@s.whatsapp.net").includes(auteurMessage);
                 
             const arg = texte ? texte.trim().split(/ +/).slice(1) : null;
-            const verifCom = texte ? texte.startsWith(prefixe) : false;
-          // const normalizeEmoji = (str) => str.normalize('NFKD').replace(/[\u{FE0F}]/gu, ''); // Enlever les variations
-//const verifCom = texte ? normalizeEmoji(texte).startsWith(normalizeEmoji(prefixe)) : false;
- const com = verifCom ? texte.slice(1).trim().split(/ +/).shift().toLowerCase() : false;
+          //  const verifCom = texte ? texte.startsWith(prefixe) : false;
+          const normalizeString = (str) => str ? str.normalize('NFC') : '';
+
+
+// Vérifier si le texte commence par l'emoji spécifique
+const verifCom = texte ? normalizeString(texte).startsWith(normalizeString(prefixe)) : false;
+
+            const com = verifCom ? texte.slice(1).trim().split(/ +/).shift().toLowerCase() : false;
             function groupeAdmin(membreGroupe) {
                     let admin = [];
                     for (m of membreGroupe) {
