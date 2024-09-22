@@ -66,7 +66,7 @@ async function envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, sub
         try {
             await zk.sendMessage(dest, { 
                 image: { url: card.image }, 
-                caption: `Grade: ${card.grade}\nCategory: ${card.Category}\nName: ${card.name}\nPrix: $${card.price}` 
+                caption: `Grade: ${card.grade}\nCategory: ${card.category}\nName: ${card.name}\nPrix: ${card.price}` 
             }, { quoted: ms });
         } catch (error) {
             throw new Error(`Erreur lors de l'envoi de la carte : ${error.message}`);
