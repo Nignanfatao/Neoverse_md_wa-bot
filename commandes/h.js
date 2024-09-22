@@ -1,4 +1,18 @@
 const { zokou } = require("../framework/zokou");
+const { enregistrerDuel } = require('../bdd/duel');
+
+function tirerAr() {
+    return arenes[Math.floor(Math.random() * arenes.length)];
+}
+
+function genererID() {
+    let du = getDuelIds();
+    let id;
+    do {
+        id = Math.floor(Math.random() * 20); // Génère un nombre entre 0 et 20
+    } while (du.has(id)); // S'assure que l'ID n'est pas déjà utilisé
+    return id;
+}
 
 zokou(
     {
@@ -7,7 +21,7 @@ zokou(
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
-        
+
         try {
             const input = arg.join(' ');
             const [joueursInput, statsCustom] = input.split('/').map(part => part.trim());
@@ -40,10 +54,11 @@ zokou(
 *🦶🏼𝐃𝐢𝐬𝐭𝐚𝐧𝐜𝐞 𝐢𝐧𝐢𝐭𝐢𝐚𝐥𝐞*📌: 5m
 *⌚𝐋𝐚𝐭𝐞𝐧𝐜𝐞*: 6mins+ 1⚠️
 *⭕𝐏𝐨𝐫𝐭𝐞́𝐞*: 10m\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔\n
-*⚠️Vous avez 🔟 tours max pour finir votre Adversaire! Sinon la victoire sera donnée par décision selon celui qui a dominé le combat ou qui a été le plus offensif !*
-`;
+*⚠️Vous avez 🔟 tours max pour finir votre Adversaire! Sinon la victoire sera donnée par décision selon celui qui a dominé le combat ou qui a été le plus offensif !*`;
 
             await zk.sendMessage(dest, { image: { url: areneT.image }, caption: ficheDuel }, { quoted: ms });
+            await enregistrerDuel(duelID, equipe1, equipe2, areneT, statsCustom, 'open');
+
         } catch (error) {
             console.error('Erreur lors du traitement du duel:', error);
             repondre('Une erreur est survenue lors du traitement de votre demande. Veuillez réessayer plus tard.');
