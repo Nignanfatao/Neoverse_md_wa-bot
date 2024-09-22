@@ -91,8 +91,8 @@ function generateCards() {
     // Lire tous les fichiers du répertoire Card_data
     const files = fs.readdirSync(cardDirectory);
 
-    // Filtrer uniquement les fichiers .jpg
-    const cardFiles = files.filter(file => file.endsWith('.jpg'));
+    // Filtrer uniquement les fichiers .jpg qui ne commencent pas par "IMG"
+    const cardFiles = files.filter(file => file.endsWith('.jpg') && !file.startsWith('IMG'));
 
     // Créer les cartes à partir des noms de fichiers
     const cards = cardFiles.map(file => createCard(file));
