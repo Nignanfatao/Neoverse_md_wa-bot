@@ -15,19 +15,15 @@ const pool = new Pool(proConfig);
 async function createDuelsTable() {
   const client = await pool.connect();
   try {
-    // Crée la table duels si elle n'existe pas déjà
     await client.query(`
       CREATE TABLE IF NOT EXISTS duels (
-        id SERIAL PRIMARY KEY,           
-        team1 TEXT[],                    
-        team2 TEXT[],                    
-        vie_team1 INT[],                 
-        vie_team2 INT[],                 
-        energie_team1 INT[],             
-        energie_team2 INT[],             
-        stamina_team1 INT[],        
-        stamina_team2 INT[],             
-        status TEXT DEFAULT 'open'
+        id SERIAL PRIMARY KEY,
+        ide INT,
+        equipe1 JSONB,
+        equipe2 JSONB,
+        arene JSONB,
+        stats_custom TEXT,            
+        status TEXT DEFAULT 'close'
       );
     `);
     console.log('Table duels créée avec succès');
@@ -38,87 +34,33 @@ async function createDuelsTable() {
   }
 }
 
-// Fonction pour initialiser un duel entre deux joueurs
-async function initDuel(team1, team2) {
-  const client = await pool.connect();
-  const defaultStats = Array(team1.length).fill(100);  // Vie, énergie, et stamina initialisées à 100 pour chaque joueur
-  const query = `
-    INSERT INTO duels (team1, team2, vie_team1, vie_team2, energie_team1, energie_team2, stamina_team1, stamina_team2)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-    RETURNING *;
-  `;
-  const values = [team1, team2, defaultStats, defaultStats, defaultStats, defaultStats, defaultStats, defaultStats];
-  try {
-    const res = await client.query(query, values);
-    return res.rows[0];  // Retourne le duel initialisé avec les équipes
-  } catch (err) {
-    console.error(err);
-  }
-}
+async function enregistrerDuel(ide, equipe1, equipe2, arene, statsCustom, status) {
+   const client = await pool.connect();
+   const query = `
+        INSERT INTO duels (ide, equipe1, equipe2, arene, stats_custom, status)
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING id;
+    `;
+    const values = [
+        ide,
+        JSON.stringify(equipe1),
+        JSON.stringify(equipe2),
+        JSON.stringify(arene),
+        statsCustom,
+        status
+    ];
 
-async function updatePlayerStat(duelId, team, playerIndex, stat, value) {
-  const client = await pool.connect();
-  const column = `${stat}_team${team === 'team1' ? 1 : 2}`;
-  const query = `
-    UPDATE duels
-    SET ${column}[$1] = $2
-    WHERE id = $3
-    RETURNING *;
-  `;
-  const values = [playerIndex + 1, value, duelId];  // Les index SQL commencent à 1
-  try {
-    const res = await client.query(query, values);
-    return res.rows[0];  // Retourne la ligne du duel mis à jour
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-
-async function getDuel(duelId) {
-  const client = await pool.connect();
-  const query = `
-    SELECT * FROM duels WHERE id = $1;
-  `;
-  const values = [duelId];
-  try {
-    const res = await client.query(query, values);
-    const duel = res.rows[0];
-    if (duel) {
-      duel.team1.forEach((player, index) => {
-         });
-      duel.team2.forEach((player, index) => {
-        });
+    try {
+        const res = await client.query(query, values);
+        console.log('Duel enregistré avec l\'ID:', res.rows[0].id);
+        return res.rows[0].id; // Retourne l'ID du duel enregistré
+    } catch (error) {
+        console.error('Erreur lors de l\'enregistrement du duel', error);
     }
-    return duel;
-  } catch (err) {
-    console.error(err);
-  }
 }
 
-
-async function endDuel(duelId) {
-const client = await pool.connect();
-  const query = 
-    UPDATE duels
-    SET status = 'close'
-    WHERE id = $1
-    RETURNING *;
-  ;
-  const values = [duelId];
-  try {
-    const res = await client.query(query, values);
-    return res.rows[0];  // Retourne la ligne du duel terminé
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-createDuelsTable()
+createDuelsTable();
 
 module.exports = {
-    initDuel,
-    updatePlayerStat,
-    getDuel,
-    endDuel
+    enregistrerDuel
 };
