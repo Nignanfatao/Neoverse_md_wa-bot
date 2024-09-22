@@ -1,5 +1,16 @@
 const { zokou } = require("../framework/zokou");
 const { enregistrerDuel } = require('../bdd/duel');
+// Liste des arènes
+const arenes = [
+    { nom: 'plaine vide', image: 'https://i.ibb.co/3h71nT1/image.jpg' },
+    { nom: 'Desert', image: 'https://i.ibb.co/z2gwsMQ/image.jpg' },
+    { nom: 'Zone de glace', image: 'https://i.ibb.co/3F0mK1s/image.jpg' },
+    { nom: 'Vallée de la fin', image: 'https://i.ibb.co/VqFgGzF/image.jpg' },
+    { nom: 'Au dela', image: 'https://i.ibb.co/4Wkr6mT/image.jpg' },
+    { nom: 'Budokai tenkaichi', image: 'https://i.ibb.co/B429M3M/image.jpg' },
+    { nom: 'ville de jour', image: 'https://i.ibb.co/LRDRH9k/image.jpg' },
+    { nom: 'Ville detruite', image: 'https://i.ibb.co/80R07hR/image.jpg' }
+];
 
 function tirerAr() {
     return arenes[Math.floor(Math.random() * arenes.length)];
