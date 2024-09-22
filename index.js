@@ -153,8 +153,9 @@ async function main() {
                 
             const arg = texte ? texte.trim().split(/ +/).slice(1) : null;
            // const verifCom = texte ? texte.startsWith(prefixe) : false;
-            // Fonction pour normaliser et comparer les chaînes
-const normalizeString = (str) => str ? str.normalize('NFC') : '';
+            const normalizeEmoji = (str) => str.normalize('NFKD').replace(/[\u{FE0F}]/gu, ''); // Enlever les variations
+const verifCom = texte ? normalizeEmoji(texte).startsWith(normalizeEmoji(prefixe)) : false;
+
 
 // Vérifier si le texte commence par le préfixe
 const verifCom = texte ? normalizeString(texte).startsWith(normalizeString(prefixe)) : false;
