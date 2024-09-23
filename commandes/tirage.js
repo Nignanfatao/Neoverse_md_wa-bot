@@ -43,11 +43,11 @@ function getRandomCard(Acategory, grade, Category) {
     const cardsArray = cards[Acategory].filter(card => card.grade === grade && card.category === Category);
     
     // Affichez les cartes après filtrage
-    console.log('Cartes disponibles après filtrage:', cardsArray);
+   // console.log('Cartes disponibles après filtrage:', cardsArray);
     
     // Vérifiez si des cartes ont été trouvées avant de sélectionner une carte au hasard
     if (cardsArray.length === 0) {
-        console.log('Aucune carte trouvée avec le grade:', grade, 'et la catégorie:', Category);
+       // console.log('Aucune carte trouvée avec le grade:', grade, 'et la catégorie:', Category);
         return null;  // ou toute autre valeur indiquant qu'aucune carte n'a été trouvée
     }
     
