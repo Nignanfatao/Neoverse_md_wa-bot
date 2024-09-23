@@ -3,6 +3,9 @@ const path = require('path');
 
 // Fonction pour déterminer le prix en fonction du nom du fichier
 function determinePrice(pricePart) {
+    // Normaliser les majuscules en minuscules pour gérer "1M" et "1m"
+    pricePart = pricePart.toLowerCase();
+
     // Gérer les prix terminés par "nc" (ex: 50nc -> 50🔷)
     if (pricePart.endsWith('nc')) {
         return pricePart.replace('nc', '🔷');
@@ -49,7 +52,13 @@ function createCard(fileName) {
 
     const name = parts[0]; // Ex: Gojo
     const grade = parts[1]; // Ex: bronze
-    const placement = parts[2]; // Ex: legend
+    let placement = parts[2]; // Ex: legend ou legende
+
+    // Normaliser le placement pour traiter "legende" et "card_legende" comme "legend"
+    if (placement === 'legende') {
+        placement = 'legend';
+    }
+
     const category = determineCategory(parts[3]); // Ex: s+, s-, etc.
     const price = determinePrice(parts[4]); // Ex: 50nc, 500k, 1m500k, etc.
     const image = `./Card_data/${fileName}`; // Chemin de l'image
@@ -69,10 +78,18 @@ function groupCardsByPlacement(cards) {
     const groupedCards = {};
 
     cards.forEach(card => {
-        if (!groupedCards[card.placement]) {
-            groupedCards[card.placement] = [];
+        // Normalisation du placement pour inclure "legend" et "legende" sous la catégorie "legend"
+        let placement = card.placement;
+
+        if (placement === 'legende' || placement === 'card_legende' || placement === 'legend') {
+            placement = 'legend';
         }
-        groupedCards[card.placement].push({
+
+        // Créer une clé pour chaque type de placement (ex: 'ultra', 'sparking', 'legend')
+        if (!groupedCards[placement]) {
+            groupedCards[placement] = [];
+        }
+        groupedCards[placement].push({
             grade: card.grade,
             name: card.name,
             category: card.category,
@@ -108,4 +125,4 @@ const cardData = generateCards();
 module.exports = { cards: cardData };
 
 // Afficher les cartes générées pour vérifier
-//console.log(JSON.stringify(cardData, null, 2));
+// console.log(JSON.stringify(cardData, null, 2));
