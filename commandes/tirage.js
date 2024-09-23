@@ -37,7 +37,7 @@ function tirerCategorie(probabilities) {
 }*/
 function getRandomCard(Acategory, grade, Category) {
     // Affichez les cartes disponibles avant le filtrage
-    console.log('Cartes disponibles avant filtrage:', cards[Acategory]);
+   // console.log('Cartes disponibles avant filtrage:', cards[Acategory]);
     
     // Filtrez les cartes en fonction du grade et de la catégorie
     const cardsArray = cards[Acategory].filter(card => card.grade === grade && card.category === Category);
