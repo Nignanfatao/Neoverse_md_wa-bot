@@ -136,7 +136,7 @@ zokou(
             { subCategory: "ss+", probability: 5 }*/
           ];
           break;
-        case "legends":
+        case "legend":
           videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394338/djjffqiiejs6rrwkrywa.mp4";
           gradeProbabilities = [
             { grade: "or", probability: 2 },
