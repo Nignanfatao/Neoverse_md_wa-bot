@@ -132,76 +132,136 @@ async function envoyerVideo(dest, zk, videoUrl) {
 
 zokou(
   { 
-    nomCom: "tirage", 
+    nomCom: "tirageallstars", 
     reaction: "🎰", 
     categorie: "NEO_GAMES🎰" 
   }, 
   async (dest, zk, commandeOptions) => {
-    const { repondre, arg, ms } = commandeOptions;
-    const niveau = arg[0];
-    
+    const { repondre, arg, ms, auteurMessage, origineMessage } = commandeOptions; // Assure-toi que auteurMessage et origineMessage sont inclus
     try {
-      let imageCategory = niveau;
-      let gradeProbabilities = [];
-      let subCategoryProbabilities = [];
-      let videoUrl = '';
+        if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us' || origineMessage === '22651463203@s.whatsapp.net' || origineMessage === '22605463559@s.whatsapp.net' ) {
+        // Envoyer une image initiale
+        await zk.sendMessage(dest, { 
+            image: { url: 'https://i.ibb.co/DGLVPPF/image.jpg' }, 
+            caption: ''
+        }, { quoted: ms });
 
-      // Définir les probabilités pour les grades et les vidéos pour chaque niveau
-      switch (niveau) {
-        case "sparking":
-          videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394328/ny7bi7f8gcfufwervg0t.mp4";
-          gradeProbabilities = [
-            { grade: "or", probability: 10 },
-            { grade: "argent", probability: 20 },
-            { grade: "bronze", probability: 70 }
-          ]; 
-          subCategoryProbabilities = [
-            { subCategory: "s-", probability: 50 },
-            { subCategory: "s", probability: 30 },
-            { subCategory: "s+", probability: 20 }
-          ];
-          break;
-        case "ultra":
-          videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394332/eika1gamq371hqv0ckvb.mp4";
-          gradeProbabilities = [
-            { grade: "or", probability: 5 },
-            { grade: "argent", probability: 25 },
-            { grade: "bronze", probability: 70 }
-          ];
-          subCategoryProbabilities = [
-            { subCategory: "s-", probability: 50 },
-            { subCategory: "s", probability: 30 },
-            { subCategory: "s+", probability: 20 }
-          ];
-          break;
-        case "legend":
-          videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394338/djjffqiiejs6rrwkrywa.mp4";
-          gradeProbabilities = [
-            { grade: "or", probability: 2 },
-            { grade: "argent", probability: 28 },
-            { grade: "bronze", probability: 70 }
-          ];
-          subCategoryProbabilities = [
-            { subCategory: "s-", probability: 50 },
-            { subCategory: "s", probability: 30 },
-            { subCategory: "s+", probability: 20 }
-          ];
-          break;
-        default:
-          repondre("Niveau de tirage inconnu.");
-          return;
-      }
+        // Fonction pour obtenir la confirmation de l'utilisateur
+        const getConfirmation = async (attempt = 1, maxAttempts = 3) => {
+            if (attempt > maxAttempts) {
+                throw new Error('MaxAttemptsReached');
+            }
+            try {
+                const rep = await zk.awaitForMessage({
+                    sender: auteurMessage, // Assure-toi que ces variables sont bien fournies
+                    chatJid: origineMessage,
+                    timeout: 60000 // 60 secondes
+                });
 
-      // Envoyer la vidéo correspondante
-      await envoyerVideo(dest, zk, videoUrl);
+                let response;
+                try {
+                    response = rep.message.extendedTextMessage.text;
+                } catch {
+                    response = rep.message.conversation;
+                }
 
-      // Envoyer deux cartes
-      await envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, subCategoryProbabilities);
-      await envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, subCategoryProbabilities);
+                if (response.toLowerCase() === 'legends') {
+                    return "legend";
+                } else if (response.toLowerCase() === 'ultra') {
+                    return "ultra";
+                } else if (response.toLowerCase() === 'sparking') {
+                    return "sparking";
+                } else {
+                    await repondre('Veuillez choisir l\'une des options proposées (legends, ultra, sparking).');
+                    return await getConfirmation(attempt + 1, maxAttempts);
+                }
+            } catch (error) {
+                if (error.message === 'Timeout') {
+                    throw new Error('Timeout');
+                } else {
+                    throw error;
+                }
+            }
+        };
 
+        // Obtenir la confirmation de l'utilisateur
+        let niveau;
+        try {
+            niveau = await getConfirmation();
+        } catch (error) {
+            if (error.message === 'Timeout') {
+                return repondre('*❌ Délai d\'attente expiré*');
+            } else if (error.message === 'MaxAttemptsReached') {
+                return repondre('*❌ Nombre maximal de tentatives dépassé*');
+            } else {
+                throw error;
+            }
+        }
+
+        let imageCategory = niveau;
+        let gradeProbabilities = [];
+        let subCategoryProbabilities = [];
+        let videoUrl = '';
+
+        // Définir les probabilités pour les grades et les vidéos pour chaque niveau
+        switch (niveau) {
+            case "sparking":
+                videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394328/ny7bi7f8gcfufwervg0t.mp4";
+                gradeProbabilities = [
+                    { grade: "or", probability: 10 },
+                    { grade: "argent", probability: 20 },
+                    { grade: "bronze", probability: 70 }
+                ]; 
+                subCategoryProbabilities = [
+                    { subCategory: "s-", probability: 50 },
+                    { subCategory: "s", probability: 30 },
+                    { subCategory: "s+", probability: 20 }
+                ];
+                break;
+            case "ultra":
+                videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394332/eika1gamq371hqv0ckvb.mp4";
+                gradeProbabilities = [
+                    { grade: "or", probability: 5 },
+                    { grade: "argent", probability: 25 },
+                    { grade: "bronze", probability: 70 }
+                ];
+                subCategoryProbabilities = [
+                    { subCategory: "s-", probability: 50 },
+                    { subCategory: "s", probability: 30 },
+                    { subCategory: "s+", probability: 20 }
+                ];
+                break;
+            case "legend":
+                videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394338/djjffqiiejs6rrwkrywa.mp4";
+                gradeProbabilities = [
+                    { grade: "or", probability: 2 },
+                    { grade: "argent", probability: 28 },
+                    { grade: "bronze", probability: 70 }
+                ];
+                subCategoryProbabilities = [
+                    { subCategory: "s-", probability: 50 },
+                    { subCategory: "s", probability: 30 },
+                    { subCategory: "s+", probability: 20 }
+                ];
+                break;
+            default:
+                repondre("Niveau de tirage inconnu.");
+                return;
+        }
+
+        // Envoyer la vidéo correspondante
+        await envoyerVideo(dest, zk, videoUrl);
+
+        // Envoyer deux cartes
+        await envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, subCategoryProbabilities);
+        await envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, subCategoryProbabilities);
+        }
     } catch (error) {
-      repondre("Une erreur est survenue pendant le tirage : " + error.message);
-      console.error(error);
+        if (error.message === 'MaxAttemptsReached') {
+            repondre("*❌ Nombre maximal de tentatives dépassé*");
+        } else {
+            repondre("Une erreur est survenue pendant le tirage : " + error.message);
+            console.error(error);
+        }
     }
-  }
-);
+});
