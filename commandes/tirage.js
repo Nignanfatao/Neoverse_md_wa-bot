@@ -29,21 +29,66 @@ function tirerCategorie(probabilities) {
     return probabilities[probabilities.length - 1].subCategory;
 }
 
+// Fonction utilitaire pour obtenir toutes les catégories disponibles dans une imageCategory
+function getAllCategories(Acategory) {
+    const categories = new Set();
+    cards[Acategory].forEach(card => {
+        categories.add(card.category);
+    });
+    return Array.from(categories);
+}
+
+// Définir un ordre de priorité pour les grades (du plus élevé au moins élevé)
+const gradePriority = ["or", "argent", "bronze"];
+
+// Fonction pour trouver une carte aléatoire avec possibilité de fallback en changeant grade et catégorie
+function findCardWithFallback(Acategory, initialGrade, initialCategory) {
+    // Obtenir l'index du grade initial dans l'ordre de priorité
+    let gradeIndex = gradePriority.indexOf(initialGrade);
+    if (gradeIndex === -1) {
+        console.log(`Grade initial "${initialGrade}" non reconnu. Utilisation du premier grade par défaut.`);
+        gradeIndex = 0; // Utiliser le premier grade par défaut si le grade initial n'est pas reconnu
+    }
+
+    // Itérer à travers les grades selon l'ordre de priorité, à partir du grade initial
+    for (let i = gradeIndex; i < gradePriority.length; i++) {
+        const currentGrade = gradePriority[i];
+        
+        // Si on est sur le grade initial, commencer par la catégorie initiale
+        if (i === gradeIndex) {
+            const card = getRandomCard(Acategory, currentGrade, initialCategory);
+            if (card) {
+                console.log(`Carte trouvée avec le grade "${currentGrade}" et la catégorie "${initialCategory}".`);
+                return card;
+            }
+        }
+
+        // Obtenir toutes les catégories disponibles
+        const allCategories = getAllCategories(Acategory);
+
+        // Définir l'ordre de priorité des catégories : commencer par la catégorie initiale, puis les autres
+        const otherCategories = allCategories.filter(cat => cat !== initialCategory);
+        const categoriesToTry = i === gradeIndex ? [initialCategory, ...otherCategories] : allCategories;
+
+        // Itérer à travers les catégories
+        for (const category of categoriesToTry) {
+            const card = getRandomCard(Acategory, currentGrade, category);
+            if (card) {
+                console.log(`Carte trouvée avec le grade "${currentGrade}" et la catégorie "${category}".`);
+                return card;
+            }
+        }
+    }
+
+    // Si aucune carte n'est trouvée après avoir essayé tous les grades et catégories
+    console.log(`Aucune carte trouvée dans aucune combinaison de grade et de catégorie pour "${Acategory}".`);
+    return null;
+}
+
 // Fonction pour trouver une carte aléatoire
-/*function getRandomCard(Acategory, grade, Category) {
-    const cardsArray = cards[Acategory].filter(card => card.grade === grade && card.Category === Category);
-    const randomIndex = Math.floor(Math.random() * cardsArray.length);
-    return cardsArray[randomIndex];
-}*/
 function getRandomCard(Acategory, grade, Category) {
-    // Affichez les cartes disponibles avant le filtrage
-   // console.log('Cartes disponibles avant filtrage:', cards[Acategory]);
-    
     // Filtrez les cartes en fonction du grade et de la catégorie
     const cardsArray = cards[Acategory].filter(card => card.grade === grade && card.category === Category);
-    
-    // Affichez les cartes après filtrage
-   // console.log('Cartes disponibles après filtrage:', cardsArray);
     
     // Vérifiez si des cartes ont été trouvées avant de sélectionner une carte au hasard
     if (cardsArray.length === 0) {
@@ -60,7 +105,7 @@ function getRandomCard(Acategory, grade, Category) {
 async function envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, subCategoryProbabilities) {
     const grade = tirerProbabilite(gradeProbabilities);
     const Category = tirerCategorie(subCategoryProbabilities);
-    const card = getRandomCard(imageCategory, grade, Category);
+    const card = findCardWithFallback(imageCategory, grade, Category);
 
     if (card) {
         try {
@@ -72,19 +117,18 @@ async function envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, sub
             throw new Error(`Erreur lors de l'envoi de la carte : ${error.message}`);
         }
     } else {
-        throw new Error("Aucune carte disponible dans cette catégorie.");
+        throw new Error("Aucune carte disponible dans cette catégorie et grade, même après fallback.");
     }
 }
 
 // Fonction pour envoyer une vidéo
 async function envoyerVideo(dest, zk, videoUrl) {
     try {
-        await zk.sendMessage(dest, { video: { url: videoUrl }, gifPlayback : true });
+        await zk.sendMessage(dest, { video: { url: videoUrl }, gifPlayback: true });
     } catch (error) {
         throw new Error(`Erreur lors de l'envoi de la vidéo : ${error.message}`);
     }
 }
-
 
 zokou(
   { 
@@ -115,9 +159,6 @@ zokou(
             { subCategory: "s-", probability: 50 },
             { subCategory: "s", probability: 30 },
             { subCategory: "s+", probability: 20 }
-            /*{ subCategory: "ss-", probability: 20 },
-            { subCategory: "ss", probability: 10 },
-            { subCategory: "ss+", probability: 5 }*/
           ];
           break;
         case "ultra":
@@ -131,9 +172,6 @@ zokou(
             { subCategory: "s-", probability: 50 },
             { subCategory: "s", probability: 30 },
             { subCategory: "s+", probability: 20 }
-           /* { subCategory: "ss-", probability: 20 },
-            { subCategory: "ss", probability: 10 },
-            { subCategory: "ss+", probability: 5 }*/
           ];
           break;
         case "legend":
@@ -147,9 +185,6 @@ zokou(
             { subCategory: "s-", probability: 50 },
             { subCategory: "s", probability: 30 },
             { subCategory: "s+", probability: 20 }
-            /*{ subCategory: "ss-", probability: 20 },
-            { subCategory: "ss", probability: 10 },
-            { subCategory: "ss+", probability: 5 }*/
           ];
           break;
         default:
