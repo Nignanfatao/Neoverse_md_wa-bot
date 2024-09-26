@@ -139,7 +139,7 @@ zokou(
   async (dest, zk, commandeOptions) => {
     const { repondre, arg, ms, auteurMessage, origineMessage } = commandeOptions; // Assure-toi que auteurMessage et origineMessage sont inclus
     try {
-        if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363049564083813@g.us' || origineMessage === '22651463203@s.whatsapp.net' || origineMessage === '22605463559@s.whatsapp.net' ) {
+        if (origineMessage === '120363049564083813@g.us' || origineMessage === '120363307444088356@g.us' || origineMessage === '22651463203@s.whatsapp.net' || origineMessage === '22605463559@s.whatsapp.net' ) {
         // Envoyer une image initiale
         await zk.sendMessage(dest, { 
             image: { url: 'https://i.ibb.co/DGLVPPF/image.jpg' }, 
