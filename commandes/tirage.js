@@ -122,6 +122,15 @@ function findCardWithFallback(Acategory, initialGrade, initialCategory, cartesTi
     return null;
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+
 // Fonction pour trouver une carte aléatoire
 function getRandomCard(Acategory, grade, Category, cartesTirees) {
     // Filtrez les cartes en fonction du grade et de la catégorie, et qui ne sont pas déjà tirées
