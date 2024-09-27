@@ -225,9 +225,12 @@ zokou(
                         { grade: "bronze", probability: 70 }
                     ]; 
                     subCategoryProbabilities = [
-                        { subCategory: "s-", probability: 50 },
-                        { subCategory: "s", probability: 30 },
-                        { subCategory: "s+", probability: 20 }
+                        { subCategory: "s-", probability: 35 },
+                        { subCategory: "s", probability: 25 },
+                        { subCategory: "s+", probability: 18 },
+                        { subCategory: "ss-", probability: 10 },
+                        { subCategory: "ss", probability: 8 },
+                        { subCategory: "ss+", probability: 4 }
                     ];
                     break;
                 case "ultra":
@@ -238,9 +241,12 @@ zokou(
                         { grade: "bronze", probability: 70 }
                     ];
                     subCategoryProbabilities = [
-                        { subCategory: "s-", probability: 50 },
-                        { subCategory: "s", probability: 30 },
-                        { subCategory: "s+", probability: 20 }
+                        { subCategory: "s-", probability: 35 },
+                        { subCategory: "s", probability: 25 },
+                        { subCategory: "s+", probability: 18 },
+                        { subCategory: "ss-", probability: 10 },
+                        { subCategory: "ss", probability: 8 },
+                        { subCategory: "ss+", probability: 4 }
                     ];
                     break;
                 case "legend":
@@ -251,9 +257,12 @@ zokou(
                         { grade: "bronze", probability: 70 }
                     ];
                     subCategoryProbabilities = [
-                        { subCategory: "s-", probability: 50 },
-                        { subCategory: "s", probability: 30 },
-                        { subCategory: "s+", probability: 20 }
+                        { subCategory: "s-", probability: 35 },
+                        { subCategory: "s", probability: 25 },
+                        { subCategory: "s+", probability: 18 },
+                        { subCategory: "ss-", probability: 10 },
+                        { subCategory: "ss", probability: 8 },
+                        { subCategory: "ss+", probability: 4 }
                     ];
                     break;
                 default:
