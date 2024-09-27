@@ -110,7 +110,7 @@ async function envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, sub
     while (attempts < maxAttempts) {
         const grade = tirerProbabilite(gradeProbabilities);
         const Category = tirerCategorie(subCategoryProbabilities);
-        card = findCardWithFallback(imageCategory, grade, Category, cartesTirees);
+        card = findCardWithRandomGrade(imageCategory, grade, Category, cartesTirees);
 
         if (card && !cartesTirees.includes(card.name)) {
             cartesTirees.push(card.name); // Ajouter la carte tirée
