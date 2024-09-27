@@ -38,90 +38,7 @@ function getAllCategories(Acategory) {
     return Array.from(categories);
 }
 
-// Définir un ordre de priorité pour les grades (du plus élevé au moins élevé)
-const gradePriority = ["argent", "bronze", "or"];
-
-// Définir un ordre de priorité pour les catégories (du plus élevé au moins élevé)
-const categoryPriority = ["s-", "s", "s+", "ss-", "ss", "ss+"];
-
-// Fonction pour trouver une carte aléatoire avec possibilité de fallback en changeant grade et catégorie
-function findCardWithFallback(Acategory, initialGrade, initialCategory, cartesTirees) {
-    // Obtenir toutes les combinaisons possibles de grades et catégories
-    const allCategories = getAllCategories(Acategory);
-    const allGrades = gradePriority; // On considère que gradePriority contient tous les grades disponibles
-
-    // Créer un tableau de toutes les combinaisons possibles avec leurs priorités
-    let combinations = [];
-
-    for (const grade of allGrades) {
-        for (const category of allCategories) {
-            // Calculer la priorité basée sur le grade et la catégorie
-            const gradePriorityIndex = gradePriority.indexOf(grade);
-            const categoryPriorityIndex = categoryPriority.indexOf(category);
-
-            // Si le grade ou la catégorie n'est pas reconnu, assigner une priorité basse
-            const effectiveGradePriority = gradePriorityIndex !== -1 ? gradePriorityIndex : gradePriority.length;
-            const effectiveCategoryPriority = categoryPriorityIndex !== -1 ? categoryPriorityIndex : categoryPriority.length;
-
-            // La priorité totale est une combinaison des priorités de grade et de catégorie
-            const totalPriority = effectiveGradePriority * categoryPriority.length + effectiveCategoryPriority;
-
-            combinations.push({ grade, category, priority: totalPriority });
-        }
-    }
-
-    // Trier les combinaisons par priorité (du plus bas au plus haut)
-    combinations.sort((a, b) => a.priority - b.priority);
-
-    // Grouper les combinaisons par priorité
-    const groupedCombinations = {};
-    for (const combo of combinations) {
-        if (!groupedCombinations[combo.priority]) {
-            groupedCombinations[combo.priority] = [];
-        }
-        groupedCombinations[combo.priority].push({ grade: combo.grade, category: combo.category });
-    }
-
-    // Obtenir les priorités triées
-    const sortedPriorities = Object.keys(groupedCombinations)
-        .map(Number)
-        .sort((a, b) => a - b);
-
-    // Itérer à travers les groupes de priorités
-    for (const priority of sortedPriorities) {
-        const combos = groupedCombinations[priority];
-        const shuffledCombos = shuffleArray(combos); // Mélanger les combinaisons dans le même niveau de priorité
-
-        // Prioriser la combinaison initiale si elle est dans ce groupe
-        const initialComboIndex = shuffledCombos.findIndex(
-            combo => combo.grade === initialGrade && combo.category === initialCategory
-        );
-
-        if (initialComboIndex !== -1) {
-            const initialCombo = shuffledCombos.splice(initialComboIndex, 1)[0];
-            // Essayer la combinaison initiale en premier
-            const card = getRandomCard(Acategory, initialCombo.grade, initialCombo.category, cartesTirees);
-            if (card) {
-                console.log(`Carte trouvée avec le grade "${initialCombo.grade}" et la catégorie "${initialCombo.category}".`);
-                return card;
-            }
-        }
-
-        // Essayer les autres combinaisons du groupe
-        for (const { grade, category } of shuffledCombos) {
-            const card = getRandomCard(Acategory, grade, category, cartesTirees);
-            if (card) {
-                console.log(`Carte trouvée avec le grade "${grade}" et la catégorie "${category}".`);
-                return card;
-            }
-        }
-    }
-
-    // Si aucune carte n'est trouvée après avoir essayé toutes les combinaisons
-    console.log(`Aucune carte trouvée dans aucune combinaison de grade et de catégorie pour "${Acategory}".`);
-    return null;
-}
-
+// Fonction utilitaire pour mélanger un tableau (Fisher-Yates Shuffle)
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -130,6 +47,43 @@ function shuffleArray(array) {
     return array;
 }
 
+function findCardWithRandomGrade(Acategory, initialGrade, initialCategory, cartesTirees) {
+    // Définir les grades disponibles
+    const availableGrades = ['bronze', 'argent', 'or']; // Correction des guillemets ici
+    
+    // Vérifier si le grade initial est dans la liste des grades disponibles
+    let gradesToTry = [];
+    if (availableGrades.includes(initialGrade)) {
+        gradesToTry.push(initialGrade);
+        // Ajouter les autres grades et les mélanger
+        const remainingGrades = availableGrades.filter(grade => grade !== initialGrade);
+        gradesToTry = gradesToTry.concat(shuffleArray(remainingGrades));
+    } else {
+        console.log(`Grade initial "${initialGrade}" non reconnu. Mélange complet des grades.`);
+        gradesToTry = shuffleArray([...availableGrades]);
+    }
+
+    // Obtenir toutes les catégories disponibles
+    const allCategories = getAllCategories(Acategory);
+
+    // Itérer à travers les grades dans l'ordre mélangé
+    for (const currentGrade of gradesToTry) {
+        // Définir l'ordre des catégories : initialCategory en premier, puis les autres
+        const categoriesToTry = [initialCategory, ...allCategories.filter(cat => cat !== initialCategory)];
+        
+        // Itérer à travers les catégories pour le grade actuel
+        for (const category of categoriesToTry) {
+            const card = getRandomCard(Acategory, currentGrade, category, cartesTirees);
+            if (card) {
+                console.log(`Carte trouvée avec le grade "${currentGrade}" et la catégorie "${category}".`);
+                return card;
+            }
+        }
+    }
+
+    console.log("Aucune carte trouvée après avoir épuisé toutes les options.");
+    return null;
+}
 
 // Fonction pour trouver une carte aléatoire
 function getRandomCard(Acategory, grade, Category, cartesTirees) {
@@ -264,7 +218,7 @@ zokou(
             // Définir les probabilités pour les grades et les vidéos pour chaque niveau
             switch (niveau) {
                 case "sparking":
-                    videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394328/ny7bi7f8gcfufwervg0t.mp4";
+                    videoUrl = "./video_file/sparking.mp4";
                     gradeProbabilities = [
                         { grade: "or", probability: 10 },
                         { grade: "argent", probability: 30 },
@@ -280,7 +234,7 @@ zokou(
                     ];
                     break;
                 case "ultra":
-                    videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394332/eika1gamq371hqv0ckvb.mp4";
+                    videoUrl = "./video_file/ultra.mp4";
                     gradeProbabilities = [
                         { grade: "or", probability: 10 },
                         { grade: "argent", probability: 30 },
@@ -296,7 +250,7 @@ zokou(
                     ];
                     break;
                 case "legend":
-                    videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394338/djjffqiiejs6rrwkrywa.mp4";
+                    videoUrl = "./video_file/legend.mp4";
                     gradeProbabilities = [
                         { grade: "or", probability: 10 },
                         { grade: "argent", probability: 30 },
