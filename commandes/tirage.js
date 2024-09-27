@@ -221,8 +221,8 @@ zokou(
                     videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394328/ny7bi7f8gcfufwervg0t.mp4";
                     gradeProbabilities = [
                         { grade: "or", probability: 10 },
-                        { grade: "argent", probability: 20 },
-                        { grade: "bronze", probability: 70 }
+                        { grade: "argent", probability: 30 },
+                        { grade: "bronze", probability: 60 }
                     ]; 
                     subCategoryProbabilities = [
                         { subCategory: "s-", probability: 35 },
@@ -236,9 +236,9 @@ zokou(
                 case "ultra":
                     videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394332/eika1gamq371hqv0ckvb.mp4";
                     gradeProbabilities = [
-                        { grade: "or", probability: 5 },
-                        { grade: "argent", probability: 25 },
-                        { grade: "bronze", probability: 70 }
+                        { grade: "or", probability: 10 },
+                        { grade: "argent", probability: 30 },
+                        { grade: "bronze", probability: 60 }
                     ];
                     subCategoryProbabilities = [
                         { subCategory: "s-", probability: 35 },
@@ -252,9 +252,9 @@ zokou(
                 case "legend":
                     videoUrl = "https://res.cloudinary.com/dwnofjjes/video/upload/v1726394338/djjffqiiejs6rrwkrywa.mp4";
                     gradeProbabilities = [
-                        { grade: "or", probability: 2 },
-                        { grade: "argent", probability: 28 },
-                        { grade: "bronze", probability: 70 }
+                        { grade: "or", probability: 10 },
+                        { grade: "argent", probability: 30 },
+                        { grade: "bronze", probability: 60 }
                     ];
                     subCategoryProbabilities = [
                         { subCategory: "s-", probability: 35 },
