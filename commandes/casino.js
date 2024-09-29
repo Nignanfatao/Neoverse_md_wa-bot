@@ -104,10 +104,10 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
 
           let msg = isSecondChance 
             ? '🎊😃: *Vous avez une deuxième chance ! Choisissez un autre numéro. Vous avez 1 min ⚠️* (Répondre à ce message)'
-            : '🎊😃: *Choisissez un numéro. Vous avez 1 min ⚠️* (Répondre à ce message)'
+            : '🎊😃: *Choisissez un numéro. Vous avez 1 min ⚠️* (Répondre à ce message)';
           let lien = isSecondChance 
-            ?'https://i.ibb.co/SPY5b86/image.jpg';
-            :'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg'
+            ?'https://i.ibb.co/SPY5b86/image.jpg'
+            :'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
           await zk.sendMessage(origineMessage, { image: { url: lien }, caption: msg }, { quoted: ms });
 
           try {
@@ -151,7 +151,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
             return { success: true, message: msgc, image: lienc };
           } else {
             let msgd = isSecondChance
-              ? ``;
+              ? ``
               :  `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`;
             let liend = 'https://telegra.ph/file/222cefbcd18ba50012d05.jpg';
             return { success: false, message: msgd, image: liend };
