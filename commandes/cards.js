@@ -120,6 +120,8 @@ function generateCards() {
     return groupedCards;
 }
 
+generateCards();
+
 // Exporter les cartes générées
 const cardData = generateCards();
 module.exports = { cards: cardData };
