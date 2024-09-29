@@ -30,9 +30,9 @@ zokou(
         let liena = 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
         let msga = `*🎰𝗧𝗘𝗡𝗧𝗘𝗭 𝗩𝗢𝗧𝗥𝗘 𝗖𝗛𝗔𝗡𝗖𝗘🥳 !!*
 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬🎉🎉🎉
-Jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro que vous choisissez parmi les *5️⃣0️⃣*. *⚠️ Vous avez 2 tentatives et pour jouer vous devez payer 2🔶*
+jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro que vous choisissez parmi les *5️⃣0️⃣*. *⚠️vous avez 2 tentatives et pour jouer vous devez payer 2🔶*
 ▔▔🎊▔🎊▔🎊▔▔🎊▔▔🎊▔🎊▔🎊
-* \`${numbers.join(', ')}\` *
+*\`${numbers.join(', ')}\`*
 ▔▔🎊▔🎊▔🎊▔▔🎊▔▔🎊▔🎊▔🎊
 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬🎉🎉🎉
 * \`+Cadeaux\` * (🎁 Pour voir les Récompenses possibles)
@@ -104,7 +104,7 @@ Jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
 
           let msg = isSecondChance 
             ? '🎊😃: *Vous avez une deuxième chance ! Choisissez un autre numéro. Vous avez 1 min ⚠️* (Répondre à ce message)'
-            : '🎊😃: *Choisissez un numéro. Vous avez 1 min ⚠️* (Répondre à ce message)';
+            : '🎊😃: *Choisissez un numéro. Vous avez 1 min ⚠️* (Répondre à ce message)'
           let lien = 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
           await zk.sendMessage(origineMessage, { image: { url: lien }, caption: msg }, { quoted: ms });
 
@@ -140,15 +140,17 @@ Jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
           }
         };
 
-        const checkWinningNumber = (number) => {
+        const checkWinningNumber = (isSecondChance = false, number) => {
           if (winningNumbers.includes(number)) {
             let rewardIndex = winningNumbers.indexOf(number);
             let reward = rewards[rewardIndex];
-            let msgc = `🎊🥳😍 *✅ EXCELLENT ! C'était le bon numéro ${reward} ! Vas-y, tu peux encore gagner plus* 😍🥳🎊`;
+            let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
             let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg';
             return { success: true, message: msgc, image: lienc };
           } else {
-            let msgd = `😫😖💔 *❌ NON ! C'était le mauvais numéro ! Dommage, tu y étais presque 💔* 😫😖💔`;
+            let msgd = isSecondChance
+              ? ``;
+              :  `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`;
             let liend = 'https://telegra.ph/file/222cefbcd18ba50012d05.jpg';
             return { success: false, message: msgd, image: liend };
           }
@@ -164,7 +166,7 @@ Jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
             // Offrir une deuxième chance
             try {
               const chosenNumber2 = await getChosenNumber(true);
-              let result2 = checkWinningNumber(chosenNumber2);
+              let result2 = checkWinningNumber(true,chosenNumber2);
               await zk.sendMessage(origineMessage, { image: { url: result2.image }, caption: result2.message }, { quoted: ms });
             } catch (error) {
               if (error.message === 'TooManyAttempts' || error.message === 'Timeout') {
