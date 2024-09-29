@@ -153,7 +153,7 @@ zokou(
         if (origineMessage === '120363049564083813@g.us' || origineMessage === '120363307444088356@g.us' || origineMessage === '22651463203@s.whatsapp.net' || origineMessage === '22605463559@s.whatsapp.net' ) {
             // Envoyer une image initiale
             await zk.sendMessage(dest, { 
-                image: { url: 'https://i.ibb.co/DGLVPPF/image.jpg' }, 
+                image: { url: './video_file/Tirage_choice.jpg' }, 
                 caption: ''
             }, { quoted: ms });
 
