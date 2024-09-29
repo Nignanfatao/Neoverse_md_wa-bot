@@ -105,7 +105,9 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
           let msg = isSecondChance 
             ? '🎊😃: *Vous avez une deuxième chance ! Choisissez un autre numéro. Vous avez 1 min ⚠️* (Répondre à ce message)'
             : '🎊😃: *Choisissez un numéro. Vous avez 1 min ⚠️* (Répondre à ce message)'
-          let lien = 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
+          let lien = isSecondChance 
+            ?'https://i.ibb.co/SPY5b86/image.jpg';
+            :'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg'
           await zk.sendMessage(origineMessage, { image: { url: lien }, caption: msg }, { quoted: ms });
 
           try {
@@ -195,3 +197,56 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
     }
   }
 );
+
+zokou(
+  {
+    nomCom: 'cadeaux',
+    reaction: '🎁',
+    categorie: 'Other'
+  },
+  async (origineMessage, zk, commandeOptions) => {
+    const { ms, repondre } = commandeOptions;
+    if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {   
+      let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
+      let msg = '';
+      
+      // Envoyer l'image en vue unique
+      zk.sendMessage(origineMessage, { 
+        image: { url: lien }, 
+        caption: msg, 
+       // viewOnce: true 
+      }, { quoted: ms });
+    }
+  }
+);
+
+/*zokou(
+  {
+    nomCom: 'cadeaux',
+    reaction: '🎁',
+    categorie: 'Other'
+  },
+  async (origineMessage, zk, commandeOptions) => {
+    const { ms, repondre } = commandeOptions;
+   // if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {   
+      let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
+      let msg = 'Sélectionnez un cadeau ci-dessous 🎁';
+
+      // Liste de boutons pour les cadeaux
+      let buttons = [
+        { buttonId: '+cadeau', buttonText: { displayText: 'Cadeau 1' }, type: 1 },
+        { buttonId: 'cadeau_2', buttonText: { displayText: '+Cadeau' }, type: 1 },
+        { buttonId: 'cadeau_3', buttonText: { displayText: 'Cadeau 3' }, type: 1 }
+      ];
+
+      // Envoyer l'image avec les boutons
+      zk.sendMessage(origineMessage, { 
+        image: { url: lien }, 
+        caption: msg, 
+        buttons: buttons, 
+        headerType: 4  // Type 4 pour une image avec des boutons
+      }, { quoted: ms });
+    //}
+  }
+);
+*/
