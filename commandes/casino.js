@@ -251,23 +251,29 @@ zokou(
   },
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre } = commandeOptions;
-    let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
-    const msg = 'salut';
-    { buttonId: 'menu', buttonText: { displayText: '📋MENU🌸' }, type: 1 },
-    { buttonId: 'youtube', buttonText: { displayText: '🎥YouTube🎥' }, type: 1 },
-    { buttonId: 'whatsapp', buttonText: { displayText: '🛑WhatsApp💬' }, type: 1 },
-    { buttonId: 'owner', buttonText: { displayText: '↩️Owner👤' }, type: 1 }
-  ];
+    let lien = 'https://i.ibb.co/K6yZgTt/image.jpg'; // Lien vers l'image à envoyer
+    let msg = 'salut';  // Message texte qui accompagne l'image
 
-  const buttons = {
-    image: { url: lien }, // URL de l'image que tu veux envoyer
-    caption: msg,         // Le texte qui accompagne l'image
-    footer: 'ovl',   // Un footer si nécessaire
-    buttons: buttons,         // Les boutons configurés ci-dessus
-    headerType: 4,            // 4 signifie que tu envoies une image
-  };
+    // Configuration des boutons
+    const but = [
+      { buttonId: 'menu', buttonText: { displayText: '📋MENU🌸' }, type: 1 },
+      { buttonId: 'youtube', buttonText: { displayText: '🎥YouTube🎥' }, type: 1 },
+      { buttonId: 'whatsapp', buttonText: { displayText: '🛑WhatsApp💬' }, type: 1 },
+      { buttonId: 'owner', buttonText: { displayText: '↩️Owner👤' }, type: 1 }
+    ];
+
+    // Création du message avec boutons et image
+    const buttonMessage = {
+      image: { url: lien },    // URL de l'image à envoyer
+      caption: msg,            // Texte qui accompagne l'image
+      footer: 'ovl',           // Texte de footer (facultatif)
+      buttons: but,            // Boutons configurés
+      headerType: 4,           // Indique que l'en-tête est une image
+    };
+
     try {
-      zk.sendButTxt(origineMessage, msg, buttons);
+      // Envoie le message avec boutons
+      await zk.sendButImg(origineMessage, buttonMessage);
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
@@ -289,7 +295,7 @@ hydratedTemplate: {
 DeepakBotInc.relayMessage(jid, template.message, { messageId: template.key.id })
 }
 
-DeepakBotInc.sendButImg = async (jid, path, teks, fke, but) => {
+DeepakBotInc = async (jid, path, teks, fke, but) => {
 let img = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
 let fjejfjjjer = {
 image: img, 
