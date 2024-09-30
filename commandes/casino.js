@@ -268,6 +268,7 @@ zokou(
       console.error("Erreur lors du téléchargement de l'image :", error);
       return; // Arrêter l'exécution en cas d'erreur
     }
+
     // Configuration des boutons
     const but = [
       { buttonId: 'menu', buttonText: { displayText: '📋MENU🌸' }, type: 1 },
@@ -278,21 +279,22 @@ zokou(
 
     // Création du message avec boutons et image
     const buttonMessage = {
-      image: imgBuffer,    // URL de l'image à envoyer
-      caption: msg,            // Texte qui accompagne l'image
-      footer: 'ovl',           // Texte de footer (facultatif)
-      buttons: but,            // Boutons configurés
-      headerType: 4,           // Indique que l'en-tête est une image
+      image: imgBuffer,    // Image sous forme de buffer
+      caption: msg,        // Texte qui accompagne l'image
+      footer: 'ovl',       // Texte de footer (facultatif)
+      buttons: but,        // Boutons configurés
+      headerType: 4,       // Indique que l'en-tête est une image
     };
 
     try {
-      // Envoie le message avec boutons
-      await zk.sendButImg(origineMessage, buttonMessage);
+      // Utilisation de sendMessage directement pour envoyer l'image
+      await zk.sendMessage(origineMessage, buttonMessage);
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
   }
 );
+
 
 /*DeepakBotInc.send5ButLoc = async (jid , text = '' , footer = '', img, but = [], options = {}) =>{
 var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
