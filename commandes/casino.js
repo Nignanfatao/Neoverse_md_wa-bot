@@ -266,6 +266,8 @@ zokou(
       image: imgBuffer, 
       jpegThumbnail: imgBuffer,
       caption: msg,
+      fileLength: "1",
+      footer: 'salut', 
       buttons: buttons,
       headerType: 4,
     };
@@ -279,34 +281,47 @@ zokou(
   }
 );
 
-// Gestion des clics sur les boutons
-/*zk.on('messages.upsert', async (m) => {
-    const message = m.messages[0];
-    if (!message.message) return;
-    if (message.key.fromMe) return;
+/*DeepakBotInc.send5ButLoc = async (jid , text = '' , footer = '', img, but = [], options = {}) =>{
+var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
+templateMessage: {
+hydratedTemplate: {
+"hydratedContentText": text,
+"locationMessage": {
+"jpegThumbnail": img },
+"hydratedFooterText": footer,
+"hydratedButtons": but
+}
+}
+}), options)
+DeepakBotInc.relayMessage(jid, template.message, { messageId: template.key.id })
+}
 
-    // Vérifie si le message contient des boutons
-    if (message.message.templateMessage) {
-        const buttons = message.message.templateMessage.hydratedTemplate.hydratedButtons;
-        buttons.forEach(async (button) => {
-            if (button.buttonId) {
-                // Gestion des actions en fonction du buttonId
-                switch (button.buttonId) {
-                    case 'cadeau_1':
-                        await zk.sendMessage(message.key.remoteJid, { text: 'Vous avez sélectionné Cadeau 1!' }, { quoted: message });
-                        break;
-                    case 'cadeau_2':
-                        await zk.sendMessage(message.key.remoteJid, { text: 'Vous avez sélectionné Cadeau 2!' }, { quoted: message });
-                        break;
-                    case 'cadeau_3':
-                        await zk.sendMessage(message.key.remoteJid, { text: 'Vous avez sélectionné Cadeau 3!' }, { quoted: message });
-                        break;
-                    default:
-                        await zk.sendMessage(message.key.remoteJid, { text: 'Action non reconnue.' }, { quoted: message });
-                        break;
-                }
-            }
-        });
-    }
-});
+DeepakBotInc.sendButImg = async (jid, path, teks, fke, but) => {
+let img = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
+let fjejfjjjer = {
+image: img, 
+jpegThumbnail: img,
+caption: teks,
+fileLength: "1",
+footer: fke,
+buttons: but,
+headerType: 4,
+}
+DeepakBotInc.sendMessage(jid, fjejfjjjer, { quoted: m })
+}
+
+return DeepakBotInc
+
+}
+
+DeepakBotInc.sendButtonText = (jid, buttons = [], text, footer, quoted = '', options = {}) => {
+let buttonMessage = {
+text,
+footer,
+buttons,
+headerType: 2,
+...options
+}
+DeepakBotInc.sendMessage(jid, buttonMessage, { quoted, ...options })
+}
 */
