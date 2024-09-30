@@ -394,7 +394,21 @@ async function main() {
             }
         });
     } 
-        
+
+    zk.sendButImg = async (org, lien, txt, buttons) => {
+      let message = {
+      image: {url: lien},
+      caption: txt,
+      buttons: buttons,
+      headerType: 4,
+    };
+    try {
+      zk.sendMessage(org, message, { quoted: ms });
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du message :", error);
+    }
+    }
+
             //fin autre fonction ovl
     } catch (error) {
         console.error("Erreur principale:", error);
