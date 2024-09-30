@@ -409,6 +409,19 @@ async function main() {
     }
     }
 
+  zk.sendButTxt = async (org,txt, buttons) => {
+let message = {
+txt,
+buttons,
+headerType: 2,
+...options
+}
+    try {
+      zk.sendMessage(org, message, ...options);
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du message :", error);
+    }
+        }
             //fin autre fonction ovl
     } catch (error) {
         console.error("Erreur principale:", error);
