@@ -1,4 +1,6 @@
 const { zokou } = require('../framework/zokou');
+const fetch = require('node-fetch'); // Assure-toi d'avoir installé node-fetch via npm
+const fs = require('fs');
 
 const generateRandomNumbers = (min, max, count) => {
   const numbers = new Set();
@@ -220,35 +222,90 @@ zokou(
   }
 );
 
+ // Si tu utilises des chemins locaux
+
+// Fonction pour obtenir le buffer de l'image à partir de l'URL
+const getBuffer = async (url) => {
+  const res = await fetch(url);
+  const arrayBuffer = await res.arrayBuffer();
+  return Buffer.from(arrayBuffer);
+};
+
+// Définition de la commande 'cadeaux'
 zokou(
   {
-    nomCom: 'cadeaux',
+    nomCom: 'cadeau',
     reaction: '🎁',
     categorie: 'Other'
   },
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre } = commandeOptions;
-   // if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {   
-      let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
-      let msg = 'Sélectionnez un cadeau ci-dessous 🎁';
+    
+    let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
+    let msg = 'Sélectionnez un cadeau ci-dessous 🎁';
 
-      // Liste de boutons pour les cadeaux
-      let buttons = [
-        { buttonId: '+cadeau', buttonText: { displayText: 'Cadeau 1' }, type: 1 },
-        { buttonId: 'cadeau_2', buttonText: { displayText: '+Cadeau' }, type: 1 },
-        { buttonId: 'cadeau_3', buttonText: { displayText: 'Cadeau 3' }, type: 1 }
-      ];
-
-    let message = {
-        image: lien, 
-        jpegThumbnail: lien,
-        caption: message,
-        fileLength: "1",
-        buttons: buttons,
-        headerType: 4,
+    // Télécharger l'image et la convertir en buffer
+    let imgBuffer;
+    try {
+      imgBuffer = await getBuffer(lien);
+    } catch (error) {
+      console.error("Erreur lors du téléchargement de l'image :", error);
+      return; // Arrêter l'exécution en cas d'erreur
     }
-      // Envoyer l'image avec les boutons
+
+    // Liste de boutons pour les cadeaux
+    let buttons = [
+      { buttonId: 'cadeau_1', buttonText: { displayText: 'Cadeau 1' }, type: 1 },
+      { buttonId: 'cadeau_2', buttonText: { displayText: 'Cadeau 2' }, type: 1 },
+      { buttonId: 'cadeau_3', buttonText: { displayText: 'Cadeau 3' }, type: 1 }
+    ];
+
+    // Créer l'objet de message
+    let message = {
+      image: imgBuffer, 
+      jpegThumbnail: imgBuffer,
+      caption: msg,
+      buttons: buttons,
+      headerType: 4,
+    };
+
+    // Envoyer l'image avec les boutons
+    try {
       zk.sendMessage(origineMessage, message, { quoted: ms });
-    //}
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du message :", error);
+    }
   }
 );
+
+// Gestion des clics sur les boutons
+/*zk.on('messages.upsert', async (m) => {
+    const message = m.messages[0];
+    if (!message.message) return;
+    if (message.key.fromMe) return;
+
+    // Vérifie si le message contient des boutons
+    if (message.message.templateMessage) {
+        const buttons = message.message.templateMessage.hydratedTemplate.hydratedButtons;
+        buttons.forEach(async (button) => {
+            if (button.buttonId) {
+                // Gestion des actions en fonction du buttonId
+                switch (button.buttonId) {
+                    case 'cadeau_1':
+                        await zk.sendMessage(message.key.remoteJid, { text: 'Vous avez sélectionné Cadeau 1!' }, { quoted: message });
+                        break;
+                    case 'cadeau_2':
+                        await zk.sendMessage(message.key.remoteJid, { text: 'Vous avez sélectionné Cadeau 2!' }, { quoted: message });
+                        break;
+                    case 'cadeau_3':
+                        await zk.sendMessage(message.key.remoteJid, { text: 'Vous avez sélectionné Cadeau 3!' }, { quoted: message });
+                        break;
+                    default:
+                        await zk.sendMessage(message.key.remoteJid, { text: 'Action non reconnue.' }, { quoted: message });
+                        break;
+                }
+            }
+        });
+    }
+});
+*/
