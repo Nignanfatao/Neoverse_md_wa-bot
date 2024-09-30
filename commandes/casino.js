@@ -1,7 +1,4 @@
 const { zokou } = require('../framework/zokou');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-// Assure-toi d'avoir installé node-fetch via npm
-const fs = require('fs');
 
 const generateRandomNumbers = (min, max, count) => {
   const numbers = new Set();
@@ -223,16 +220,6 @@ zokou(
   }
 );
 
- // Si tu utilises des chemins locaux
-
-// Fonction pour obtenir le buffer de l'image à partir de l'URL
-const getBuffer = async (url) => {
-  const res = await fetch(url);
-  const arrayBuffer = await res.arrayBuffer();
-  return Buffer.from(arrayBuffer);
-};
-
-// Définition de la commande 'cadeaux'
 zokou(
   {
     nomCom: 'cadeau',
@@ -241,38 +228,15 @@ zokou(
   },
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre } = commandeOptions;
-    
     let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
     let msg = 'Sélectionnez un cadeau ci-dessous 🎁';
-
-    // Télécharger l'image et la convertir en buffer
-    let imgBuffer;
-    try {
-      imgBuffer = await getBuffer(lien);
-    } catch (error) {
-      console.error("Erreur lors du téléchargement de l'image :", error);
-      return; // Arrêter l'exécution en cas d'erreur
-    }
-
-    // Liste de boutons pour les cadeaux
     let buttons = [
       { buttonId: 'cadeau_1', buttonText: { displayText: 'Cadeau 1' }, type: 1 },
       { buttonId: 'cadeau_2', buttonText: { displayText: 'Cadeau 2' }, type: 1 },
       { buttonId: 'cadeau_3', buttonText: { displayText: 'Cadeau 3' }, type: 1 }
     ];
-
-    // Créer l'objet de message
-    let message = {
-      image: {url: lien},
-      caption: msg,
-      footer: 'salut', 
-      buttons: buttons,
-      headerType: 4,
-    };
-
-    // Envoyer l'image avec les boutons
     try {
-      zk.sendMessage(origineMessage, message, { quoted: ms });
+      zk.sendButImg(origineMessage, lien, msg, buttons);
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
