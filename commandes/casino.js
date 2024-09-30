@@ -1,5 +1,6 @@
 const { zokou } = require('../framework/zokou');
-const fetch = require('node-fetch'); // Assure-toi d'avoir installé node-fetch via npm
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+// Assure-toi d'avoir installé node-fetch via npm
 const fs = require('fs');
 
 const generateRandomNumbers = (min, max, count) => {
