@@ -267,7 +267,7 @@ zokou(
     ];
     // Création du message avec boutons et image
     const messageOptions = {
-        image: './video_file/rcp.jpg', // L'image que tu souhaites envoyer
+        image: { url: './video_file/rcp.jpg' }, // L'image que tu souhaites envoyer
         header: 'Menu Principal',
         footer: 'Powered by Ovl-Md',
         body: 'Sélectionne une option ci-dessous:',
