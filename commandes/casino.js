@@ -263,10 +263,8 @@ zokou(
 
     // Créer l'objet de message
     let message = {
-      image: imgBuffer, 
-      jpegThumbnail: imgBuffer,
+      image: {url: lien},
       caption: msg,
-      fileLength: "1",
       footer: 'salut', 
       buttons: buttons,
       headerType: 4,
