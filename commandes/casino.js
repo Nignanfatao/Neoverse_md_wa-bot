@@ -220,7 +220,7 @@ zokou(
   }
 );
 
-/*zokou(
+zokou(
   {
     nomCom: 'cadeaux',
     reaction: '🎁',
@@ -239,14 +239,16 @@ zokou(
         { buttonId: 'cadeau_3', buttonText: { displayText: 'Cadeau 3' }, type: 1 }
       ];
 
+    let message = {
+        image: lien, 
+        jpegThumbnail: lien,
+        caption: message,
+        fileLength: "1",
+        buttons: buttons,
+        headerType: 4,
+    }
       // Envoyer l'image avec les boutons
-      zk.sendMessage(origineMessage, { 
-        image: { url: lien }, 
-        caption: msg, 
-        buttons: buttons, 
-        headerType: 4  // Type 4 pour une image avec des boutons
-      }, { quoted: ms });
+      zk.sendMessage(origineMessage, message, { quoted: ms });
     //}
   }
 );
-*/
