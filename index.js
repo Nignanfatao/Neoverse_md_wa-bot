@@ -258,9 +258,8 @@ async function main() {
                         break;
                 }
             }
-        });
-    }
-});
+        };
+    };
             // fin bouttons
 
             }); //fin evenement message
