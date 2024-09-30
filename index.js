@@ -258,7 +258,7 @@ async function main() {
                         break;
                 }
             }
-        };
+        });
     };
             // fin bouttons
 
