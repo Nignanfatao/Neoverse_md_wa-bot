@@ -268,15 +268,16 @@ zokou(
     // Création du message avec boutons et image
     const messageOptions = {
         image: { url: './video_file/rcp.jpg' }, // L'image que tu souhaites envoyer
-        header: 'Menu Principal',
+        header: 4,
         footer: 'Powered by Ovl-Md',
-        body: 'Sélectionne une option ci-dessous:',
+        caption: 'Sélectionne une option ci-dessous:',
         buttons: buttons,
         contextInfo: {
                 mentionedJid: [], // Utilisateurs mentionnés
-                forwardingScore: 0, // Score de transfert
-                isForwarded: false, // Indique si le message est transféré
+                forwardingScore: 9999, // Score de transfert
+                isForwarded: true, // Indique si le message est transféré
                 externalAdReply: {
+                    showAdAttribution: true,
                     title: 'titre', // Titre de l'annonce
                     body: 'corps', // Corps de l'annonce
                     mediaType: 1, // Type de média (image, vidéo)
