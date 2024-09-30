@@ -288,7 +288,7 @@ zokou(
 
     try {
       // Utilisation de sendMessage directement pour envoyer l'image
-      await zk.sendMessage(origineMessage, buttonMessage);
+      await zk.sendMessage(origineMessage, buttonMessage,  { quoted: ms });
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
