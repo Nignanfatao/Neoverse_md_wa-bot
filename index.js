@@ -58,7 +58,7 @@ async function ovlAuth(session) {
             // Décode la session et réécrit dans creds.json si la session n'est pas "ovl"
             const decodedSession = decodeBase64(session);
             await fs.writeFileSync(filePath, decodedSession, 'utf8');
-            console.log(decodedSession);
+            //console.log(decodedSession);
         }
     } catch (e) {
         console.log("Session invalide: " + e);
@@ -234,6 +234,34 @@ async function main() {
 
           const params = { zk, texte, origineMessage, repondre, ms };
         maine(params);
+
+
+            //bouttons 
+    // Vérifie si le message contient des boutons
+    if (message.message.templateMessage) {
+        const buttons = message.message.templateMessage.hydratedTemplate.hydratedButtons;
+        buttons.forEach(async (button) => {
+            if (button.buttonId) {
+                // Gestion des actions en fonction du buttonId
+                switch (button.buttonId) {
+                    case 'cadeau_1':
+                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 1!' }, { quoted: message });
+                        break;
+                    case 'cadeau_2':
+                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 2!' }, { quoted: message });
+                        break;
+                    case 'cadeau_3':
+                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 3!' }, { quoted: message });
+                        break;
+                    default:
+                        await zk.sendMessage(origineMessage, { text: 'Action non reconnue.' }, { quoted: message });
+                        break;
+                }
+            }
+        });
+    }
+});
+            // fin bouttons
 
             }); //fin evenement message
 
