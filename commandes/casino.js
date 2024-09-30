@@ -243,6 +243,29 @@ zokou(
   }
 );
 
+zokou(
+  {
+    nomCom: 'cad',
+    reaction: '🎁',
+    categorie: 'Other'
+  },
+  async (origineMessage, zk, commandeOptions) => {
+    const { ms, repondre } = commandeOptions;
+   // let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
+    let msg = 'Sélectionnez un cadeau ci-dessous 🎁';
+    let buttons = [
+      { buttonId: 'cadeau_1', buttonText: { displayText: 'Cadeau 1' }, type: 1 },
+      { buttonId: 'cadeau_2', buttonText: { displayText: 'Cadeau 2' }, type: 1 },
+      { buttonId: 'cadeau_3', buttonText: { displayText: 'Cadeau 3' }, type: 1 }
+    ];
+    try {
+      zk.sendButImg(origineMessage, msg, buttons);
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du message :", error);
+    }
+  }
+);
+
 /*DeepakBotInc.send5ButLoc = async (jid , text = '' , footer = '', img, but = [], options = {}) =>{
 var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
 templateMessage: {
