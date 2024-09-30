@@ -251,13 +251,21 @@ zokou(
   },
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre } = commandeOptions;
-   // let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
-    let msg = 'Sélectionnez un cadeau ci-dessous 🎁';
-    let buttons = [
-      { buttonId: 'cadeau_1', buttonText: { displayText: 'Cadeau 1' }, type: 1 },
-      { buttonId: 'cadeau_2', buttonText: { displayText: 'Cadeau 2' }, type: 1 },
-      { buttonId: 'cadeau_3', buttonText: { displayText: 'Cadeau 3' }, type: 1 }
-    ];
+    let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
+    const msg = 'salut';
+    { buttonId: 'menu', buttonText: { displayText: '📋MENU🌸' }, type: 1 },
+    { buttonId: 'youtube', buttonText: { displayText: '🎥YouTube🎥' }, type: 1 },
+    { buttonId: 'whatsapp', buttonText: { displayText: '🛑WhatsApp💬' }, type: 1 },
+    { buttonId: 'owner', buttonText: { displayText: '↩️Owner👤' }, type: 1 }
+  ];
+
+  const buttons = {
+    image: { url: lien }, // URL de l'image que tu veux envoyer
+    caption: msg,         // Le texte qui accompagne l'image
+    footer: 'ovl',   // Un footer si nécessaire
+    buttons: buttons,         // Les boutons configurés ci-dessus
+    headerType: 4,            // 4 signifie que tu envoies une image
+  };
     try {
       zk.sendButTxt(origineMessage, msg, buttons);
     } catch (error) {
