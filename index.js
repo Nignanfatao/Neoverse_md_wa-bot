@@ -245,16 +245,16 @@ async function main() {
                 // Gestion des actions en fonction du buttonId
                 switch (button.buttonId) {
                     case 'cadeau_1':
-                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 1!' }, { quoted: message });
+                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 1!' }, { quoted: ms });
                         break;
                     case 'cadeau_2':
-                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 2!' }, { quoted: message });
+                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 2!' }, { quoted: ms });
                         break;
                     case 'cadeau_3':
-                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 3!' }, { quoted: message });
+                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 3!' }, { quoted: ms });
                         break;
                     default:
-                        await zk.sendMessage(origineMessage, { text: 'Action non reconnue.' }, { quoted: message });
+                        await zk.sendMessage(origineMessage, { text: 'Action non reconnue.' }, { quoted: ms });
                         break;
                 }
             }
@@ -403,7 +403,7 @@ async function main() {
       headerType: 4,
     };
     try {
-      zk.sendMessage(org, message, { quoted: ms });
+      zk.sendMessage(org, message);
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
