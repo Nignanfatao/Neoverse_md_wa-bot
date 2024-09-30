@@ -1,4 +1,6 @@
 const { zokou } = require('../framework/zokou');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const fs = require('fs');
 
 const generateRandomNumbers = (min, max, count) => {
   const numbers = new Set();
@@ -243,6 +245,12 @@ zokou(
   }
 );
 
+const getBuffer = async (url) => {
+  const res = await fetch(url);
+  const arrayBuffer = await res.arrayBuffer();
+  return Buffer.from(arrayBuffer);
+};
+
 zokou(
   {
     nomCom: 'cad',
@@ -253,7 +261,13 @@ zokou(
     const { ms, repondre } = commandeOptions;
     let lien = 'https://i.ibb.co/K6yZgTt/image.jpg'; // Lien vers l'image à envoyer
     let msg = 'salut';  // Message texte qui accompagne l'image
-
+    let imgBuffer;
+    try {
+      imgBuffer = await getBuffer(lien);
+    } catch (error) {
+      console.error("Erreur lors du téléchargement de l'image :", error);
+      return; // Arrêter l'exécution en cas d'erreur
+    }
     // Configuration des boutons
     const but = [
       { buttonId: 'menu', buttonText: { displayText: '📋MENU🌸' }, type: 1 },
@@ -264,7 +278,7 @@ zokou(
 
     // Création du message avec boutons et image
     const buttonMessage = {
-      image: { url: lien },    // URL de l'image à envoyer
+      image: imgBuffer,    // URL de l'image à envoyer
       caption: msg,            // Texte qui accompagne l'image
       footer: 'ovl',           // Texte de footer (facultatif)
       buttons: but,            // Boutons configurés
