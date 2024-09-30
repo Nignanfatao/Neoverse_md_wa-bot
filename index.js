@@ -238,8 +238,8 @@ async function main() {
 
             //bouttons 
     // Vérifie si le message contient des boutons
-    if (message.message.templateMessage) {
-        const buttons = message.message.templateMessage.hydratedTemplate.hydratedButtons;
+    if (ms.message.templateMessage) {
+        const buttons = ms.message.templateMessage.hydratedTemplate.hydratedButtons;
         buttons.forEach(async (button) => {
             if (button.buttonId) {
                 // Gestion des actions en fonction du buttonId
