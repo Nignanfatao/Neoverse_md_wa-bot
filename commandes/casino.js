@@ -245,12 +245,6 @@ zokou(
   }
 );
 
-const getBuffer = async (url) => {
-  const res = await fetch(url);
-  const arrayBuffer = await res.arrayBuffer();
-  return Buffer.from(arrayBuffer);
-};
-
 zokou(
   {
     nomCom: 'cad',
@@ -260,83 +254,117 @@ zokou(
   async (origineMessage, zk, commandeOptions) => {
     const { ms, repondre } = commandeOptions;
     let lien = 'https://i.ibb.co/K6yZgTt/image.jpg'; // Lien vers l'image à envoyer
-    let msg = 'salut';  // Message texte qui accompagne l'image
-    let imgBuffer;
-    try {
-      imgBuffer = await getBuffer(lien);
-    } catch (error) {
-      console.error("Erreur lors du téléchargement de l'image :", error);
-      return; // Arrêter l'exécution en cas d'erreur
-    }
-
-    // Configuration des boutons
-    const but = [
-      { buttonId: 'menu', buttonText: { displayText: '📋MENU🌸' }, type: 1 },
-      { buttonId: 'youtube', buttonText: { displayText: '🎥YouTube🎥' }, type: 1 },
-      { buttonId: 'whatsapp', buttonText: { displayText: '🛑WhatsApp💬' }, type: 1 },
-      { buttonId: 'owner', buttonText: { displayText: '↩️Owner👤' }, type: 1 }
+   // Configuration des boutons
+    const buttons = [
+        {
+            name: 'quick_reply',
+            buttonParamsJson: JSON.stringify({ display_text: "menu🌟", id: "+menu" })
+        },
+        {
+            name: 'quick_reply',
+            buttonParamsJson: JSON.stringify({ display_text: "Test 🧾", id: "+test" })
+        }
     ];
-
     // Création du message avec boutons et image
-    const buttonMessage = {
-      image: imgBuffer,    // Image sous forme de buffer
-      caption: msg,        // Texte qui accompagne l'image
-      footer: 'ovl',       // Texte de footer (facultatif)
-      buttons: but,        // Boutons configurés
-      headerType: 4,       // Indique que l'en-tête est une image
-    };
-
+    const messageOptions = {
+        image: 'https://i.ibb.co/K6yZgTt/image.jpg', // L'image que tu souhaites envoyer
+        header: 'Menu Principal',
+        footer: 'Powered by Ovl-Md',
+        body: 'Sélectionne une option ci-dessous:',
+        buttons: buttons,
+        contextInfo: {
+                mentionedJid: [], // Utilisateurs mentionnés
+                forwardingScore: 0, // Score de transfert
+                isForwarded: false, // Indique si le message est transféré
+                externalAdReply: {
+                    title: 'titre', // Titre de l'annonce
+                    body: 'corps', // Corps de l'annonce
+                    mediaType: 1, // Type de média (image, vidéo)
+                    sourceUrl: 'https://ovl.com', // URL source
+                    thumbnailUrl: 'https://i.ibb.co/K6yZgTt/image.jpg', // URL de la miniature
+                    renderLargerThumbnail: false // Taille de la miniature
+                }
+        }
+    }; 
     try {
       // Utilisation de sendMessage directement pour envoyer l'image
-      await zk.sendMessage(origineMessage, buttonMessage,  { quoted: ms });
+      await zk.sendMessage(origineMessage, messageOptions,  { quoted: ms });
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
   }
 );
 
+/*async function sendButtonMessage(chatId, buttons, quotedMessage, messageOptions) {
+    try {
+        // Prépare le message avec les boutons
+        const buttonMessage = {
+            image: messageOptions.image, // Image à inclure
+            header: messageOptions.header || '', // En-tête (facultatif)
+            footer: messageOptions.footer || '', // Pied de page (facultatif)
+            body: messageOptions.body || '', // Corps du message
+            buttons: buttons, // Liste des boutons
+            contextInfo: {
+                mentionedJid: messageOptions.mentionedJid || [], // Utilisateurs mentionnés
+                forwardingScore: messageOptions.forwardingScore || 0, // Score de transfert
+                isForwarded: messageOptions.isForwarded || false, // Indique si le message est transféré
+                externalAdReply: {
+                    title: messageOptions.adTitle || '', // Titre de l'annonce
+                    body: messageOptions.adBody || '', // Corps de l'annonce
+                    mediaType: messageOptions.mediaType || 1, // Type de média (image, vidéo)
+                    sourceUrl: messageOptions.sourceUrl || '', // URL source
+                    thumbnailUrl: messageOptions.thumbnailUrl || '', // URL de la miniature
+                    renderLargerThumbnail: messageOptions.renderLargerThumbnail || false // Taille de la miniature
+                }
+            }
+        };
 
-/*DeepakBotInc.send5ButLoc = async (jid , text = '' , footer = '', img, but = [], options = {}) =>{
-var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
-templateMessage: {
-hydratedTemplate: {
-"hydratedContentText": text,
-"locationMessage": {
-"jpegThumbnail": img },
-"hydratedFooterText": footer,
-"hydratedButtons": but
-}
-}
-}), options)
-DeepakBotInc.relayMessage(jid, template.message, { messageId: template.key.id })
-}
-
-DeepakBotInc = async (jid, path, teks, fke, but) => {
-let img = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
-let fjejfjjjer = {
-image: img, 
-jpegThumbnail: img,
-caption: teks,
-fileLength: "1",
-footer: fke,
-buttons: but,
-headerType: 4,
-}
-DeepakBotInc.sendMessage(jid, fjejfjjjer, { quoted: m })
-}
-
-return DeepakBotInc
-
+        // Envoie du message avec les boutons
+        await chatApi.sendMessage(chatId, buttonMessage, { quoted: quotedMessage });
+        console.log("Message envoyé avec succès !");
+    } catch (error) {
+        console.error("Erreur lors de l'envoi du message avec boutons :", error);
+    }
 }
 
-DeepakBotInc.sendButtonText = (jid, buttons = [], text, footer, quoted = '', options = {}) => {
-let buttonMessage = {
-text,
-footer,
-buttons,
-headerType: 2,
-...options
+
+// Commande qui envoie un message avec boutons
+async function sendMenuCommand(pika) {
+    // Définition des options de message
+    const messageOptions = {
+        image: './path_to_image.jpg', // L'image que tu souhaites envoyer
+        header: 'Menu Principal',
+        footer: 'Powered by AnyaBot',
+        body: 'Sélectionne une option ci-dessous:',
+        adTitle: 'AnyaBot',
+        adBody: 'Le meilleur bot WhatsApp !',
+        mediaType: 1,
+        sourceUrl: 'https://anyabot.com',
+        thumbnailUrl: './path_to_thumbnail.jpg',
+        renderLargerThumbnail: false,
+        mentionedJid: [pika.sender], // Mentionne l'utilisateur qui a envoyé la commande
+        forwardingScore: 999,
+        isForwarded: true
+    };
+
+    // Boutons à inclure dans le message
+    const buttons = [
+        {
+            name: 'quick_reply',
+            buttonParamsJson: JSON.stringify({ display_text: "Allmenu 🌟", id: "!allmenu" })
+        },
+        {
+            name: 'quick_reply',
+            buttonParamsJson: JSON.stringify({ display_text: "Listmenu 🧾", id: "!listmenu" })
+        }
+    ];
+
+    // Envoi du message avec boutons
+    await sendButtonMessage(pika.chat, buttons, pika, messageOptions);
 }
-DeepakBotInc.sendMessage(jid, buttonMessage, { quoted, ...options })
+
+// Appel de la commande lorsque nécessaire
+if (command === 'menu') {
+    sendMenuCommand(pika);
 }
 */
