@@ -259,7 +259,7 @@ zokou(
       { buttonId: 'cadeau_3', buttonText: { displayText: 'Cadeau 3' }, type: 1 }
     ];
     try {
-      zk.sendButImg(origineMessage, msg, buttons);
+      zk.sendButTxt(origineMessage, msg, buttons);
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
