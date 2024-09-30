@@ -267,7 +267,7 @@ zokou(
     ];
     // Création du message avec boutons et image
     const messageOptions = {
-        image: 'https://i.ibb.co/K6yZgTt/image.jpg', // L'image que tu souhaites envoyer
+        image: './video_file/rcp.jpg', // L'image que tu souhaites envoyer
         header: 'Menu Principal',
         footer: 'Powered by Ovl-Md',
         body: 'Sélectionne une option ci-dessous:',
@@ -281,7 +281,7 @@ zokou(
                     body: 'corps', // Corps de l'annonce
                     mediaType: 1, // Type de média (image, vidéo)
                     sourceUrl: 'https://ovl.com', // URL source
-                    thumbnailUrl: 'https://i.ibb.co/K6yZgTt/image.jpg', // URL de la miniature
+                    thumbnailUrl: './video_file/rcp.jpg', // URL de la miniature
                     renderLargerThumbnail: false // Taille de la miniature
                 }
         }
