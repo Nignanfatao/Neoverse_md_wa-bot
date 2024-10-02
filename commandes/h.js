@@ -16,14 +16,14 @@ function tirerAr() {
     return arenes[Math.floor(Math.random() * arenes.length)];
 }
 
-function genererID() {
+/*function genererID() {
     let du = getDuelIds();
     let id;
     do {
         id = Math.floor(Math.random() * 20); // Génère un nombre entre 0 et 20
     } while (du.includes(id)); // S'assure que l'ID n'est pas déjà utilisé
     return id;
-}
+}*/
 
 zokou(
     {
@@ -34,14 +34,16 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         try {
+            if(!arg[0]) { 
+                repondre('pour obtenir la fiche de duel veuillez suivre ce format: +duel joueur1 à joueurN vs joueur1 à joueurN /ensuite vous mettez les stats\n Ex: +duel hakuji vs Damian / Hakuji + 2');
             const input = arg.join(' ');
             const [joueursInput, statsCustom] = input.split('/').map(part => part.trim());
             const [joueursAvantVs, joueursApresVs] = joueursInput.split('vs').map(part => part.trim());
             const equipe1 = joueursAvantVs.split(',').map(joueur => ({ nom: joueur.trim(), stats: { sta: 100, energie: 100, vie: 100 } }));
             const equipe2 = joueursApresVs.split(',').map(joueur => ({ nom: joueur.trim(), stats: { sta: 100, energie: 100, vie: 100 } }));
             const areneT = tirerAr();
-            const duelID = genererID();
-            repondre(`🔑 Votre clé d'accès au duel est : *${duelID}*`);
+            //const duelID = genererID();
+        //    repondre(`🔑 Votre clé d'accès au duel est : *${duelID}*`);
 
             let ficheDuel = `*🆚𝗩𝗘𝗥𝗦𝗨𝗦 𝗔𝗥𝗘𝗡𝗔 𝗕𝗔𝗧𝗧𝗟𝗘🏆🎮*
 ░░░░░░░░░░░░░░░░░░░░
@@ -68,7 +70,7 @@ zokou(
 *⚠️Vous avez 🔟 tours max pour finir votre Adversaire! Sinon la victoire sera donnée par décision selon celui qui a dominé le combat ou qui a été le plus offensif !*`;
 
             await zk.sendMessage(dest, { image: { url: areneT.image }, caption: ficheDuel }, { quoted: ms });
-            await enregistrerDuel(duelID, equipe1, equipe2, areneT, statsCustom, 'open');
+          //  await enregistrerDuel(duelID, equipe1, equipe2, areneT, statsCustom, 'open');
 
         } catch (error) {
             console.error('Erreur lors du traitement du duel:', error);
