@@ -35,7 +35,7 @@ zokou(
 
         try {
             if(!arg[0]) { 
-                repondre('pour obtenir la fiche de duel veuillez suivre ce format: +duel joueur1 à joueurN vs joueur1 à joueurN /ensuite vous mettez les stats\n Ex: +duel hakuji vs Damian / Hakuji + 2');
+             return repondre('pour obtenir la fiche de duel veuillez suivre ce format: +duel joueur1 à joueurN vs joueur1 à joueurN /ensuite vous mettez les stats\n Ex: +duel hakuji vs Damian / Hakuji + 2');
             };
             const input = arg.join(' ');
             const [joueursInput, statsCustom] = input.split('/').map(part => part.trim());
