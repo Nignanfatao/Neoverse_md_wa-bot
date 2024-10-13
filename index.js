@@ -214,12 +214,20 @@ async function main() {
                 zk.sendMessage(origineMessage, { text: message }, { quoted: ms });
             }
 
-            //auth avec le préfixe
-
-            if (verifCom) {
-
-                    //await await zk.readMessages(ms.key);
-                    const cd = evt.cm.find((zokou) => zokou.nomCom === (com));
+            //auth avec le préfixe et id
+            
+            if (mtype === 'templateButtonReplyMessage') {
+        const buttonId = ms.message.templateButtonReplyMessage.selectedId;
+            };
+            
+            if (verifCom || buttonId ) {
+                let cd
+                if(verifCom) {
+                    cd = evt.cm.find((zokou) => zokou.nomCom === (com));
+                } else { 
+                    cd = evt.cm.find((zokou) => zokou.nomCom === buttonId);
+                }
+            
                     if (cd) {
                         
                         try {
@@ -238,7 +246,7 @@ async function main() {
 
             //bouttons 
     // Vérifie si le message contient des boutons
-    if (ms.message.templateMessage) {
+    /*if (ms.message.templateMessage) {
         const buttons = ms.message.templateMessage.hydratedTemplate.hydratedButtons;
         buttons.forEach(async (button) => {
             if (button.buttonId) {
@@ -259,7 +267,7 @@ async function main() {
                 }
             }
         });
-    };
+    };*/
             // fin bouttons
 
             }); //fin evenement message
