@@ -1,6 +1,6 @@
 const { zokou } = require("../framework/zokou");
-const { pkg, prepareWAMessageMedia } = require('@whiskeysockets/baileys');
-const { generateWAMessageFromContent, proto } = pkg;
+const { generateWAMessageFromContent, prepareWAMessageMedia, proto } = require('@whiskeysockets/baileys');
+
 
 zokou(
   {
