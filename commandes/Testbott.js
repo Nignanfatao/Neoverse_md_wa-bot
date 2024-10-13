@@ -9,14 +9,14 @@ zokou(
     categorie: 'Other'
   },
   async (origineMessage, zk, commandeOptions) => {
-    const { origineMessage, ms, repondre } = commandeOptions;
+    const { ms, auteurMessage, repondre } = commandeOptions;
     
     try {
       const imageMedia = await prepareWAMessageMedia({
         image: { url: 'https://i.ibb.co/K6yZgTt/image.jpg' }
       }, { });
 
-      const message = generateWAMessageFromContent(origineMessage.key.remoteJid, {
+      const message = generateWAMessageFromContent(origineMessage, {
         viewOnceMessage: {
           message: {
             extendedTextMessage: proto.Message.ExtendedTextMessage.create({
@@ -31,7 +31,7 @@ zokou(
                 { buttonId: 'howto', buttonText: { displayText: '📽 HOW TO DEPLOY' }, type: 1, urlButton: 'https://ibrahim-adams.vercel.app/Deploy.html' },
                 { buttonId: 'channel', buttonText: { displayText: '🛰 WHATSAPP CHANNEL' }, type: 1, urlButton: 'https://whatsapp.com/channel/0029VaZuGSxEawdxZK9CzM0Y' },
               ],
-              mentionedJid: [origineMessage],
+              mentionedJid: [auteurMessage],
               contextInfo: { forwardingScore: 9999, isForwarded: true }
             })
           }
@@ -57,7 +57,7 @@ zokou(
     categorie: 'Other'
   },
   async (origineMessage, zk, commandeOptions) => {
-    const {origineMessage, ms, repondre } = commandeOptions;
+    const { ms, auteurMessage, repondre } = commandeOptions;
     
     try {
       const messageOptions = generateWAMessageFromContent(origineMessage, {
@@ -125,7 +125,7 @@ zokou(
               ],
             }),
             contextInfo: {
-              mentionedJid: [m.sender],
+              mentionedJid: [auteurMessage],
               forwardingScore: 9999,
               isForwarded: true,
             },
@@ -134,7 +134,7 @@ zokou(
       },
     }, {});
 
-    await zk.sendMessage(origineMessage, messageOptions,  { quoted: ms });
+    await zk.sendMessage(origineMessage, messageOptions.message,  { quoted: ms });
        } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
