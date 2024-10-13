@@ -78,7 +78,7 @@ zokou(
             header: proto.Message.InteractiveMessage.Header.create({
               ...(await prepareWAMessageMedia({
                 image: {
-                  url: 'https://i.imgur.com/G3WM4D8.jpeg',
+                  url: 'https://telegra.ph/file/bd75d35e193a7cf0e300a.jpg',
                 },
               }, { upload: zk.waUploadToServer })),
               title: '',
@@ -91,7 +91,7 @@ zokou(
                 {
                   name: 'quick_reply',
                   buttonParamsJson: JSON.stringify({
-                    display_text: "📜 COMMAND LIST",
+                    display_text: "Menu",
                     id: "menu",
                   }),
                 },
