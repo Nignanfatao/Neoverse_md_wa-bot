@@ -92,35 +92,14 @@ zokou(
                   name: 'quick_reply',
                   buttonParamsJson: JSON.stringify({
                     display_text: "📜 COMMAND LIST",
-                    id: "+menu",
+                    id: "menu",
                   }),
                 },
                  {
                   name: 'quick_reply',
                   buttonParamsJson: JSON.stringify({
-                    display_text: "⏳ PING",
-                    id: "+pave",
-                  }),
-                },
-                {
-                  name: 'cta_url',
-                  buttonParamsJson: JSON.stringify({
-                    display_text: "📂 REPO",
-                    url: 'https://github.com/devibraah/BWM-XMD',
-                  }),
-                },
-                {
-                 name: 'cta_url',
-                  buttonParamsJson: JSON.stringify({
-                    display_text: "📽 HOW TO DEPLOY",
-                    url: 'https://ibrahim-adams.vercel.app/Deploy.html',
-                  }),
-                },
-                {
-                  name: 'cta_url',
-                  buttonParamsJson: JSON.stringify({
-                    display_text: "🛰 WHATSAPP CHANNEL",
-                    url: 'https://whatsapp.com/channel/0029VaZuGSxEawdxZK9CzM0Y',
+                    display_text: "northainz👤",
+                    id: "northainz👤",
                   }),
                 },
               ],
