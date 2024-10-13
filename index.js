@@ -215,9 +215,9 @@ async function main() {
             }
 
             //auth avec le préfixe et id
-            
+            let buttonId;
             if (mtype === 'templateButtonReplyMessage') {
-        const buttonId = ms.message.templateButtonReplyMessage.selectedId;
+         buttonId = ms.message.templateButtonReplyMessage.selectedId;
             };
             
             if (verifCom || buttonId ) {
