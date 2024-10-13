@@ -13,7 +13,7 @@ zokou(
     
     try {
       const imageMedia = await prepareWAMessageMedia({
-        image: { url: 'https://i.ibb.co/K6yZgTt/image.jpg' }
+        image: { url: 'https://i.imgur.com/G3WM4D8.jpeg' }
       }, { upload: zk.waUploadToServer });
 
       const message = generateWAMessageFromContent(origineMessage, {
@@ -38,7 +38,8 @@ zokou(
         }
       }, {});
 
-      await zk.sendMessage(origineMessage, message.message, { quoted: ms });
+      await zk.relayMessage(origineMessage, message.message, { messageId:  message.key.id });
+     // await zk.sendMessage(origineMessage, message.message, { quoted: ms });
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
@@ -60,7 +61,7 @@ zokou(
     const { ms, auteurMessage, repondre } = commandeOptions;
     
     try {
-      const messageOptions = generateWAMessageFromContent(origineMessage, {
+      const message = generateWAMessageFromContent(origineMessage, {
       viewOnceMessage: {
         message: {
           messageContextInfo: {
@@ -77,7 +78,7 @@ zokou(
             header: proto.Message.InteractiveMessage.Header.create({
               ...(await prepareWAMessageMedia({
                 image: {
-                  url: 'https://i.ibb.co/K6yZgTt/image.jpg',
+                  url: 'https://i.imgur.com/G3WM4D8.jpeg',
                 },
               }, { upload: zk.waUploadToServer })),
               title: '',
@@ -133,8 +134,9 @@ zokou(
         },
       },
     }, {});
-
-    await zk.sendMessage(origineMessage, messageOptions.message,  { quoted: ms });
+      
+    await zk.relayMessage(origineMessage, message.message, { messageId:  message.key.id });
+  //  await zk.sendMessage(origineMessage, messageOptions.message,  { quoted: ms });
        } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
