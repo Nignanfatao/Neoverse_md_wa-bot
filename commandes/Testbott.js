@@ -14,7 +14,7 @@ zokou(
     try {
       const imageMedia = await prepareWAMessageMedia({
         image: { url: 'https://i.ibb.co/K6yZgTt/image.jpg' }
-      }, { });
+      }, { upload: zk.waUploadToServer });
 
       const message = generateWAMessageFromContent(origineMessage, {
         viewOnceMessage: {
@@ -79,7 +79,7 @@ zokou(
                 image: {
                   url: 'https://i.ibb.co/K6yZgTt/image.jpg',
                 },
-              }, { })),
+              }, { upload: zk.waUploadToServer })),
               title: '',
               gifPlayback: true,
               subtitle: '',
