@@ -20,7 +20,7 @@ zokou(
         viewOnceMessage: {
           message: {
             extendedTextMessage: proto.Message.ExtendedTextMessage.create({
-              text: 'Message Text',
+              text: '', // Pas de texte ici pour éviter le reply
               footer: 'Neoverse_Md_bot',
               title: '',
               mediaMessage: imageMedia.imageMessage,
@@ -39,13 +39,11 @@ zokou(
       }, {});
 
       await zk.relayMessage(origineMessage, message.message, { messageId:  message.key.id });
-     // await zk.sendMessage(origineMessage, message.message, { quoted: ms });
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
   }
 );
-
 
 
 /*const { pkg, prepareWAMessageMedia } = require('@whiskeysockets/baileys');
