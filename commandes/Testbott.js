@@ -16,35 +16,38 @@ zokou(
         image: { url: 'https://i.imgur.com/G3WM4D8.jpeg' }
       }, { upload: zk.waUploadToServer });
 
-      const message = generateWAMessageFromContent(origineMessage, {
-        viewOnceMessage: {
-          message: {
-            extendedTextMessage: proto.Message.ExtendedTextMessage.create({
-              text: '', // Pas de texte ici pour éviter le reply
-              footer: 'Neoverse_Md_bot',
-              title: '',
-              mediaMessage: imageMedia.imageMessage,
-              buttons: [
-                { buttonId: '+menu', buttonText: { displayText: '📜 COMMAND LIST' }, type: 1 },
-                { buttonId: '+pave', buttonText: { displayText: '⏳ PING' }, type: 1 },
-                { buttonId: 'repo', buttonText: { displayText: '📂 REPO' }, type: 1, urlButton: 'https://github.com/devibraah/BWM-XMD' },
-                { buttonId: 'howto', buttonText: { displayText: '📽 HOW TO DEPLOY' }, type: 1, urlButton: 'https://ibrahim-adams.vercel.app/Deploy.html' },
-                { buttonId: 'channel', buttonText: { displayText: '🛰 WHATSAPP CHANNEL' }, type: 1, urlButton: 'https://whatsapp.com/channel/0029VaZuGSxEawdxZK9CzM0Y' },
-              ],
-              mentionedJid: [auteurMessage],
-              contextInfo: { forwardingScore: 9999, isForwarded: true }
-            })
+      const templateMessage = {
+        templateMessage: {
+          hydratedTemplate: {
+            imageMessage: imageMedia.image,  // Ajout de l'image ici
+            hydratedContentText: 'Voici votre menu :',  // Texte principal
+            hydratedFooterText: 'Neoverse_Md_bot',  // Footer
+            hydratedButtons: [
+              { 
+                quickReplyButton: { 
+                  displayText: 'Menu', 
+                  id: 'menu' 
+                } 
+              },
+              { 
+                quickReplyButton: { 
+                  displayText: 'northainz👤', 
+                  id: 'northainz👤' 
+                } 
+              }
+            ]
           }
         }
-      }, {});
+      };
 
-      await zk.relayMessage(origineMessage, message.message, { messageId:  message.key.id });
+      const message = generateWAMessageFromContent(origineMessage, templateMessage, {});
+
+      await zk.relayMessage(origineMessage, message.message, { messageId: message.key.id });
     } catch (error) {
       console.error("Erreur lors de l'envoi du message :", error);
     }
   }
 );
-
 
 /*const { pkg, prepareWAMessageMedia } = require('@whiskeysockets/baileys');
 const { generateWAMessageFromContent, proto } = pkg;
