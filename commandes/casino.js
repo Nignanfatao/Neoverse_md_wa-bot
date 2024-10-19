@@ -49,7 +49,7 @@ zokou(
           const result_golds = await client.query(user.get_golds);
           const result_coupons = await client.query(user.get_coupons);
 
-          let valeur_np = result_np.rows[0][user.cln_nc];
+          let valeur_np = result_np.rows[0][user.cln_np];
           let valeur_nc = result_nc.rows[0][user.cln_nc];
           let valeur_golds = result_golds.rows[0][user.cln_golds];
           let valeur_coupons = result_coupons.rows[0][user.cln_coupons];
