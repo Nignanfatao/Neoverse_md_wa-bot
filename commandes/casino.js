@@ -202,7 +202,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
             return { success: true, message: msgc, image: lienc };
           } else {
             let msgd = isSecondChance
-              ? `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`; 
+              ? `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`
               :``;
             let liend = isSecondChance
               ? 'https://telegra.ph/file/222cefbcd18ba50012d05.jpg';
