@@ -242,6 +242,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
         }
       }
     } else { return repondre(`votre identifiant n'est pas encore enregistré`);
+           }
       }
     } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
