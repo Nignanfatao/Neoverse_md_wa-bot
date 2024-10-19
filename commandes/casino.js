@@ -1,6 +1,8 @@
 const { zokou } = require('../framework/zokou');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const fs = require('fs');
+const users = require('../Id_ext/northdiv');
+const s = require("../set");
+const dbUrl = s.DB;
 
 const generateRandomNumbers = (min, max, count) => {
   const numbers = new Set();
@@ -15,6 +17,7 @@ const generateRewards = () => {
   return rewards.sort(() => 0.5 - Math.random()).slice(0, 3);
 };
 
+
 zokou(
   {
     nomCom: 'roulette',
@@ -25,7 +28,40 @@ zokou(
     const { ms, repondre, auteurMessage, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
     try {
       // Vérifier si le message provient des groupes spécifiés
-      if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {
+      if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us' || origineMessage === '22605463559@s.whatsapp.net') {
+        const user = users.find(item => item.id === auteurMessage); //id mtd
+        let client;
+    if (user) {
+        const proConfig = {
+          connectionString: dbUrl,
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        };
+
+        const { Pool } = require('pg');
+        const pool = new Pool(proConfig);
+        client = await pool.connect();
+        
+        // Exécuter la requête pour récupérer la valeur souhaitée
+          const result_np = await client.query(user.get_np);
+          const result_nc = await client.query(user.get_nc);
+          const result_golds = await client.query(user.get_golds);
+          const result_coupons = await client.query(user.get_coupons);
+
+          let valeur_np = result_np.rows[0][user.cln_nc];
+          let valeur_nc = result_nc.rows[0][user.cln_nc];
+          let valeur_golds = result_golds.rows[0][user.cln_golds];
+          let valeur_coupons = result_coupons.rows[0][user.cln_coupons];
+ 
+        if (valeur_np < 1) {
+          return repondre('Nombre de Np insuffisant') 
+        } else { 
+          const sous_np = eval(`${valeur_np} - 1`);
+          const query_np = user.upd_np
+         await client.query(query_np, sous_np);    
+
+            
         let numbers = generateRandomNumbers(0, 50, 50);
         let winningNumbers = generateRandomNumbers(0, 50, 3);
         let rewards = generateRewards();
@@ -37,7 +73,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
 *\`${numbers.join(', ')}\`*
 ▔▔🎊▔🎊▔🎊▔▔🎊▔▔🎊▔🎊▔🎊
 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬🎉🎉🎉
-* \`+Cadeaux\` * (🎁 Pour voir les Récompenses possibles)
+*\`+Cadeaux\`* (🎁 Pour voir les Récompenses possibles)
 
 *🎊Voulez-vous tenter votre chance ?* (1min)
 ✅: \`Oui\`
@@ -150,12 +186,27 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
             let reward = rewards[rewardIndex];
             let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
             let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg';
+            switch (reward) {
+                  case '10🔷':
+                    await client.query(user.upd_nc, [valeur_nc + 10]);
+                    break;
+                  case '50.000 G🧭':
+                    await client.query(user.upd_golds, [valeur_golds + 50000]);
+                    break;
+                  case '10🎟':
+                    await client.query(user.upd_coupons, [valeur_coupons + 10]);
+                    break;
+                  default:
+                    await repondre('Récompense inconnue');
+                }
             return { success: true, message: msgc, image: lienc };
           } else {
             let msgd = isSecondChance
-              ? ``
-              :  `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`;
-            let liend = 'https://telegra.ph/file/222cefbcd18ba50012d05.jpg';
+              ? `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`; 
+              :``;
+            let liend = isSecondChance
+              ? 'https://telegra.ph/file/222cefbcd18ba50012d05.jpg';
+               : ``;
             return { success: false, message: msgd, image: liend };
           }
         };
@@ -190,6 +241,8 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
           }
         }
       }
+    }
+      }
     } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
       if (error.message !== 'Timeout' && error.message !== 'TooManyAttempts' && error.message !== 'GameCancelledByUser') {
@@ -200,172 +253,3 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
   }
 );
 
-zokou(
-  {
-    nomCom: 'cadeaux',
-    reaction: '🎁',
-    categorie: 'Other'
-  },
-  async (origineMessage, zk, commandeOptions) => {
-    const { ms, repondre } = commandeOptions;
-    if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {   
-      let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
-      let msg = '';
-      
-      // Envoyer l'image en vue unique
-      zk.sendMessage(origineMessage, { 
-        image: { url: lien }, 
-        caption: msg, 
-       // viewOnce: true 
-      }, { quoted: ms });
-    }
-  }
-);
-
-zokou(
-  {
-    nomCom: 'cadeau',
-    reaction: '🎁',
-    categorie: 'Other'
-  },
-  async (origineMessage, zk, commandeOptions) => {
-    const { ms, repondre } = commandeOptions;
-    let lien = 'https://i.ibb.co/K6yZgTt/image.jpg';
-    let msg = 'Sélectionnez un cadeau ci-dessous 🎁';
-    let buttons = [
-      { buttonId: 'cadeau_1', buttonText: { displayText: 'Cadeau 1' }, type: 1 },
-      { buttonId: 'cadeau_2', buttonText: { displayText: 'Cadeau 2' }, type: 1 },
-      { buttonId: 'cadeau_3', buttonText: { displayText: 'Cadeau 3' }, type: 1 }
-    ];
-    try {
-      zk.sendButImg(origineMessage, lien, msg, buttons);
-    } catch (error) {
-      console.error("Erreur lors de l'envoi du message :", error);
-    }
-  }
-);
-
-zokou(
-  {
-    nomCom: 'cad',
-    reaction: '🎁',
-    categorie: 'Other'
-  },
-  async (origineMessage, zk, commandeOptions) => {
-    const { ms, repondre } = commandeOptions;
-    let lien = 'https://i.ibb.co/K6yZgTt/image.jpg'; // Lien vers l'image à envoyer
-   // Configuration des boutons
-    const buttons = [
-        {
-            name: 'quick_reply',
-            buttonParamsJson: JSON.stringify({ display_text: "menu🌟", id: "+menu" })
-        },
-        {
-            name: 'quick_reply',
-            buttonParamsJson: JSON.stringify({ display_text: "Test 🧾", id: "+test" })
-        }
-    ];
-    // Création du message avec boutons et image
-    const messageOptions = {
-        image: { url: './video_file/rcp.jpg' }, // L'image que tu souhaites envoyer
-        header: 4,
-        footer: 'Powered by Ovl-Md',
-        caption: 'Sélectionne une option ci-dessous:',
-        buttons: buttons,
-        contextInfo: {
-                mentionedJid: [], // Utilisateurs mentionnés
-                forwardingScore: 9999, // Score de transfert
-                isForwarded: true, // Indique si le message est transféré
-                externalAdReply: {
-                    showAdAttribution: true,
-                    title: 'titre', // Titre de l'annonce
-                    body: 'corps', // Corps de l'annonce
-                    mediaType: 1, // Type de média (image, vidéo)
-                    sourceUrl: 'https://ovl.com', // URL source
-                    thumbnailUrl: './video_file/rcp.jpg', // URL de la miniature
-                    renderLargerThumbnail: false // Taille de la miniature
-                }
-        }
-    }; 
-    try {
-      // Utilisation de sendMessage directement pour envoyer l'image
-      await zk.sendMessage(origineMessage, messageOptions,  { quoted: ms });
-    } catch (error) {
-      console.error("Erreur lors de l'envoi du message :", error);
-    }
-  }
-);
-
-/*async function sendButtonMessage(chatId, buttons, quotedMessage, messageOptions) {
-    try {
-        // Prépare le message avec les boutons
-        const buttonMessage = {
-            image: messageOptions.image, // Image à inclure
-            header: messageOptions.header || '', // En-tête (facultatif)
-            footer: messageOptions.footer || '', // Pied de page (facultatif)
-            body: messageOptions.body || '', // Corps du message
-            buttons: buttons, // Liste des boutons
-            contextInfo: {
-                mentionedJid: messageOptions.mentionedJid || [], // Utilisateurs mentionnés
-                forwardingScore: messageOptions.forwardingScore || 0, // Score de transfert
-                isForwarded: messageOptions.isForwarded || false, // Indique si le message est transféré
-                externalAdReply: {
-                    title: messageOptions.adTitle || '', // Titre de l'annonce
-                    body: messageOptions.adBody || '', // Corps de l'annonce
-                    mediaType: messageOptions.mediaType || 1, // Type de média (image, vidéo)
-                    sourceUrl: messageOptions.sourceUrl || '', // URL source
-                    thumbnailUrl: messageOptions.thumbnailUrl || '', // URL de la miniature
-                    renderLargerThumbnail: messageOptions.renderLargerThumbnail || false // Taille de la miniature
-                }
-            }
-        };
-
-        // Envoie du message avec les boutons
-        await chatApi.sendMessage(chatId, buttonMessage, { quoted: quotedMessage });
-        console.log("Message envoyé avec succès !");
-    } catch (error) {
-        console.error("Erreur lors de l'envoi du message avec boutons :", error);
-    }
-}
-
-
-// Commande qui envoie un message avec boutons
-async function sendMenuCommand(pika) {
-    // Définition des options de message
-    const messageOptions = {
-        image: './path_to_image.jpg', // L'image que tu souhaites envoyer
-        header: 'Menu Principal',
-        footer: 'Powered by AnyaBot',
-        body: 'Sélectionne une option ci-dessous:',
-        adTitle: 'AnyaBot',
-        adBody: 'Le meilleur bot WhatsApp !',
-        mediaType: 1,
-        sourceUrl: 'https://anyabot.com',
-        thumbnailUrl: './path_to_thumbnail.jpg',
-        renderLargerThumbnail: false,
-        mentionedJid: [pika.sender], // Mentionne l'utilisateur qui a envoyé la commande
-        forwardingScore: 999,
-        isForwarded: true
-    };
-
-    // Boutons à inclure dans le message
-    const buttons = [
-        {
-            name: 'quick_reply',
-            buttonParamsJson: JSON.stringify({ display_text: "Allmenu 🌟", id: "!allmenu" })
-        },
-        {
-            name: 'quick_reply',
-            buttonParamsJson: JSON.stringify({ display_text: "Listmenu 🧾", id: "!listmenu" })
-        }
-    ];
-
-    // Envoi du message avec boutons
-    await sendButtonMessage(pika.chat, buttons, pika, messageOptions);
-}
-
-// Appel de la commande lorsque nécessaire
-if (command === 'menu') {
-    sendMenuCommand(pika);
-}
-*/
