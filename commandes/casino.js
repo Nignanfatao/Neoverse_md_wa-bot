@@ -57,9 +57,7 @@ zokou(
         if (valeur_np < 1) {
           return repondre('Nombre de Np insuffisant') 
         } else { 
-          const sous_np = eval(`${valeur_np} - 1`);
-          const query_np = user.upd_np
-         await client.query(query_np, sous_np);    
+         await client.query(user.upd_np, [valeur_np + 1]);    
 
             
         let numbers = generateRandomNumbers(0, 50, 50);
