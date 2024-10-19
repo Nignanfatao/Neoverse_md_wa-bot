@@ -200,12 +200,12 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
             return { success: true, message: msgc, image: lienc };
           } else {
             let msgd = isSecondChance
-              ?``
+              ? `🎊😃: *Vous avez une deuxième chance ! Choisissez un autre numéro. Vous avez 1 min ⚠️* (Répondre à ce message)`
               : `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`;
                
             let liend = isSecondChance
-              ? ''
-               : `https://telegra.ph/file/222cefbcd18ba50012d05.jpg`;
+              ? 'https://i.ibb.co/SPY5b86/image.jpg'
+              : `https://telegra.ph/file/222cefbcd18ba50012d05.jpg`;
             return { success: false, message: msgd, image: liend };
           }
         };
