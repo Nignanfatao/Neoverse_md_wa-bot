@@ -27,8 +27,14 @@ zokou(
     const { ms, repondre, auteurMessage, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
     try {
       // Vérifier si le message provient des groupes spécifiés
-      if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us' || origineMessage === '22651463203@s.whatsapp.net' || origineMessage === '22605463559@s.whatsapp.net') {
-        const user = users.find(item => item.id === auteurMessage);
+      const authorizedChats = [
+  '120363024647909493@g.us',
+  '120363307444088356@g.us',
+  '22651463203@s.whatsapp.net',
+  '22605463559@s.whatsapp.net'
+];
+      if (authorizedChats.includes(origineMessage)) {
+      const user = users.find(item => item.id === auteurMessage);
         let client;
         if (user) {
           const proConfig = {
@@ -56,7 +62,7 @@ zokou(
           let numbers = generateRandomNumbers(0, 50, 50);
           let winningNumbers = generateRandomNumbers(0, 50, 3);
           let rewards = generateRewards();
-          repondre(winningNumbers.join(', '));
+          //repondre(winningNumbers.join(', '));
           let liena = 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
           let msga = `*🎰𝗧𝗘𝗡𝗧𝗘𝗭 𝗩𝗢𝗧𝗥𝗘 𝗖𝗛𝗔𝗡𝗖𝗘🥳 !!*
 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬🎉🎉🎉
@@ -116,10 +122,10 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
           try {
             confirmation = await getConfirmation();
             if (valeur_np < 1) {
-              return repondre('Nombre de Np insuffisant');
+              return  repondre('Nombre de Neo points insuffisant');
             } else {
               await client.query(user.upd_np, [valeur_np - 1]);   
-              repondre('np retiré');
+              //repondre('np retiré');
             }
           } catch (error) {
             return; // Gestion de l'erreur, jeu annulé
@@ -237,9 +243,10 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
           } catch (error) {
             return; // Gestion de l'erreur ou délai expiré
           }
+        } else { repondre("Votre identifiant n'existe pas") 
+        }
         } else {
           return repondre("Commande non autorisée pour ce chat.");
-        }
       }
     } catch (error) {
       console.error('Erreur', error);
