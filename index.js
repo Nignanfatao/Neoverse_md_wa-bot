@@ -2,7 +2,7 @@ const fs = require('fs');
 const pino = require("pino");
 const path = require('path');
 const { exec } = require("child_process");
-const { default: makeWASocket, useMultiFileAuthState, delay, makeCacheableSignalKeyStore, jidDecode, getContentType, downloadContentFromMessage, makeInMemoryStore, fetchLatestBaileysVersion, DisconnectReason } = require("@whiskeysockets/baileys");
+const { default: makeWASocket, useMultiFileAuthState, generateWAMessageFromContent, prepareWAMessageMedia, proto, delay, makeCacheableSignalKeyStore, jidDecode, getContentType, downloadContentFromMessage, makeInMemoryStore, fetchLatestBaileysVersion, DisconnectReason } = require("@whiskeysockets/baileys");
 const boom = require("@hapi/boom");
 const conf = require("./set");
 const session = conf.SESSION_ID || "";
@@ -17,42 +17,16 @@ function decodeBase64(base64String) {
     return Buffer.from(base64String, 'base64').toString('utf8');
 }
 
-/*async function authentification() {
-        try {
-            
-            //console.log("le data "+data)
-            if (!fs.existsSync("./auth/creds.json")) {
-                console.log("connexion en cour ...");
-                await fs.writeFileSync("./auth/creds.json", atob(session), "utf8");
-                //console.log(session)
-            }
-            else if (fs.existsSync("./auth/creds.json") && session != "zokk") {
-                await fs.writeFileSync("./auth/creds.json", atob(session), "utf8");
-            }
-        }
-        catch (e) {
-            console.log("Session Invalide " + e );
-            return;
-        }
-    }
-    authentification();*/
-
 async function ovlAuth(session) {
     try {
-        //const filePath = path.join(__dirname, 'auth', 'creds.json');
-
-        const filePath = './auth/creds.json';
-        // Vérifie si le fichier creds.json n'existe pas
+        const filePath = './auth/creds.json'; 
         if (!fs.existsSync(filePath)) {
-            console.log("connexion au bot en cours");
-
-            // Décode la session et écrit dans creds.json
+            console.log("connexion au bot en cours"); 
             const decodedSession = decodeBase64(session);
-            await fs.writeFileSync(filePath, decodedSession, 'utf8');
-            
+            await fs.writeFileSync(filePath, decodedSession, 'utf8'); 
             // Lit et affiche le contenu du fichier creds.json
             const sess = fs.readFileSync(filePath, 'utf8');
-            console.log(sess);
+           // console.log(sess);
         } else if (fs.existsSync(filePath) && session !== "zokk") {
             console.log('pas de creds');
             // Décode la session et réécrit dans creds.json si la session n'est pas "ovl"
@@ -70,8 +44,7 @@ ovlAuth(session);
 
 async function main() {
     const { version, isLatest } = await fetchLatestBaileysVersion();
-    //const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, 'auth'));
-      const { state, saveCreds } = await useMultiFileAuthState('./auth');
+    const { state, saveCreds } = await useMultiFileAuthState('./auth');
     try {
         const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store"
   })
@@ -243,33 +216,6 @@ async function main() {
           const params = { zk, texte, origineMessage, repondre, ms };
         maine(params);
 
-
-            //bouttons 
-    // Vérifie si le message contient des boutons
-    /*if (ms.message.templateMessage) {
-        const buttons = ms.message.templateMessage.hydratedTemplate.hydratedButtons;
-        buttons.forEach(async (button) => {
-            if (button.buttonId) {
-                // Gestion des actions en fonction du buttonId
-                switch (button.buttonId) {
-                    case 'cadeau_1':
-                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 1!' }, { quoted: ms });
-                        break;
-                    case 'cadeau_2':
-                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 2!' }, { quoted: ms });
-                        break;
-                    case 'cadeau_3':
-                        await zk.sendMessage(origineMessage, { text: 'Vous avez sélectionné Cadeau 3!' }, { quoted: ms });
-                        break;
-                    default:
-                        await zk.sendMessage(origineMessage, { text: 'Action non reconnue.' }, { quoted: ms });
-                        break;
-                }
-            }
-        });
-    };*/
-            // fin bouttons
-
             }); //fin evenement message
 
         zk.ev.on("connection.update", async (con) => {
@@ -403,33 +349,84 @@ async function main() {
         });
     } 
 
-    zk.sendButImg = async (org, lien, txt, buttons) => {
-      let message = {
-      image: {url: lien},
-      caption: txt,
-      buttons: buttons,
-      headerType: 4,
-    };
-    try {
-      zk.sendMessage(org, message);
-    } catch (error) {
-      console.error("Erreur lors de l'envoi du message :", error);
-    }
-    }
+    zk.sendButImg = async (org, auteur, txt, img, buttons) => {
+  try {
+    const preparedMedia = await prepareWAMessageMedia({ 
+      image: { url: img } 
+    }, { upload: zk.waUploadToServer });
 
-  zk.sendButTxt = async (org,txt, buttons) => {
-let message = {
-txt,
-buttons,
-headerType: 2,
-...options
-}
-    try {
-      zk.sendMessage(org, message, ...options);
-    } catch (error) {
-      console.error("Erreur lors de l'envoi du message :", error);
-    }
-        }
+    const message = generateWAMessageFromContent(org, {
+      message: {
+        interactiveMessage: proto.Message.InteractiveMessage.create({
+          body: proto.Message.InteractiveMessage.Body.create({
+            text: txt,
+          }),
+          header: proto.Message.InteractiveMessage.Header.create({
+            imageMessage: preparedMedia.imageMessage,
+          }),
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+            buttons: buttons,
+          }),
+          contextInfo: {
+            mentionedJid: [auteur],
+            forwardingScore: 1,
+            isForwarded: false,
+          },
+        }),
+      },
+    }, {});
+
+    await zk.relayMessage(org, message.message, { messageId: message.key.id });
+    
+  } catch (error) {
+    console.error("Erreur lors de l'envoi du message :", error);
+  }
+};
+
+zk.sendButTxt = async (org, auteur, txt, buttons) => {
+  try {
+    const message = generateWAMessageFromContent(org, {
+      message: {
+        interactiveMessage: proto.Message.InteractiveMessage.create({
+          body: proto.Message.InteractiveMessage.Body.create({
+            text: txt,
+          }),
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+            buttons: buttons,
+          }),
+          contextInfo: {
+            mentionedJid: [auteur],
+            forwardingScore: 1,
+            isForwarded: false,
+          },
+        }),
+      },
+    }, {});
+
+    await zk.relayMessage(org, message.message, { messageId: message.key.id });
+  } catch (error) {
+    console.error("Erreur lors de l'envoi du message texte avec boutons :", error);
+  }
+};
+
+ zk.sendBut = async (org, buttons) => {
+  try {
+    const message = generateWAMessageFromContent(org, {
+      message: {
+        interactiveMessage: proto.Message.InteractiveMessage.create({
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+            buttons: buttons,
+          }),
+        }),
+      },
+    }, {});
+
+    await zk.relayMessage(org, message.message, { messageId: message.key.id });
+  } catch (error) {
+    console.error("Erreur lors de l'envoi des boutons sans texte ni image :", error);
+  }
+};
+        
             //fin autre fonction ovl
     } catch (error) {
         console.error("Erreur principale:", error);
