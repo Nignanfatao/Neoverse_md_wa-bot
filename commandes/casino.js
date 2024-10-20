@@ -183,7 +183,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
   }
 };
 
-const checkWinningNumber = (number) => {
+const checkWinningNumber = async (number) => {
   if (winningNumbers.includes(number)) {
     let rewardIndex = winningNumbers.indexOf(number);
     let reward = rewards[rewardIndex];
