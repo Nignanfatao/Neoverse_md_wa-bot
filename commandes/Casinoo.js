@@ -178,7 +178,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
           }
         };
 
-        const checkWinningNumber = (isSecondChance = false, number) => {
+        const checkWinningNumber = async (isSecondChance = false, number) => {
           if (winningNumbers.includes(number)) {
             let rewardIndex = winningNumbers.indexOf(number);
             let reward = rewards[rewardIndex];
