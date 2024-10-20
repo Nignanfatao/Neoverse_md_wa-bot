@@ -132,7 +132,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
           }
         }
 
-        const getChosenNumber = (isSecondChance = false, attempt = 1) => {
+        const getChosenNumber = async (isSecondChance = false, attempt = 1) => {
           if (attempt > 3) {
             await repondre('*❌ Jeu annulé : trop de tentatives.*');
             throw new Error('TooManyAttempts');
@@ -178,7 +178,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
           }
         };
 
-        const checkWinningNumber = async (isSecondChance = false, number) => {
+        const checkWinningNumber =  (isSecondChance = false, number) => {
           if (winningNumbers.includes(number)) {
             let rewardIndex = winningNumbers.indexOf(number);
             let reward = rewards[rewardIndex];
