@@ -28,7 +28,7 @@ zokou(
     const { ms, repondre, auteurMessage, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
     try {
       // Vérifier si le message provient des groupes spécifiés
-      if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {
+      if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us' || origineMessage === '22651463203@s.whatsapp.net' || origineMessage === '22605463559@s.whatsapp.net') {
         const user = users.find(item => item.id === auteurMessage); //id mtd
         let client;
     if (user) {
