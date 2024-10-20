@@ -57,7 +57,8 @@ zokou(
         if (valeur_np < 1) {
           return repondre('Nombre de Np insuffisant') 
         } else { 
-         await client.query(user.upd_np, [valeur_np + 1]);    
+         await client.query(user.upd_np, [valeur_np + 1]);   
+          repondre('np retiré');
 
             
         let numbers = generateRandomNumbers(0, 50, 50);
