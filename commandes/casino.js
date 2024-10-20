@@ -134,20 +134,59 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
           }
         }
 
-        const getChosenNumber = async (attempt = 1, isSecondChance = false) => {
+        const getChosenNumber1 = async (attempt = 1) => {
   if (attempt > 3) {
     await repondre('*❌ Jeu annulé : trop de tentatives.*');
     throw new Error('TooManyAttempts');
   }
 
   // Message personnalisé selon s'il s'agit de la deuxième chance ou non
-  let msg = isSecondChance 
-    ? '🎊😃: *Vous avez une deuxième chance ! Choisissez un autre numéro. Vous avez 1 min ⚠️* (Répondre à ce message)'
-    : '🎊😃: *Choisissez un numéro. Vous avez 1 min ⚠️* (Répondre à ce message)';
+  let msg = '🎊😃: *Choisissez un numéro. Vous avez 1 min ⚠️* (Répondre à ce message)';
     
-  let lien = isSecondChance 
-    ? 'https://i.ibb.co/SPY5b86/image.jpg' 
-    : 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
+  let lien = 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
+
+  await zk.sendMessage(origineMessage, { image: { url: lien }, caption: msg }, { quoted: ms });
+
+  try {
+    const rep = await zk.awaitForMessage({
+      sender: auteurMessage,
+      chatJid: origineMessage,
+      timeout: 60000 // 60 secondes
+    });
+
+    let chosenNumber;
+    try {
+      chosenNumber = rep.message.extendedTextMessage.text;
+    } catch {
+      chosenNumber = rep.message.conversation;
+    }
+
+    chosenNumber = parseInt(chosenNumber);
+
+    if (isNaN(chosenNumber) || chosenNumber < 0 || chosenNumber > 50) {
+      await repondre('Veuillez choisir un des numéros proposés.');
+      return await getChosenNumber(attempt + 1, isSecondChance);
+    }
+
+    return chosenNumber;
+  } catch (error) {
+    if (error.message === 'Timeout') {
+      await repondre('*❌ Délai d\'attente expiré*');
+      throw error;
+    } else {
+      throw error;
+    }
+  }
+};
+          const getChosenNumber2 = async (attempt = 1) => {
+  if (attempt > 3) {
+    await repondre('*❌ Jeu annulé : trop de tentatives.*');
+    throw new Error('TooManyAttempts');
+  }
+
+  // Message personnalisé selon s'il s'agit de la deuxième chance ou non
+  let msg = '🎊😃: *Vous avez une deuxième chance ! Choisissez un autre numéro. Vous avez 1 min ⚠️* (Répondre à ce message)';
+  let lien = 'https://i.ibb.co/SPY5b86/image.jpg';
 
   await zk.sendMessage(origineMessage, { image: { url: lien }, caption: msg }, { quoted: ms });
 
@@ -183,7 +222,31 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
   }
 };
 
-const checkWinningNumber = async (number) => {
+const checkWinningNumber1 = async (number) => {
+  if (winningNumbers.includes(number)) {
+    let rewardIndex = winningNumbers.indexOf(number);
+    let reward = rewards[rewardIndex];
+    let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
+    let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg';
+    
+    switch (reward) {
+      case '10🔷':
+        await client.query(user.upd_nc, [valeur_nc + 10]);
+        break;
+      case '50.000 G🧭':
+        await client.query(user.upd_golds, [valeur_golds + 50000]);
+        break;
+      case '10🎟':
+        await client.query(user.upd_coupons, [valeur_coupons + 10]);
+        break;
+      default:
+        await repondre('Récompense inconnue');
+    }
+   
+    return { success: true, message: msgc, image: lienc };
+  } 
+};
+          const checkWinningNumber2 = async (number) => {
   if (winningNumbers.includes(number)) {
     let rewardIndex = winningNumbers.indexOf(number);
     let reward = rewards[rewardIndex];
@@ -214,16 +277,16 @@ const checkWinningNumber = async (number) => {
 
 try {
   // Choisir le premier numéro
-  const chosenNumber1 = await getChosenNumber();
-  let result1 = checkWinningNumber(chosenNumber1);
+  const chosenNumber1 = await getChosenNumber1();
+  let result1 = checkWinningNumber1(chosenNumber1);
 
-//  await zk.sendMessage(origineMessage, { image: { url: result1.image }, caption: result1.message }, { quoted: ms });
+ await zk.sendMessage(origineMessage, { image: { url: result1.image }, caption: result1.message }, { quoted: ms });
 
   if (!result1.success) {
     // Si le premier numéro est incorrect, offrir une deuxième chance
     try {
-      const chosenNumber2 = await getChosenNumber(1, true); // Deuxième tentative
-      let result2 = checkWinningNumber(chosenNumber2);
+      const chosenNumber2 = await getChosenNumber2(); // Deuxième tentative
+      let result2 = checkWinningNumber2(chosenNumber2);
       await zk.sendMessage(origineMessage, { image: { url: result2.image }, caption: result2.message }, { quoted: ms });
     } catch (error) {
               if (error.message === 'TooManyAttempts' || error.message === 'Timeout') {
