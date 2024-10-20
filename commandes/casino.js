@@ -190,7 +190,7 @@ const checkWinningNumber = async (number) => {
     let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
     let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg';
     
-    switch (reward) {
+    /*switch (reward) {
       case '10🔷':
         await client.query(user.upd_nc, [valeur_nc + 10]);
         break;
@@ -203,7 +203,7 @@ const checkWinningNumber = async (number) => {
       default:
         await repondre('Récompense inconnue');
     }
-    
+    */
     return { success: true, message: msgc, image: lienc };
   } else {
     let msgd = `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`;
