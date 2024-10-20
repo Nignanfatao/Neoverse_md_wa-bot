@@ -29,6 +29,31 @@ zokou(
     try {
       // Vérifier si le message provient des groupes spécifiés
       if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us' || origineMessage === '22651463203@s.whatsapp.net' || origineMessage === '22605463559@s.whatsapp.net') {
+        const user = users.find(item => item.id === auteurMessage); //id mtd
+        let client;
+    if (user) {
+        const proConfig = {
+          connectionString: dbUrl,
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        };
+
+        const { Pool } = require('pg');
+        const pool = new Pool(proConfig);
+        client = await pool.connect();
+        
+        // Exécuter la requête pour récupérer la valeur souhaitée
+          const result_np = await client.query(user.get_np);
+          const result_nc = await client.query(user.get_nc);
+          const result_golds = await client.query(user.get_golds);
+          const result_coupons = await client.query(user.get_coupons);
+
+          let valeur_np = result_np.rows[0][user.cln_np];
+          let valeur_nc = result_nc.rows[0][user.cln_nc];
+          let valeur_golds = result_golds.rows[0][user.cln_golds];
+          let valeur_coupons = result_coupons.rows[0][user.cln_coupons];
+      
         let numbers = generateRandomNumbers(0, 50, 50);
         let winningNumbers = generateRandomNumbers(0, 50, 3);
         let rewards = generateRewards();
@@ -90,36 +115,12 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
         let confirmation;
         try {
           confirmation = await getConfirmation();
-          const user = users.find(item => item.id === auteurMessage); //id mtd
-        let client;
-    if (user) {
-        const proConfig = {
-          connectionString: dbUrl,
-          ssl: {
-            rejectUnauthorized: false,
-          },
-        };
-
-        const { Pool } = require('pg');
-        const pool = new Pool(proConfig);
-        client = await pool.connect();
-        
-        // Exécuter la requête pour récupérer la valeur souhaitée
-          const result_np = await client.query(user.get_np);
-          const result_nc = await client.query(user.get_nc);
-          const result_golds = await client.query(user.get_golds);
-          const result_coupons = await client.query(user.get_coupons);
-
-          let valeur_np = result_np.rows[0][user.cln_np];
-          let valeur_nc = result_nc.rows[0][user.cln_nc];
-          let valeur_golds = result_golds.rows[0][user.cln_golds];
-          let valeur_coupons = result_coupons.rows[0][user.cln_coupons];
- 
-        if (valeur_np < 1) {
+         if (valeur_np < 1) {
           return repondre('Nombre de Np insuffisant') 
         } else { 
          await client.query(user.upd_np, [valeur_np - 1]);   
           repondre('np retiré');
+         }
         } catch (error) {
           if (error.message === 'TooManyAttempts') {
             // Le message de cancellation a déjà été envoyé dans getConfirmation
@@ -222,6 +223,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
             throw error;
           }
         }
+      }
       }
     } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
