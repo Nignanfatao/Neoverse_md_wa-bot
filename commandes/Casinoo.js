@@ -178,12 +178,26 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
           }
         };
 
-        const checkWinningNumber =  (isSecondChance = false, number) => {
+        const checkWinningNumber = async (isSecondChance = false, number) => {
           if (winningNumbers.includes(number)) {
             let rewardIndex = winningNumbers.indexOf(number);
             let reward = rewards[rewardIndex];
             let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
             let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg';
+            switch (reward) {
+      case '10🔷':
+        await client.query(user.upd_nc, [valeur_nc + 10]);
+        break;
+      case '50.000 G🧭':
+        await client.query(user.upd_golds, [valeur_golds + 50000]);
+        break;
+      case '10🎟':
+        await client.query(user.upd_coupons, [valeur_coupons + 10]);
+        break;
+      default:
+        await repondre('Récompense inconnue');
+    }
+   
             return { success: true, message: msgc, image: lienc };
           } else {
             let msgd = isSecondChance
@@ -196,7 +210,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
 
         try {
           const chosenNumber1 = await getChosenNumber();
-          let result1 = checkWinningNumber(chosenNumber1);
+          let result1 = await checkWinningNumber(chosenNumber1);
 
           await zk.sendMessage(origineMessage, { image: { url: result1.image }, caption: result1.message }, { quoted: ms });
 
@@ -204,7 +218,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
             // Offrir une deuxième chance
             try {
               const chosenNumber2 = await getChosenNumber(true);
-              let result2 = checkWinningNumber(true,chosenNumber2);
+              let result2 = await checkWinningNumber(true,chosenNumber2);
               await zk.sendMessage(origineMessage, { image: { url: result2.image }, caption: result2.message }, { quoted: ms });
             } catch (error) {
               if (error.message === 'TooManyAttempts' || error.message === 'Timeout') {
