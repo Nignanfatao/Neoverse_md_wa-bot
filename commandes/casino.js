@@ -4,6 +4,7 @@ const users = require('../Id_ext/northdiv');
 const s = require("../set");
 const dbUrl = s.DB;
 
+
 const generateRandomNumbers = (min, max, count) => {
   const numbers = new Set();
   while (numbers.size < count) {
@@ -17,7 +18,6 @@ const generateRewards = () => {
   return rewards.sort(() => 0.5 - Math.random()).slice(0, 3);
 };
 
-
 zokou(
   {
     nomCom: 'roulette',
@@ -28,7 +28,7 @@ zokou(
     const { ms, repondre, auteurMessage, auteurMsgRepondu, msgRepondu, arg } = commandeOptions;
     try {
       // Vérifier si le message provient des groupes spécifiés
-      if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us' || origineMessage === '22605463559@s.whatsapp.net' || origineMessage === '22651463203@s.whatsapp.net') {
+      if (origineMessage === '120363024647909493@g.us' || origineMessage === '120363307444088356@g.us') {
         const user = users.find(item => item.id === auteurMessage); //id mtd
         let client;
     if (user) {
@@ -57,10 +57,11 @@ zokou(
         if (valeur_np < 1) {
           return repondre('Nombre de Np insuffisant') 
         } else { 
-         await client.query(user.upd_np, [valeur_np + 1]);   
+         await client.query(user.upd_np, [valeur_np - 1]);   
           repondre('np retiré');
 
             
+        
         let numbers = generateRandomNumbers(0, 50, 50);
         let winningNumbers = generateRandomNumbers(0, 50, 3);
         let rewards = generateRewards();
@@ -179,7 +180,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
           }
         };
 
-        const checkWinningNumber = async (isSecondChance = false, number) => {
+        const checkWinningNumber = (isSecondChance = false, number) => {
           if (winningNumbers.includes(number)) {
             let rewardIndex = winningNumbers.indexOf(number);
             let reward = rewards[rewardIndex];
@@ -197,16 +198,11 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
                     break;
                   default:
                     await repondre('Récompense inconnue');
-                }
+            }
             return { success: true, message: msgc, image: lienc };
           } else {
-            let msgd = isSecondChance
-              ? `🎊😃: *Vous avez une deuxième chance ! Choisissez un autre numéro. Vous avez 1 min ⚠️* (Répondre à ce message)`
-              : `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`;
-               
-            let liend = isSecondChance
-              ? 'https://i.ibb.co/SPY5b86/image.jpg'
-              : `https://telegra.ph/file/222cefbcd18ba50012d05.jpg`;
+            let msgd = `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`;
+            let liend =  'https://telegra.ph/file/222cefbcd18ba50012d05.jpg';
             return { success: false, message: msgd, image: liend };
           }
         };
@@ -240,9 +236,6 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
             throw error;
           }
         }
-      }
-    } else { return repondre(`votre identifiant n'est pas encore enregistré`);
-           }
       }
     } catch (error) {
       console.error("Erreur lors du jeu de roulette:", error);
