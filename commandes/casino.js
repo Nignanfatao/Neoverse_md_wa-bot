@@ -226,21 +226,34 @@ try {
       let result2 = checkWinningNumber(chosenNumber2);
       await zk.sendMessage(origineMessage, { image: { url: result2.image }, caption: result2.message }, { quoted: ms });
     } catch (error) {
-      if (error.message === 'TooManyAttempts' || error.message === 'Timeout') {
-        return; // Jeu annulé 
-    } else {
+              if (error.message === 'TooManyAttempts' || error.message === 'Timeout') {
+                // Le message de cancellation a dÃ©jÃ  Ã©tÃ© envoyÃ© dans getChosenNumber
+                return;
+              } else {
+                throw error;
+              }
+            }
+          }
+        } catch (error) {
+          if (error.message === 'TooManyAttempts' || error.message === 'GameCancelledByUser' || error.message === 'Timeout') {
+            // Les messages de cancellation ont dÃ©jÃ  Ã©tÃ© envoyÃ©s dans les fonctions respectives
+            return;
+          } else {
             throw error;
           }
         }
       }
-    } else { return repondre(`votre identifiant n'est pas encore enregistrÃ©`);
+    } else { return repondre(`votre identifiant n'est pas encore enregistré`);
            }
       }
     } catch (error) {
-  console.error("Erreur lors du jeu de roulette:", error);
-  repondre('Une erreur est survenue. Veuillez réessayer.');
-}
-
+      console.error("Erreur lors du jeu de roulette:", error);
+      if (error.message !== 'Timeout' && error.message !== 'TooManyAttempts' && error.message !== 'GameCancelledByUser') {
+        repondre('Une erreur est survenue. Veuillez réessayer.');
+      }
+    }
+  }
+);
 
 zokou(
   {
