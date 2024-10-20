@@ -279,6 +279,7 @@ try {
   // Choisir le premier numéro
   const chosenNumber1 = await getChosenNumber1();
   let result1 = checkWinningNumber1(chosenNumber1);
+console.log(`URL: ${result1.image}, msg: ${result1.message}`);
 
  await zk.sendMessage(origineMessage, { image: { url: result1.image }, caption: result1.message }, { quoted: ms });
 
@@ -287,6 +288,8 @@ try {
     try {
       const chosenNumber2 = await getChosenNumber2(); // Deuxième tentative
       let result2 = checkWinningNumber2(chosenNumber2);
+      console.log(`URL: ${result2.image}, msg: ${result2.message}`);
+
       await zk.sendMessage(origineMessage, { image: { url: result2.image }, caption: result2.message }, { quoted: ms });
     } catch (error) {
               if (error.message === 'TooManyAttempts' || error.message === 'Timeout') {
