@@ -184,6 +184,21 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
             let reward = rewards[rewardIndex];
             let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
             let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg';
+            
+    switch (reward) {
+      case '10🔷':
+        await client.query(user.upd_nc, [valeur_nc + 10]);
+        break;
+      case '50.000 G🧭':
+        await client.query(user.upd_golds, [valeur_golds + 50000]);
+        break;
+      case '10🎟':
+        await client.query(user.upd_coupons, [valeur_coupons + 10]);
+        break;
+      default:
+        await repondre('Récompense inconnue');
+    }
+   
             return { success: true, message: msgc, image: lienc };
           } else {
             let msgd = isSecondChance
