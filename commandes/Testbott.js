@@ -1,57 +1,6 @@
 const { zokou } = require("../framework/zokou");
-const { generateWAMessageFromContent, prepareWAMessageMedia, proto } = require('@whiskeysockets/baileys');
+/*const { generateWAMessageFromContent, prepareWAMessageMedia, proto } = require('@whiskeysockets/baileys');
 
-
-zokou(
-  {
-    nomCom: 'cadee',
-    reaction: '🎁',
-    categorie: 'Other'
-  },
-  async (origineMessage, zk, commandeOptions) => {
-    const { ms, auteurMessage, repondre } = commandeOptions;
-    
-    try {
-      const imageMedia = await prepareWAMessageMedia({
-        image: { url: 'https://i.imgur.com/G3WM4D8.jpeg' }
-      }, { upload: zk.waUploadToServer });
-
-      const templateMessage = {
-        templateMessage: {
-          hydratedTemplate: {
-            imageMessage: imageMedia.image,  // Ajout de l'image ici
-            hydratedContentText: 'Voici votre menu :',  // Texte principal
-            hydratedFooterText: 'Neoverse_Md_bot',  // Footer
-            hydratedButtons: [
-              { 
-                quickReplyButton: { 
-                  displayText: 'Menu', 
-                  id: 'menu' 
-                } 
-              },
-              { 
-                quickReplyButton: { 
-                  displayText: 'northainz👤', 
-                  id: 'northainz👤' 
-                } 
-              }
-            ]
-          }
-        }
-      };
-
-      const message = generateWAMessageFromContent(origineMessage, templateMessage, {});
-
-      await zk.relayMessage(origineMessage, message.message, { messageId: message.key.id });
-    } catch (error) {
-      console.error("Erreur lors de l'envoi du message :", error);
-    }
-  }
-);
-
-/*const { pkg, prepareWAMessageMedia } = require('@whiskeysockets/baileys');
-const { generateWAMessageFromContent, proto } = pkg;
-*/
 zokou(
   {
     nomCom: 'cadeebmw',
@@ -121,5 +70,115 @@ zokou(
       console.error("Erreur lors de l'envoi du message :", error);
     }
   }
-);
+);*/
  
+
+zokou(
+  {
+    nomCom: 'butimg',
+    reaction: '🎁',
+    categorie: 'Other'
+  },
+  async (origineMessage, zk, commandeOptions) => {
+    const { ms, auteurMessage, repondre } = commandeOptions;
+    
+    try {
+    let texte = "boutons message";
+    let lien = "https://i.imgur.com/G3WM4D8.jpeg";
+    let buttons = [
+                {
+                  name: 'quick_reply',
+                  buttonParamsJson: JSON.stringify({
+                    display_text: "",
+                    id: "menu",
+                  }),
+                },
+                 {
+                  name: 'quick_reply',
+                  buttonParamsJson: JSON.stringify({
+                    display_text: "northainz👤",
+                    id: "northainz👤",
+                  }),
+                },
+              ];
+     await zk.sendButImg(origineMessage, auteurMessage, texte, lien, buttons);
+      
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du message :", error);
+    }
+  }
+);
+
+zokou(
+  {
+    nomCom: 'buttxt',
+    reaction: '🎁',
+    categorie: 'Other'
+  },
+  async (origineMessage, zk, commandeOptions) => {
+    const { ms, auteurMessage, repondre } = commandeOptions;
+    
+    try {
+    let texte = "boutons message";
+    let buttons = [
+                {
+                  name: 'quick_reply',
+                  buttonParamsJson: JSON.stringify({
+                    display_text: "menu",
+                    id: "menu",
+                  }),
+                },
+                 {
+                  name: 'quick_reply',
+                  buttonParamsJson: JSON.stringify({
+                    display_text: "northainz👤",
+                    id: "northainz👤",
+                  }),
+                },
+              ];
+     await zk.sendButTxt(origineMessage, auteurMessage, texte, buttons);
+       } catch (error) {
+      console.error("Erreur lors de l'envoi du message :", error);
+    }
+  }
+);
+
+zokou(
+  {
+    nomCom: 'but',
+    reaction: '🎁',
+    categorie: 'Other'
+  },
+  async (origineMessage, zk, commandeOptions) => {
+    const { ms, auteurMessage, repondre } = commandeOptions;
+    
+    try {
+    let texte = "boutons message";
+    let buttons = [
+                {
+                  name: 'quick_reply',
+                  buttonParamsJson: JSON.stringify({
+                    display_text: "menu",
+                    id: "menu",
+                  }),
+                },
+                 {
+                  name: 'quick_reply',
+                  buttonParamsJson: JSON.stringify({
+                    display_text: "northainz👤",
+                    id: "northainz👤",
+                  }),
+                },
+              ];
+     await zk.sendBut(origineMessage, buttons);
+            } catch (error) {
+      console.error("Erreur lors de l'envoi du message :", error);
+    }
+  }
+);
+
+
+/* zk.sendButImg = async (org, auteur, txt, img, buttons)
+zk.sendButTxt = async (org, auteur, txt, buttons)
+zk.sendBut = async (org, buttons)
+*/
