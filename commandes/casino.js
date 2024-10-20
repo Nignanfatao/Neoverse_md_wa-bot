@@ -165,7 +165,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
 
     if (isNaN(chosenNumber) || chosenNumber < 0 || chosenNumber > 50) {
       await repondre('Veuillez choisir un des numéros proposés.');
-      return await getChosenNumber(attempt + 1, isSecondChance);
+      return await getChosenNumber1(attempt + 1, isSecondChance);
     }
 
     return chosenNumber;
@@ -208,7 +208,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
 
     if (isNaN(chosenNumber) || chosenNumber < 0 || chosenNumber > 50) {
       await repondre('Veuillez choisir un des numéros proposés.');
-      return await getChosenNumber(attempt + 1, isSecondChance);
+      return await getChosenNumber2(attempt + 1, isSecondChance);
     }
 
     return chosenNumber;
@@ -226,8 +226,6 @@ const checkWinningNumber1 = async (number) => {
   if (winningNumbers.includes(number)) {
     let rewardIndex = winningNumbers.indexOf(number);
     let reward = rewards[rewardIndex];
-    let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
-    let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg';
     
     switch (reward) {
       case '10🔷':
@@ -243,16 +241,17 @@ const checkWinningNumber1 = async (number) => {
         await repondre('Récompense inconnue');
     }
    
-    return { success: true, message: msgc, image: lienc };
+    return { success: true, 
+            message: `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`, 
+            image: "https://telegra.ph/file/dc157f349cd8045dff559.jpg"
+           };
   } 
 };
           const checkWinningNumber2 = async (number) => {
   if (winningNumbers.includes(number)) {
     let rewardIndex = winningNumbers.indexOf(number);
     let reward = rewards[rewardIndex];
-    let msgc = `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`;
-    let lienc = 'https://telegra.ph/file/dc157f349cd8045dff559.jpg';
-    
+     
     switch (reward) {
       case '10🔷':
         await client.query(user.upd_nc, [valeur_nc + 10]);
@@ -267,11 +266,15 @@ const checkWinningNumber1 = async (number) => {
         await repondre('Récompense inconnue');
     }
    
-    return { success: true, message: msgc, image: lienc };
+    return { success: true, 
+            message: `🎊🥳😍 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬*✅EXCELLENT! C'était le bon numéro ${reward}! Vas-y tu peux encore gagner plus ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬😍🥳🎊`, 
+            image: "https://telegra.ph/file/dc157f349cd8045dff559.jpg"
+           };
   } else {
-    let msgd = `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`;
-    let liend =  'https://telegra.ph/file/222cefbcd18ba50012d05.jpg';
-    return { success: false, message: msgd, image: liend };
+    return { success: false,
+            message: `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`,
+            image: "https://telegra.ph/file/222cefbcd18ba50012d05.jpg"
+           };
   }
 };
 
