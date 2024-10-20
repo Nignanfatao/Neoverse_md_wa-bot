@@ -56,6 +56,7 @@ zokou(
           let numbers = generateRandomNumbers(0, 50, 50);
           let winningNumbers = generateRandomNumbers(0, 50, 3);
           let rewards = generateRewards();
+          repondre(winningNumbers);
           let liena = 'https://telegra.ph/file/9a411be3bf362bd0bcea4.jpg';
           let msga = `*🎰𝗧𝗘𝗡𝗧𝗘𝗭 𝗩𝗢𝗧𝗥𝗘 𝗖𝗛𝗔𝗡𝗖𝗘🥳 !!*
 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬🎉🎉🎉
