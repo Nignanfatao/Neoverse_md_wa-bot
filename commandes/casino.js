@@ -19,7 +19,7 @@ const generateRewards = () => {
 
 zokou(
   {
-    nomCom: 'roulettet',
+    nomCom: 'roulettes',
     reaction: '🎰',
     categorie: 'NEO_GAMES🎰'
   },
