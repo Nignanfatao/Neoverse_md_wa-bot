@@ -19,7 +19,7 @@ const generateRewards = () => {
 
 zokou(
   {
-    nomCom: 'roulettes',
+    nomCom: 'roulettet',
     reaction: '🎰',
     categorie: 'NEO_GAMES🎰'
   },
@@ -194,27 +194,41 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
 
               return { success: true, message: msgc, image: lienc };
             } else {
-              let msgd = isSecondChance 
-                ? '' // Ne renvoie rien si c'est la deuxième chance
-                : `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`; // Message d'échec
-              let liend = isSecondChance
-                ? ''
-                : 'https://telegra.ph/file/222cefbcd18ba50012d05.jpg';
-              return { success: false, message: msgd, image: liend };
+              if (isSecondChance) {
+                // Message d'échec final après la deuxième tentative
+                let msgd = `😫😖💔 ▭▬▭▬▭▬▭▬▭▬▭▬❌NON ! C'était le mauvais numéro ! Dommage tu y étais presque💔▭▬▭▬▭▬▭▬▭▬▭▬😫😖💔`;
+                let liend = 'https://telegra.ph/file/222cefbcd18ba50012d05.jpg';
+                return { success: false, message: msgd, image: liend };
+              } else {
+                // Ne rien envoyer après le premier échec
+                return { success: false, message: null, image: null };
+              }
             }
           };
 
           try {
             const chosenNumber1 = await getChosenNumber();
-            let result1 = await checkWinningNumber(false, chosenNumber1);
+            const result1 = await checkWinningNumber(false, chosenNumber1);
 
-            await zk.sendMessage(origineMessage, { image: { url: result1.image }, caption: result1.message }, { quoted: ms });
+            if (result1.success) {
+              await zk.sendMessage(origineMessage, { image: { url: result1.image }, caption: result1.message }, { quoted: ms });
+            } else {
+              // Si échec à la première tentative, proposer une deuxième chance
+              if (result1.message) {
+                await zk.sendMessage(origineMessage, { image: { url: result1.image }, caption: result1.message }, { quoted: ms });
+              }
 
-            if (!result1.success) {
               try {
                 const chosenNumber2 = await getChosenNumber(true);
-                let result2 = await checkWinningNumber(true, chosenNumber2);
-                await zk.sendMessage(origineMessage, { image: { url: result2.image }, caption: result2.message }, { quoted: ms });
+                const result2 = await checkWinningNumber(true, chosenNumber2);
+
+                if (result2.success) {
+                  await zk.sendMessage(origineMessage, { image: { url: result2.image }, caption: result2.message }, { quoted: ms });
+                } else {
+                  if (result2.message) {
+                    await zk.sendMessage(origineMessage, { image: { url: result2.image }, caption: result2.message }, { quoted: ms });
+                  }
+                }
               } catch (error) {
                 return; // Erreur ou délai expiré lors de la deuxième chance
               }
