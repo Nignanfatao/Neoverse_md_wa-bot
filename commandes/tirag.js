@@ -27,66 +27,6 @@ function tirerCategorie(probabilities) {
     return probabilities[probabilities.length - 1].subCategory;
 }
 
-function getAllCategories(Acategory) {
-    const categoryKey = Acategory === 'legends' ? 'legend' : Acategory;
-    if (!cards[categoryKey]) return []; 
-    const categories = new Set();
-    cards[categoryKey].forEach(card => {
-        categories.add(card.category);
-    });
-    return Array.from(categories);
-}
-
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-function findCardWithRandomGrade(Acategory, initialGrade, initialCategory, cartesTirees) {
-    const categoryKey = Acategory === 'legends' ? 'legend' : Acategory;
-    const availableGrades = ['bronze', 'argent', 'or'];
-    let gradesToTry = [];
-    if (availableGrades.includes(initialGrade)) {
-        gradesToTry.push(initialGrade);
-        const remainingGrades = availableGrades.filter(grade => grade !== initialGrade);
-        gradesToTry = gradesToTry.concat(shuffleArray(remainingGrades));
-    } else {
-        gradesToTry = shuffleArray([...availableGrades]);
-    }
-
-    const allCategories = getAllCategories(categoryKey);
-
-    for (const currentGrade of gradesToTry) {
-        const categoriesToTry = [initialCategory, ...allCategories.filter(cat => cat !== initialCategory)];
-        
-        for (const category of categoriesToTry) {
-            const card = getRandomCard(categoryKey, currentGrade, category, cartesTirees);
-            if (card) {
-                return card;
-            }
-        }
-    }
-
-    return null;
-}
-
-function getRandomCard(Acategory, grade, Category, cartesTirees) {
-    const categoryKey = Acategory === 'legends' ? 'legend' : Acategory;
-    if (!cards[categoryKey]) return null;
-
-    const cardsArray = cards[categoryKey].filter(card => card.grade === grade && card.category === Category && !cartesTirees.includes(card.name));
-    
-    if (cardsArray.length === 0) {
-        return null;
-    }
-    
-    const randomIndex = Math.floor(Math.random() * cardsArray.length);
-    return cardsArray[randomIndex];
-}
-
 async function envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, subCategoryProbabilities, cartesTirees) {
     let card;
     let attempts = 0;
@@ -183,22 +123,55 @@ zokou(
             }
 
             const config = {
-                sparking: {
-                    videoUrl: "./video_file/sparking.mp4",
-                    gradeProbabilities: [{ grade: "or", probability: 10 }, { grade: "argent", probability: 30 }, { grade: "bronze", probability: 60 }],
-                    subCategoryProbabilities: [{ subCategory: "s-", probability: 35 }, { subCategory: "s", probability: 25 }, { subCategory: "s+", probability: 18 }, { subCategory: "ss-", probability: 10 }, { subCategory: "ss", probability: 8 }, { subCategory: "ss+", probability: 4 }]
-                },
-                ultra: {
-                    videoUrl: "./video_file/ultra.mp4",
-                    gradeProbabilities: [{ grade: "or", probability: 15 }, { grade: "argent", probability: 35 }, { grade: "bronze", probability: 50 }],
-                    subCategoryProbabilities: [{ subCategory: "s-", probability: 30 }, { subCategory: "s", probability: 20 }, { subCategory: "s+", probability: 20 }, { subCategory: "ss-", probability: 15 }, { subCategory: "ss", probability: 10 }, { subCategory: "ss+", probability: 5 }]
-                },
-                legends: {
-                    videoUrl: "./video_file/legend.mp4",
-                    gradeProbabilities: [{ grade: "or", probability: 20 }, { grade: "argent", probability: 40 }, { grade: "bronze", probability: 40 }],
-                    subCategoryProbabilities: [{ subCategory: "s-", probability: 25 }, { subCategory: "s", probability: 20 }, { subCategory: "s+", probability: 20 }, { subCategory: "ss-", probability: 15 }, { subCategory: "ss", probability: 10 }, { subCategory: "ss+", probability: 10 }]
-                }
-            };
+    sparking: {
+        videoUrl: "./video_file/sparking.mp4",
+        gradeProbabilities: [
+            { grade: "or", probability: 10 },
+            { grade: "argent", probability: 30 },
+            { grade: "bronze", probability: 60 }
+        ],
+        subCategoryProbabilities: [
+            { subCategory: "s-", probability: 40 },
+            { subCategory: "s", probability: 30 },
+            { subCategory: "s+", probability: 20 },
+            { subCategory: "ss-", probability: 5 },
+            { subCategory: "ss", probability: 3 },
+            { subCategory: "ss+", probability: 2 }
+        ]
+    },
+    ultra: {
+        videoUrl: "./video_file/ultra.mp4",
+        gradeProbabilities: [
+            { grade: "or", probability: 15 },
+            { grade: "argent", probability: 35 },
+            { grade: "bronze", probability: 50 }
+        ],
+        subCategoryProbabilities: [
+            { subCategory: "s-", probability: 35 },
+            { subCategory: "s", probability: 25 },
+            { subCategory: "s+", probability: 18 },
+            { subCategory: "ss-", probability: 12 },
+            { subCategory: "ss", probability: 7 },
+            { subCategory: "ss+", probability: 3 }
+        ]
+    },
+    legends: {
+        videoUrl: "./video_file/legend.mp4",
+        gradeProbabilities: [
+            { grade: "or", probability: 20 },
+            { grade: "argent", probability: 40 },
+            { grade: "bronze", probability: 40 }
+        ],
+        subCategoryProbabilities: [
+            { subCategory: "s-", probability: 30 },
+            { subCategory: "s", probability: 25 },
+            { subCategory: "s+", probability: 20 },
+            { subCategory: "ss-", probability: 12 },
+            { subCategory: "ss", probability: 8 },
+            { subCategory: "ss+", probability: 5 }
+        ]
+    }
+};
 
             const selectedConfig = config[niveau];
             await envoyerVideo(dest, zk, selectedConfig.videoUrl);
