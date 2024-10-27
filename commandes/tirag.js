@@ -1,8 +1,6 @@
-// Importations
 const { zokou } = require('../framework/zokou');
-const { cards } = require('./cards'); // Assurez-vous que 'cards' contient les bonnes informations
+const { cards } = require('./cards');
 
-// Fonction pour tirer la probabilité d'un grade
 function tirerProbabilite(probabilities) {
     const random = Math.random() * 100;
     let cumulativeProbability = 0;
@@ -16,7 +14,6 @@ function tirerProbabilite(probabilities) {
     return probabilities[probabilities.length - 1].grade;
 }
 
-// Fonction pour tirer la probabilité d'une sous-catégorie
 function tirerCategorie(probabilities) {
     const random = Math.random() * 100;
     let cumulativeProbability = 0;
@@ -30,24 +27,66 @@ function tirerCategorie(probabilities) {
     return probabilities[probabilities.length - 1].subCategory;
 }
 
-// Fonction pour trouver une carte aléatoire en fonction du grade et de la catégorie
-function findCardWithRandomGrade(imageCategory, grade, category, cartesTirees) {
-    const filteredCards = cards.filter(card =>
-        card.grade === grade &&
-        card.category === category &&
-        card.imageCategory === imageCategory &&
-        !cartesTirees.includes(card.name)
-    );
-
-    if (filteredCards.length === 0) {
-        return null;
-    }
-
-    const randomIndex = Math.floor(Math.random() * filteredCards.length);
-    return filteredCards[randomIndex];
+function getAllCategories(Acategory) {
+    const categoryKey = Acategory === 'legends' ? 'legend' : Acategory;
+    if (!cards[categoryKey]) return []; 
+    const categories = new Set();
+    cards[categoryKey].forEach(card => {
+        categories.add(card.category);
+    });
+    return Array.from(categories);
 }
 
-// Fonction pour envoyer une carte au destinataire
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function findCardWithRandomGrade(Acategory, initialGrade, initialCategory, cartesTirees) {
+    const categoryKey = Acategory === 'legends' ? 'legend' : Acategory;
+    const availableGrades = ['bronze', 'argent', 'or'];
+    let gradesToTry = [];
+    if (availableGrades.includes(initialGrade)) {
+        gradesToTry.push(initialGrade);
+        const remainingGrades = availableGrades.filter(grade => grade !== initialGrade);
+        gradesToTry = gradesToTry.concat(shuffleArray(remainingGrades));
+    } else {
+        gradesToTry = shuffleArray([...availableGrades]);
+    }
+
+    const allCategories = getAllCategories(categoryKey);
+
+    for (const currentGrade of gradesToTry) {
+        const categoriesToTry = [initialCategory, ...allCategories.filter(cat => cat !== initialCategory)];
+        
+        for (const category of categoriesToTry) {
+            const card = getRandomCard(categoryKey, currentGrade, category, cartesTirees);
+            if (card) {
+                return card;
+            }
+        }
+    }
+
+    return null;
+}
+
+function getRandomCard(Acategory, grade, Category, cartesTirees) {
+    const categoryKey = Acategory === 'legends' ? 'legend' : Acategory;
+    if (!cards[categoryKey]) return null;
+
+    const cardsArray = cards[categoryKey].filter(card => card.grade === grade && card.category === Category && !cartesTirees.includes(card.name));
+    
+    if (cardsArray.length === 0) {
+        return null;
+    }
+    
+    const randomIndex = Math.floor(Math.random() * cardsArray.length);
+    return cardsArray[randomIndex];
+}
+
 async function envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, subCategoryProbabilities, cartesTirees) {
     let card;
     let attempts = 0;
@@ -77,7 +116,6 @@ async function envoyerCarte(dest, zk, ms, imageCategory, gradeProbabilities, sub
     throw new Error("Aucune carte disponible dans cette catégorie et grade, même après fallback.");
 }
 
-// Fonction pour envoyer une vidéo d'animation d'introduction
 async function envoyerVideo(dest, zk, videoUrl) {
     try {
         await zk.sendMessage(dest, { video: { url: videoUrl }, gifPlayback: true });
@@ -86,7 +124,6 @@ async function envoyerVideo(dest, zk, videoUrl) {
     }
 }
 
-// Commande principale 'tirage'
 zokou(
   { 
     nomCom: "tirage", 
@@ -146,56 +183,55 @@ zokou(
             }
 
             const config = {
-                sparking: {
-                    videoUrl: "./video_file/sparking.mp4",
-                    gradeProbabilities: [
-                        { grade: "or", probability: 10 },
-                        { grade: "argent", probability: 30 },
-                        { grade: "bronze", probability: 60 }
-                    ],
-                    subCategoryProbabilities: [
-                        { subCategory: "s-", probability: 40 },
-                        { subCategory: "s", probability: 30 },
-                        { subCategory: "s+", probability: 20 },
-                        { subCategory: "ss-", probability: 5 },
-                        { subCategory: "ss", probability: 3 },
-                        { subCategory: "ss+", probability: 2 }
-                    ]
-                },
-                ultra: {
-                    videoUrl: "./video_file/ultra.mp4",
-                    gradeProbabilities: [
-                        { grade: "or", probability: 15 },
-                        { grade: "argent", probability: 35 },
-                        { grade: "bronze", probability: 50 }
-                    ],
-                    subCategoryProbabilities: [
-                        { subCategory: "s-", probability: 35 },
-                        { subCategory: "s", probability: 25 },
-                        { subCategory: "s+", probability: 18 },
-                        { subCategory: "ss-", probability: 12 },
-                        { subCategory: "ss", probability: 7 },
-                        { subCategory: "ss+", probability: 3 }
-                    ]
-                },
-                legends: {
-                    videoUrl: "./video_file/legend.mp4",
-                    gradeProbabilities: [
-                        { grade: "or", probability: 20 },
-                        { grade: "argent", probability: 40 },
-                        { grade: "bronze", probability: 40 }
-                    ],
-                    subCategoryProbabilities: [
-                        { subCategory: "s-", probability: 30 },
-                        { subCategory: "s", probability: 25 },
-                        { subCategory: "s+", probability: 20 },
-                        { subCategory: "ss-", probability: 12 },
-                        { subCategory: "ss", probability: 8 },
-                        { subCategory: "ss+", probability: 5 }
-                    ]
-                }
-            };
-
+    sparking: {
+        videoUrl: "./video_file/sparking.mp4",
+        gradeProbabilities: [
+            { grade: "or", probability: 5 },
+            { grade: "argent", probability: 15 },
+            { grade: "bronze", probability: 80 }
+        ],
+        subCategoryProbabilities: [
+            { subCategory: "s-", probability: 50 },
+            { subCategory: "s", probability: 25 },
+            { subCategory: "s+", probability: 15 },
+            { subCategory: "ss-", probability: 5 },
+            { subCategory: "ss", probability: 3 },
+            { subCategory: "ss+", probability: 2 }
+        ]
+    },
+    ultra: {
+        videoUrl: "./video_file/ultra.mp4",
+        gradeProbabilities: [
+            { grade: "or", probability: 10 },
+            { grade: "argent", probability: 20 },
+            { grade: "bronze", probability: 70 }
+        ],
+        subCategoryProbabilities: [
+            { subCategory: "s-", probability: 45 },
+            { subCategory: "s", probability: 25 },
+            { subCategory: "s+", probability: 15 },
+            { subCategory: "ss-", probability: 8 },
+            { subCategory: "ss", probability: 5 },
+            { subCategory: "ss+", probability: 2 }
+        ]
+    },
+    legends: {
+        videoUrl: "./video_file/legend.mp4",
+        gradeProbabilities: [
+            { grade: "or", probability: 15 },
+            { grade: "argent", probability: 25 },
+            { grade: "bronze", probability: 60 }
+        ],
+        subCategoryProbabilities: [
+            { subCategory: "s-", probability: 40 },
+            { subCategory: "s", probability: 25 },
+            { subCategory: "s+", probability: 20 },
+            { subCategory: "ss-", probability: 7 },
+            { subCategory: "ss", probability: 5 },
+            { subCategory: "ss+", probability: 3 }
+        ]
+    }
+};
             const selectedConfig = config[niveau];
             await envoyerVideo(dest, zk, selectedConfig.videoUrl);
 
