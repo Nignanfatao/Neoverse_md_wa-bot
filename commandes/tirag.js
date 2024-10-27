@@ -188,7 +188,7 @@ zokou(
                     subCategoryProbabilities: [{ subCategory: "s-", probability: 30 }, { subCategory: "s", probability: 20 }, { subCategory: "s+", probability: 20 }, { subCategory: "ss-", probability: 15 }, { subCategory: "ss", probability: 10 }, { subCategory: "ss+", probability: 5 }]
                 },
                 legends: {
-                    videoUrl: "./video_file/legends.mp4",
+                    videoUrl: "./video_file/legend.mp4",
                     gradeProbabilities: [{ grade: "or", probability: 20 }, { grade: "argent", probability: 40 }, { grade: "bronze", probability: 40 }],
                     subCategoryProbabilities: [{ subCategory: "s-", probability: 25 }, { subCategory: "s", probability: 20 }, { subCategory: "s+", probability: 20 }, { subCategory: "ss-", probability: 15 }, { subCategory: "ss", probability: 10 }, { subCategory: "ss+", probability: 10 }]
                 }
