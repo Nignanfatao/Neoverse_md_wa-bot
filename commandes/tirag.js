@@ -120,7 +120,7 @@ async function envoyerVideo(dest, zk, videoUrl) {
 
 zokou(
   { 
-    nomCom: "tirageallstars", 
+    nomCom: "tirage", 
     reaction: "🎰", 
     categorie: "NEO_GAMES🎰" 
   }, 
