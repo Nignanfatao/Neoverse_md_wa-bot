@@ -4,7 +4,7 @@ const { cards } = require('./cards');
 function tirerProbabilite(probabilities) {
     const random = Math.random() * 100;
     let cumulativeProbability = 0;
-    
+
     for (let i = 0; i < probabilities.length; i++) {
         cumulativeProbability += probabilities[i].probability;
         if (random < cumulativeProbability) {
@@ -28,8 +28,10 @@ function tirerCategorie(probabilities) {
 }
 
 function getAllCategories(Acategory) {
+    const categoryKey = Acategory === 'legends' ? 'legend' : Acategory;
+    if (!cards[categoryKey]) return []; 
     const categories = new Set();
-    cards[Acategory].forEach(card => {
+    cards[categoryKey].forEach(card => {
         categories.add(card.category);
     });
     return Array.from(categories);
@@ -44,6 +46,7 @@ function shuffleArray(array) {
 }
 
 function findCardWithRandomGrade(Acategory, initialGrade, initialCategory, cartesTirees) {
+    const categoryKey = Acategory === 'legends' ? 'legend' : Acategory;
     const availableGrades = ['bronze', 'argent', 'or'];
     let gradesToTry = [];
     if (availableGrades.includes(initialGrade)) {
@@ -54,13 +57,13 @@ function findCardWithRandomGrade(Acategory, initialGrade, initialCategory, carte
         gradesToTry = shuffleArray([...availableGrades]);
     }
 
-    const allCategories = getAllCategories(Acategory);
+    const allCategories = getAllCategories(categoryKey);
 
     for (const currentGrade of gradesToTry) {
         const categoriesToTry = [initialCategory, ...allCategories.filter(cat => cat !== initialCategory)];
         
         for (const category of categoriesToTry) {
-            const card = getRandomCard(Acategory, currentGrade, category, cartesTirees);
+            const card = getRandomCard(categoryKey, currentGrade, category, cartesTirees);
             if (card) {
                 return card;
             }
@@ -71,7 +74,10 @@ function findCardWithRandomGrade(Acategory, initialGrade, initialCategory, carte
 }
 
 function getRandomCard(Acategory, grade, Category, cartesTirees) {
-    const cardsArray = cards[Acategory].filter(card => card.grade === grade && card.category === Category && !cartesTirees.includes(card.name));
+    const categoryKey = Acategory === 'legends' ? 'legend' : Acategory;
+    if (!cards[categoryKey]) return null;
+
+    const cardsArray = cards[categoryKey].filter(card => card.grade === grade && card.category === Category && !cartesTirees.includes(card.name));
     
     if (cardsArray.length === 0) {
         return null;
@@ -198,19 +204,20 @@ zokou(
             await envoyerVideo(dest, zk, selectedConfig.videoUrl);
 
             const cartesTirees = [];
-            for (let i = 0; i < 10; i++) {
+            const tirages = 2;  // Tirer 2 cartes quel que soit le niveau
+
+            for (let i = 0; i < tirages; i++) {
                 try {
                     await envoyerCarte(dest, zk, ms, niveau, selectedConfig.gradeProbabilities, selectedConfig.subCategoryProbabilities, cartesTirees);
                 } catch (error) {
-                    await repondre(`Erreur lors de l'envoi de la carte: ${error.message}`);
-                    break;
+                    await repondre(error.message);
                 }
             }
         } else {
-            await repondre("Cette commande n'est pas disponible dans cette conversation.");
+            return await repondre('*❌ Vous ne pouvez pas lancer cette commande ici*');
         }
     } catch (error) {
-        console.error("Erreur dans la commande tirageallstars:", error.message);
-        await repondre("Une erreur est survenue lors de l'exécution de la commande.");
+        return repondre(`Erreur lors de l'envoi des cartes : ${error.message}`);
     }
-});
+  }
+);
