@@ -26,7 +26,7 @@ async function ovlAuth(session) {
             await fs.writeFileSync(filePath, decodedSession, 'utf8'); 
             // Lit et affiche le contenu du fichier creds.json
             const sess = fs.readFileSync(filePath, 'utf8');
-           // console.log(sess);
+            console.log(sess);
         } else if (fs.existsSync(filePath) && session !== "zokk") {
             console.log('pas de creds');
             // Décode la session et réécrit dans creds.json si la session n'est pas "ovl"
