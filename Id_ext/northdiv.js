@@ -74,23 +74,23 @@ const players = [
     upd_coupons: "UPDATE centraldiv SET e8 = $1 WHERE id = 4", 
     upd_golds: "UPDATE centraldiv SET e5 = $1 WHERE id = 4"
   },
-  /*
+  //rudeus
   { 
-    id: "", 
-    nom: "",
+    id: "242064379833@s.whatsapp.net", 
+    nom: "Rudeus",
     cln_np: 'e9',
     cln_nc: "e6",
     cln_coupons: "e8", 
     cln_golds: "e5",
-    get_np: "SELECT e9 FROM centraldiv WHERE id = ", 
-    get_nc: "SELECT e6 FROM centraldiv WHERE id = ", 
-    get_coupons: "SELECT e8 FROM centraldiv WHERE id = ", 
-    get_golds: "SELECT e5 FROM  centraldiv WHERE id = ",
-    upd_np: "UPDATE centraldiv SET e9 = $1 WHERE id = ", 
-    upd_nc: "UPDATE centraldiv SET e6 = $1 WHERE id = ", 
-    upd_coupons: "UPDATE centraldiv SET e8 = $1 WHERE id = ", 
-    upd_golds: "UPDATE centraldiv SET e5 = $1 WHERE id = "
-  },
+    get_np: "SELECT e9 FROM centraldiv WHERE id = 10", 
+    get_nc: "SELECT e6 FROM centraldiv WHERE id = 10", 
+    get_coupons: "SELECT e8 FROM centraldiv WHERE id = 10", 
+    get_golds: "SELECT e5 FROM  centraldiv WHERE id = 10",
+    upd_np: "UPDATE centraldiv SET e9 = $1 WHERE id = 10", 
+    upd_nc: "UPDATE centraldiv SET e6 = $1 WHERE id = 10", 
+    upd_coupons: "UPDATE centraldiv SET e8 = $1 WHERE id = 10", 
+    upd_golds: "UPDATE centraldiv SET e5 = $1 WHERE id = 10"
+  },/*
   { 
     id: "", 
     nom: "",
