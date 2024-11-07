@@ -1,5 +1,5 @@
 const { zokou } = require("../framework/zokou");
-/*const { generateWAMessageFromContent, prepareWAMessageMedia, proto } = require('@whiskeysockets/baileys');
+const { generateWAMessageFromContent, prepareWAMessageMedia, proto } = require('@whiskeysockets/baileys');
 
 zokou(
   {
@@ -70,7 +70,7 @@ zokou(
       console.error("Erreur lors de l'envoi du message :", error);
     }
   }
-);*/
+);
  
 
 zokou(
