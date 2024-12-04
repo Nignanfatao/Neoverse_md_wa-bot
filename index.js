@@ -12,34 +12,25 @@ const FileType = require('file-type')
 const prefixe = conf.PREFIXE || "/";
 const maine = require('./commandes/elysium_control_bot');
 
-
-function decodeBase64(base64String) {
-    return Buffer.from(base64String, 'base64').toString('utf8');
-}
-
 async function ovlAuth(session) {
+    let sessionId;
     try {
-        const filePath = './auth/creds.json'; 
+        if (session.startsWith("Ovl-MD_") && session.endsWith("_SESSION-ID")) {
+            sessionId = session.slice(7, -11);
+        }
+        const response = await axios.get('https://pastebin.com/raw/' + sessionId);
+        const data = typeof response.data === 'string' ? response.data : JSON.stringify(response.data);
+        const filePath = path.join(__dirname, 'auth', 'creds.json');
         if (!fs.existsSync(filePath)) {
-            console.log("connexion au bot en cours"); 
-            const decodedSession = decodeBase64(session);
-            await fs.writeFileSync(filePath, decodedSession, 'utf8'); 
-            // Lit et affiche le contenu du fichier creds.json
-            const sess = fs.readFileSync(filePath, 'utf8');
-            console.log(sess);
-        } else if (fs.existsSync(filePath) && session !== "zokk") {
-            console.log('pas de creds');
-            // Décode la session et réécrit dans creds.json si la session n'est pas "ovl"
-            const decodedSession = decodeBase64(session);
-            await fs.writeFileSync(filePath, decodedSession, 'utf8');
-            //console.log(decodedSession);
+            console.log("Connexion au bot en cours");
+            await fs.writeFileSync(filePath, data, 'utf8'); 
+        } else if (fs.existsSync(filePath) && session !== "ovl") {
+            await fs.writeFileSync(filePath, data, 'utf8');
         }
     } catch (e) {
-        console.log("Session invalide: " + e);
+        console.log("Session invalide: " + e.message || e);
     }
-}
-
-// Appelez la fonction avec votre variable session
+ }
 ovlAuth(session);
 
 async function main() {
