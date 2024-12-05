@@ -8,6 +8,7 @@ const conf = require("./set");
 const session = conf.SESSION_ID || "";
 let evt = require(__dirname + "/framework/zokou");
 let { reagir } = require(__dirname + "/framework/app");
+const axios = require("axios");
 const FileType = require('file-type')
 const prefixe = conf.PREFIXE || "/";
 const maine = require('./commandes/elysium_control_bot');
