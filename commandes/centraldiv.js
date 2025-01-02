@@ -56,7 +56,7 @@ ${data.e17}
 
                     if (superUser) {
                         const updates = await processUpdates(arg, data_id, client);
-                        await updatePlayerData(updates, client);
+                        await updatePlayerData(updates, client, data_id);
 
                         const messages = updates.map(update => `⚙ Object: ${update.object}\n💵 Ancienne Valeur: ${update.oldValue}\n💵 Nouvelle Valeur: ${update.newValue}`).join('\n\n');
                         await repondre(`Données du joueur mises à jour:\n\n${messages}`);
@@ -110,7 +110,7 @@ async function calculateNewValue(colonneObjet, signe, valeur, data_id, client) {
     return { oldValue, newValue };
 }
 
-async function updatePlayerData(updates, client) {
+async function updatePlayerData(updates, client, data_id) {
     await client.query('BEGIN');
     for (const update of updates) {
         const query = `UPDATE centraldiv SET ${update.colonneObjet} = $1 WHERE id = ${data_id}`;
