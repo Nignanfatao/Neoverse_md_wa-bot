@@ -83,16 +83,27 @@ async function processUpdates(arg, data_id, client) {
     };
 
     const updates = [];
-    for (let i = 0; i < arg.length; i += 3) {
+    let i = 0;
+
+    while (i < arg.length) {
         const [object, signe, valeur] = [arg[i], arg[i+1], arg[i+2]];
         const colonneObjet = colonnesJoueur[object];
-        const { oldValue, newValue } = await calculateNewValue(colonneObjet, signe, valeur, data_id, client);
-        updates.push({ colonneObjet, newValue, oldValue, object });
+        let texte = [];
+        i += 3;
+
+        while (i < arg.length && !colonnesJoueur[arg[i]]) {
+            texte.push(arg[i]);
+            i++;
+        }
+
+        const { oldValue, newValue } = await calculateNewValue(colonneObjet, signe, valeur, texte, data_id, client);
+        updates.push({ colonneObjet, newValue, oldValue, object, texte });
     }
+
     return updates;
 }
 
-async function calculateNewValue(colonneObjet, signe, valeur, data_id, client) {
+async function calculateNewValue(colonneObjet, signe, valeur, texte, data_id, client) {
     const query = `SELECT ${colonneObjet} FROM centraldiv WHERE id = ${data_id}`;
     const result = await client.query(query);
     const oldValue = result.rows[0][colonneObjet];
@@ -101,7 +112,6 @@ async function calculateNewValue(colonneObjet, signe, valeur, data_id, client) {
     if (signe === '+' || signe === '-') {
         newValue = eval(`${oldValue} ${signe} ${valeur}`);
     } else if (signe === '=' || signe === 'add' || signe === 'supp') {
-        const texte = [];
         if (signe === '=') newValue = texte.join(' ');
         else if (signe === 'add') newValue = oldValue + ' ' + texte.join(' ');
         else if (signe === 'supp') newValue = oldValue.replace(new RegExp(`\\b${normalizeText(texte.join(' '))}\\b`, 'gi'), '').trim();
