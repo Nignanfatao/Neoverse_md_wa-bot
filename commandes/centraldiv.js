@@ -20,7 +20,7 @@ function add_fiche(nom_joueur, data_id, image_oc) {
                 const [joueur, object, signe, valeur, ...texte] = arg;
 
                 if (!arg.length) {
-                    const mesg = `░▒▒▒▒░░▒░ \`JOUEUR`\👤
+                    const mesg = `░▒▒▒▒░░▒░ \`JOUEUR\`👤
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 ◇ *Pseudo👤*: ${data.e1}
 ◇ *Position Continentale🌍:* ${data.e23}
@@ -35,13 +35,13 @@ function add_fiche(nom_joueur, data_id, image_oc) {
 ◇ *Coupons🎟*:  ${data.e8}🎟
 ◇ *Gift Box🎁*: ${data.e7}🎁
                     
-░▒▒▒▒░░▒░ \`PALMARÈS`\🏆 
+░▒▒▒▒░░▒░ \`PALMARÈS\`🏆 
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 *✭Records*: ${data.e12} Victoires✅/ ${data.e13} Défaites❌
 *🏆Trophées*: ${data.e14}  *🌟 TOS*: ${data.e15}  
 *💫Neo Awards*: ${data.e16}   *🎖️Globes*: ${data.e22}
 
-░▒▒▒▒░░▒░ \`CARDS`\🎴 
+░▒▒▒▒░░▒░ \`CARDS\`🎴 
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔                                      
 ${data.e17}
 ░░░░░░░░░░░░░░░░░░░
@@ -130,10 +130,10 @@ async function updatePlayerData(updates, client, data_id) {
 
 
 //add_fiche(nom_joueur, data_id, image_oc)
-add_fiche('centralabdiel👤', '1', 'https://i.ibb.co/d4vspyP/image.jpg')
-add_fiche('centralajax👤', '3', 'https://i.ibb.co/d4vspyP/image.jpg')
-add_fiche('centraldabi👤', '4', 'https://i.ibb.co/d4vspyP/image.jpg')
-add_fiche('centralhakuji👤', '5', 'https://i.ibb.co/d4vspyP/image.jpg')
-add_fiche('centralyuan👤', '6', 'https://i.ibb.co/d4vspyP/image.jpg')
-add_fiche('centralrudeus👤', '7', 'https://i.ibb.co/d4vspyP/image.jpg')
-add_fiche('centralirito👤', '10', 'https://i.ibb.co/d4vspyP/image.jpg')
+add_fiche('centralabdiel👤', '1', 'https://i.ibb.co/d4vspyP/image.jpg');
+add_fiche('centralajax👤', '3', 'https://i.ibb.co/d4vspyP/image.jpg');
+add_fiche('centraldabi👤', '4', 'https://i.ibb.co/d4vspyP/image.jpg');
+add_fiche('centralhakuji👤', '5', 'https://i.ibb.co/d4vspyP/image.jpg');
+add_fiche('centralyuan👤', '6', 'https://i.ibb.co/d4vspyP/image.jpg');
+add_fiche('centralrudeus👤', '7', 'https://i.ibb.co/d4vspyP/image.jpg');
+add_fiche('centralirito👤', '10', 'https://i.ibb.co/d4vspyP/image.jpg');
