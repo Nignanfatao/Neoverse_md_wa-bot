@@ -10,7 +10,7 @@ function normalizeText(text) {
 
 function add_fiche(nom_joueur, data_id, image_oc) {
     zokou(
-        { nomCom: nom_joueur, categorie: 'CENTAL🐯🟠' },
+        { nomCom: nom_joueur, categorie: 'CENTRAL🐯🟠' },
         async (dest, zk, commandeOptions) => {
             const { ms, repondre, arg, superUser } = commandeOptions;
             let client;
@@ -20,30 +20,29 @@ function add_fiche(nom_joueur, data_id, image_oc) {
                 const [joueur, object, signe, valeur, ...texte] = arg;
 
                 if (!arg.length) {
-                    const mesg = `.                     *👤𝗜𝗡𝗙𝗢𝗦 𝗗𝗘 𝗝𝗢𝗨𝗘𝗨𝗥𝗦👤*
-▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
+                    const mesg = `░▒▒▒▒░░▒░ `JOUEUR`👤
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 ◇ *Pseudo👤*: ${data.e1}
 ◇ *Position Continentale🌍:* ${data.e23}
-◇ *Division🛡️*: ${data.e2}
+◇ *Division🛡️*: *${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
-◇ *Rang 🎖️*:${data.e4}
+◇ *Rang 🎖️*: ${data.e4}
 ◇ *Classe🏆*: ${data.e3}
-▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-◇ *Golds🧭*: ${data.e5} G🧭
+▔▔▔▔▔▔▔▔▔▔▔░▒▒▒▒░░▒░
+◇ *Golds🧭*: ${data.e5}G🧭
 ◇ *NΞOcoins🔹*: ${data.e6}🔷
 ◇ *NΞO points🔸*:  ${data.e9}🔸 
 ◇ *Coupons🎟*:  ${data.e8}🎟
-◇ *Gift Box🎁*:${data.e7} 🎁
-
-                             *🏆𝗣𝗔𝗟𝗠𝗔𝗥𝗘𝗦🏆*
-▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
-▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+◇ *Gift Box🎁*: ${data.e7}🎁
+                    
+░▒▒▒▒░░▒░ `PALMARÈS`🏆 
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 *✭Records*: ${data.e12} Victoires✅/ ${data.e13} Défaites❌
 *🏆Trophées*: ${data.e14}  *🌟 TOS*: ${data.e15}  
 *💫Neo Awards*: ${data.e16}   *🎖️Globes*: ${data.e22}
-▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-                                       *🎴𝗖𝗔𝗥𝗗𝗦🎴*
-▓ ▓ ▓ ▓▓▓▓▓▓ ▓▓▓ ▓ ▓
+
+░▒▒▒▒░░▒░ `CARDS`🎴 
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔                                      
 ${data.e17}
 ░░░░░░░░░░░░░░░░░░░
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
