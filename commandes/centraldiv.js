@@ -131,3 +131,9 @@ async function updatePlayerData(updates, client, data_id) {
 
 //add_fiche(nom_joueur, data_id, image_oc)
 add_fiche('centralabdiel👤', '1', 'https://i.ibb.co/d4vspyP/image.jpg')
+add_fiche('centralajax👤', '3', 'https://i.ibb.co/d4vspyP/image.jpg')
+add_fiche('centraldabi👤', '4', 'https://i.ibb.co/d4vspyP/image.jpg')
+add_fiche('centralhakuji👤', '5', 'https://i.ibb.co/d4vspyP/image.jpg')
+add_fiche('centralyuan👤', '6', 'https://i.ibb.co/d4vspyP/image.jpg')
+add_fiche('centralrudeus👤', '7', 'https://i.ibb.co/d4vspyP/image.jpg')
+add_fiche('centralirito👤', '10', 'https://i.ibb.co/d4vspyP/image.jpg')
