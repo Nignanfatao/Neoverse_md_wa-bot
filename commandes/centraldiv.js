@@ -130,10 +130,13 @@ async function updatePlayerData(updates, client, data_id) {
 
 
 //add_fiche(nom_joueur, data_id, image_oc)
-add_fiche('centralabdiel👤', '?', 'https://i.ibb.co/d4vspyP/image.jpg');
-add_fiche('centralajax👤', '?', 'https://i.ibb.co/d4vspyP/image.jpg');
-add_fiche('centraldabi👤', '?', 'https://i.ibb.co/d4vspyP/image.jpg');
-add_fiche('centralhakuji👤', '9', 'https://i.ibb.co/d4vspyP/image.jpg');
-add_fiche('centralyuan👤', '?', 'https://i.ibb.co/d4vspyP/image.jpg');
-add_fiche('centralrudeus👤', 10', 'https://i.ibb.co/d4vspyP/image.jpg');
+add_fiche('centralabdiel👤', '1', 'https://i.ibb.co/d4vspyP/image.jpg');
+add_fiche('centraldabi👤', '2', 'https://i.ibb.co/d4vspyP/image.jpg');
+add_fiche('centralyuan👤', '3', 'https://i.ibb.co/d4vspyP/image.jpg');
 add_fiche('centralirito👤', '4', 'https://i.ibb.co/d4vspyP/image.jpg');
+add_fiche('centralhakuji👤', '5', 'https://i.ibb.co/d4vspyP/image.jpg');
+//6
+add_fiche('centralajax👤', '7', 'https://i.ibb.co/d4vspyP/image.jpg');
+add_fiche('centralmakima👤', '8', 'https://i.ibb.co/d4vspyP/image.jpg');
+//9
+add_fiche('centralrudeus👤', '10', 'https://i.ibb.co/d4vspyP/image.jpg');
