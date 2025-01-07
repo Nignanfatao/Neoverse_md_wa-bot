@@ -24,7 +24,7 @@ function add_fiche(nom_joueur, data_id, image_oc) {
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 ◇ *Pseudo👤*: ${data.e1}
 ◇ *Position Continentale🌍:* ${data.e23}
-◇ *Division🛡️*: *${data.e2}*
+◇ *Division🛡️*: *${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*: ${data.e4}
 ◇ *Classe🏆*: ${data.e3}
@@ -41,7 +41,7 @@ function add_fiche(nom_joueur, data_id, image_oc) {
 *🏆Trophées*: ${data.e14}  *🌟 TOS*: ${data.e15}  
 *💫Neo Awards*: ${data.e16}   *🎖️Globes*: ${data.e22}
 
-░▒▒▒▒░░▒░\ `CARDS\`🎴 
+░▒▒▒▒░░▒░ \`CARDS\`🎴 
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔                                      
 ${data.e17}
 ░░░░░░░░░░░░░░░░░░░
@@ -103,7 +103,7 @@ async function processUpdates(arg, data_id, client) {
 }
 
 async function calculateNewValue(colonneObjet, signe, valeur, texte, data_id, client) {
-    const query = `SELECT ${colonneObjet} FROM eastdiv WHERE id = ${data_id}`;
+    const query = `SELECT ${colonneObjet} FROM centraldiv WHERE id = ${data_id}`;
     const result = await client.query(query);
     const oldValue = result.rows[0][colonneObjet];
     let newValue;
@@ -122,16 +122,20 @@ async function calculateNewValue(colonneObjet, signe, valeur, texte, data_id, cl
 async function updatePlayerData(updates, client, data_id) {
     await client.query('BEGIN');
     for (const update of updates) {
-        const query = `UPDATE eastdiv SET ${update.colonneObjet} = $1 WHERE id = ${data_id}`;
+        const query = `UPDATE centraldiv SET ${update.colonneObjet} = $1 WHERE id = ${data_id}`;
         await client.query(query, [update.newValue]);
     }
     await client.query('COMMIT');
 }
-
-
+1 5 8 9
 //add_fiche(nom_joueur, data_id, image_oc)
 add_fiche('eastwhite👤', '1', 'https://files.catbox.moe/fduke1.jpg');
-add_fiche('eastjuuzo👤', '10', 'https://files.catbox.moe/x89mpn.jpg');
+add_fiche('eastkemael👤', '2', 'https://telegra.ph/file/638f67854ccfaa1ee1a8a.jpg');
+add_fiche('eastaltheos👤', '3', 'https://telegra.ph/file/5ecddffc7c18e84861bf2.jpg');
 add_fiche('eastgoldy👤', '4', 'https://files.catbox.moe/39hhue.jpg');
+//5
 add_fiche('eastatsushi👤', '6', 'https://files.catbox.moe/uzu7vu.jpg');
 add_fiche('eastadam👤', '7', 'https://files.catbox.moe/6z4kiy.jpg');
+//8
+//9
+add_fiche('eastjuuzo👤', '10', 'https://files.catbox.moe/x89mpn.jpg');
