@@ -130,8 +130,8 @@ async function updatePlayerData(updates, client, data_id) {
 
 //add_fiche(nom_joueur, data_id, image_oc)
 add_fiche('eastwhite👤', '1', 'https://files.catbox.moe/fduke1.jpg');
-add_fiche('eastkemael👤', '2', 'https://telegra.ph/file/638f67854ccfaa1ee1a8a.jpg');
-add_fiche('eastaltheos👤', '3', 'https://telegra.ph/file/5ecddffc7c18e84861bf2.jpg');
+//add_fiche('eastkemael👤', '2', 'https://telegra.ph/file/638f67854ccfaa1ee1a8a.jpg');
+//add_fiche('eastaltheos👤', '3', 'https://telegra.ph/file/5ecddffc7c18e84861bf2.jpg');
 add_fiche('eastgoldy👤', '4', 'https://files.catbox.moe/39hhue.jpg');
 //5
 add_fiche('eastatsushi👤', '6', 'https://files.catbox.moe/uzu7vu.jpg');
