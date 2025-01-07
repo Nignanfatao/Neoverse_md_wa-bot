@@ -129,9 +129,9 @@ async function updatePlayerData(updates, client, data_id) {
 }
 
 
-(nom_joueur, data_id, image_oc)
-add_fiche('eastwhite👤', '1', 'https://files.catbox.moe/fduke1.jpg')
-add_fiche('eastjuuzo👤', '10', 'https://files.catbox.moe/x89mpn.jpg')
-add_fiche('eastgoldy👤', '4', 'https://files.catbox.moe/39hhue.jpg')
-add_fiche('eastatsushi👤', '6', 'https://files.catbox.moe/uzu7vu.jpg')
-add_fiche('eastadam👤', '7', 'https://files.catbox.moe/6z4kiy.jpg')
+//add_fiche(nom_joueur, data_id, image_oc)
+add_fiche('eastwhite👤', '1', 'https://files.catbox.moe/fduke1.jpg');
+add_fiche('eastjuuzo👤', '10', 'https://files.catbox.moe/x89mpn.jpg');
+add_fiche('eastgoldy👤', '4', 'https://files.catbox.moe/39hhue.jpg');
+add_fiche('eastatsushi👤', '6', 'https://files.catbox.moe/uzu7vu.jpg');
+add_fiche('eastadam👤', '7', 'https://files.catbox.moe/6z4kiy.jpg');
