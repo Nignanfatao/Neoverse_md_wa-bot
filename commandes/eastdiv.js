@@ -127,7 +127,7 @@ async function updatePlayerData(updates, client, data_id) {
     }
     await client.query('COMMIT');
 }
-1 5 8 9
+
 //add_fiche(nom_joueur, data_id, image_oc)
 add_fiche('eastwhite👤', '1', 'https://files.catbox.moe/fduke1.jpg');
 add_fiche('eastkemael👤', '2', 'https://telegra.ph/file/638f67854ccfaa1ee1a8a.jpg');
