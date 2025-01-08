@@ -154,28 +154,24 @@ zokou(
     async (dest, zk, commandeOptions) => {
         const { repondre } = commandeOptions;
 
-        let countdownTime = 6 * 60; // Décompte initial : 6 minutes en secondes
-        let extraTime = false; // Indicateur pour la minute supplémentaire
+        let countdownTime = 6 * 60;
+        let extraTime = false;
+
+        zk.sendMessage(dest, { text: "⏱️Latence Start" });
 
         const interval = setInterval(() => {
             countdownTime--;
 
             if (countdownTime <= 0 && !extraTime) {
-                // Début de la minute supplémentaire
                 extraTime = true;
-                countdownTime = 60; // Réinitialisation à 1 minute
+                countdownTime = 60;
                 zk.sendMessage(dest, { text: "⚠️ Temps Écoulé +1 min" });
             } else if (countdownTime <= 0 && extraTime) {
-                // Fin du décompte supplémentaire
                 clearInterval(interval);
                 zk.sendMessage(dest, { text: "⚠️ Latence Out" });
             } else if (!extraTime && countdownTime % 60 === 0) {
-                // Notifications toutes les minutes pour les 6 premières minutes
                 zk.sendMessage(dest, { text: `⏳ Temps restant : ${formatTime(countdownTime)}.` });
-            } else if (extraTime && countdownTime <= 10) {
-                // Notifications toutes les secondes dans les 10 dernières secondes de la minute supplémentaire
-                zk.sendMessage(dest, { text: `⏳ ${countdownTime}` });
             }
-        }, 1000); // Chaque seconde
+        }, 1000);
     }
 );
