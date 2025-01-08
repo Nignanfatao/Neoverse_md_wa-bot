@@ -150,7 +150,7 @@ function formatTime(seconds) {
 }
 
 zokou(
-    { nomCom: "+Next", categorie: "Décompte⏳" },
+    { nomCom: "next", categorie: "Décompte⏳" },
     async (dest, zk, commandeOptions) => {
         const { repondre } = commandeOptions;
 
