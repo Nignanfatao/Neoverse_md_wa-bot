@@ -25,7 +25,6 @@ function add_fiche(nom_joueur, data_id, image_oc) {
 ◇ *Pseudo👤*: ${data.e1}
 ◇ *Position Continentale🌍:* ${data.e23}
 ◇ *Division🛡️*: *${data.e2}
-◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*: ${data.e4}
 ◇ *Classe🏆*: ${data.e3}
 ▔▔▔▔▔▔▔▔▔▔▔░▒▒▒▒░░▒░
@@ -33,12 +32,11 @@ function add_fiche(nom_joueur, data_id, image_oc) {
 ◇ *NΞOcoins🔹*: ${data.e6}🔷
 ◇ *NΞO points🔸*:  ${data.e9}🔸 
 ◇ *Coupons🎟*:  ${data.e8}🎟
-◇ *Gift Box🎁*: ${data.e7}🎁
                     
 ░▒▒▒▒░░▒░ \`PALMARÈS\`🏆 
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-*✭Records*: ${data.e12} Victoires✅/ ${data.e13} Défaites❌
-*🏆Trophées*: ${data.e14}  *🌟 TOS*: ${data.e15}  
+*✭Records*: ${data.e12} Victoires✅-${data.e13} Défaites❌
+*🏆Trophées*: ${data.e14}  *🌟 TOS*: ${data.e15}
 *💫Neo Awards*: ${data.e16}   *🎖️Globes*: ${data.e22}
 
 ░▒▒▒▒░░▒░ \`STATS\`📊 
