@@ -139,3 +139,43 @@ add_fiche('eastadam👤', '7', 'https://files.catbox.moe/6z4kiy.jpg');
 //8
 //9
 add_fiche('eastjuuzo👤', '10', 'https://files.catbox.moe/x89mpn.jpg');
+
+
+//const { zokou } = require('../framework/zokou');
+
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes}:${secs.toString().padStart(2, '0')}`;
+}
+
+zokou(
+    { nomCom: "+Next", categorie: "Décompte⏳" },
+    async (dest, zk, commandeOptions) => {
+        const { repondre } = commandeOptions;
+
+        let countdownTime = 6 * 60; // Décompte initial : 6 minutes en secondes
+        let extraTime = false; // Indicateur pour la minute supplémentaire
+
+        const interval = setInterval(() => {
+            countdownTime--;
+
+            if (countdownTime <= 0 && !extraTime) {
+                // Début de la minute supplémentaire
+                extraTime = true;
+                countdownTime = 60; // Réinitialisation à 1 minute
+                zk.sendMessage(dest, { text: "⚠️ Temps Écoulé +1 min" });
+            } else if (countdownTime <= 0 && extraTime) {
+                // Fin du décompte supplémentaire
+                clearInterval(interval);
+                zk.sendMessage(dest, { text: "⚠️ Latence Out" });
+            } else if (!extraTime && countdownTime % 60 === 0) {
+                // Notifications toutes les minutes pour les 6 premières minutes
+                zk.sendMessage(dest, { text: `⏳ Temps restant : ${formatTime(countdownTime)}.` });
+            } else if (extraTime && countdownTime <= 10) {
+                // Notifications toutes les secondes dans les 10 dernières secondes de la minute supplémentaire
+                zk.sendMessage(dest, { text: `⏳ ${countdownTime}` });
+            }
+        }, 1000); // Chaque seconde
+    }
+);
