@@ -24,7 +24,7 @@ function add_fiche(nom_joueur, data_id, image_oc) {
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 ◇ *Pseudo👤*: ${data.e1}
 ◇ *Position Continentale🌍:* ${data.e23}
-◇ *Division🛡️*: *${data.e2}
+◇ *Division🛡️*: ${data.e2}
 ◇ *Points de talent XP⭐*: ${data.e10}⭐
 ◇ *Rang 🎖️*: ${data.e4}
 ◇ *Classe🏆*: ${data.e3}
