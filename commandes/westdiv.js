@@ -109,7 +109,7 @@ async function processUpdates(arg, data_id, client) {
 }
 
 async function calculateNewValue(colonneObjet, signe, valeur, texte, data_id, client) {
-    const query = `SELECT ${colonneObjet} FROM centraldiv WHERE id = ${data_id}`;
+    const query = `SELECT ${colonneObjet} FROM westdiv WHERE id = ${data_id}`;
     const result = await client.query(query);
     const oldValue = result.rows[0][colonneObjet];
     let newValue;
@@ -128,7 +128,7 @@ async function calculateNewValue(colonneObjet, signe, valeur, texte, data_id, cl
 async function updatePlayerData(updates, client, data_id) {
     await client.query('BEGIN');
     for (const update of updates) {
-        const query = `UPDATE centraldiv SET ${update.colonneObjet} = $1 WHERE id = ${data_id}`;
+        const query = `UPDATE westdiv SET ${update.colonneObjet} = $1 WHERE id = ${data_id}`;
         await client.query(query, [update.newValue]);
     }
     await client.query('COMMIT');
