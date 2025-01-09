@@ -94,7 +94,7 @@ async function processUpdates(arg, data_id, client) {
         const [object, signe, valeur] = [arg[i], arg[i+1], arg[i+2]];
         const colonneObjet = colonnesJoueur[object];
         let texte = [];
-        i += 3;
+        i += 2;
 
         while (i < arg.length && !colonnesJoueur[arg[i]]) {
             texte.push(arg[i]);
