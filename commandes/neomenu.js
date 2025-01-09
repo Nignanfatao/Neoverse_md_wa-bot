@@ -9,7 +9,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://i.ibb.co/CwZz0KK/image.jpg';
+            const lien = 'https://files.catbox.moe/06hjut.jpg';
             const msg = '';
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
         }
@@ -25,12 +25,29 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://i.ibb.co/cg9Gb6h/image.jpg';
+            const lien = 'https://files.catbox.moe/s7x1zg.jpg';
             const msg = '';
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
         }
     }
 );
+
+zokou(
+    {
+        nomCom: 'saisonnsl',
+        categorie: 'Other'
+    },
+    async (dest, zk, commandeOptions) => {
+        const { repondre, arg, ms } = commandeOptions;
+
+        if (!arg || arg.length === 0)  {
+            const lien = 'https://files.catbox.moe/n1ly7x.jpg';
+            const msg = '';
+            zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
+        }
+    }
+);
+
 
     zokou(
     {
@@ -57,7 +74,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0) {
-            const lien = 'https://i.ibb.co/8mD5h4v/image.jpg';
+            const lien = 'https://files.catbox.moe/uil3dd.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -74,7 +91,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0) {
-            const lien = 'https://i.ibb.co/CWfLcr4/image.jpg';
+            const lien = 'https://files.catbox.moe/qny0pd.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -373,14 +390,14 @@ Voici les gagnants des prestigieux prix Awards et Récompenses aux GOLDEN AWARDS
 */
 zokou(
     {
-        nomCom: 'calendar',
+        nomCom: 'calendrier',
         categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://i.ibb.co/GWvn4C5/image.jpg';
+            const lien = 'https://files.catbox.moe/ylh3xt.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -397,7 +414,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://i.ibb.co/1bj0nWf/image.jpg';
+            const lien = 'https://files.catbox.moe/fjpj04.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -415,7 +432,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://i.ibb.co/xG1rDqs/image.jpg';
+            const lien = 'https://files.catbox.moe/2fb595.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -425,21 +442,19 @@ zokou(
 
 zokou(
     {
-        nomCom: 'guides',
+        nomCom: 'guide',
         categorie: 'Other'
     },
     async (dest, zk, commandeOptions) => {
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const liena = 'https://i.ibb.co/PzKS13f/image.jpg';
-            const lienb = 'https://i.ibb.co/FnR6hYj/image.jpg';
-            const lienc = 'https://i.ibb.co/tZTSpTH/image.jpg';
+            const liena = 'https://files.catbox.moe/bg29m0.jpg';
+            const lienb = 'https://files.catbox.moe/ra29dr.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: liena }, caption: msg }, { quoted: ms });
             zk.sendMessage(dest, { image: { url: lienb }, caption: msg }, { quoted: ms });
-            zk.sendMessage(dest, { image: { url: lienc }, caption: msg }, { quoted: ms });
-   
+            
         }
     }
 );
@@ -471,7 +486,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://i.ibb.co/qJS32Vc/image.jpg';
+            const lien = 'https://files.catbox.moe/wnx4uj.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
@@ -518,7 +533,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const lien = 'https://i.ibb.co/c8npsnW/image.jpg';
+            const lien = 'https://files.catbox.moe/wuzbsu.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: lien }, caption: msg }, { quoted: ms });
    
