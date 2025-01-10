@@ -449,7 +449,7 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const liena = 'https://files.catbox.moe/bg29m0.jpg';
+            const liena = 'https://files.catbox.moe/l64bai.jpg';
             const lienb = 'https://files.catbox.moe/ra29dr.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: liena }, caption: msg }, { quoted: ms });
