@@ -143,6 +143,6 @@ add_fiche('centralirito👤', '4', 'https://files.catbox.moe/9jdiyb.jpg');
 add_fiche('centralhakuji👤', '5', 'https://files.catbox.moe/qp97rq.jpg');
 //6
 add_fiche('centralajax👤', '7', 'https://files.catbox.moe/avx1rl.jpg');
-//add_fiche('centralmakima👤', '8', 'https://telegra.ph/file/fdd73d041d1cd05d82aa2.jpg');
+add_fiche('centralmakima👤', '8', 'https://telegra.ph/file/fdd73d041d1cd05d82aa2.jpg');
 //9
 add_fiche('centralrudeus👤', '10', 'https://files.catbox.moe/ycq62s.jpg');
