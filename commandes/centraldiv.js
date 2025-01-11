@@ -84,7 +84,7 @@ async function processUpdates(arg, data_id, client) {
         pseudo: "e1", division: "e2", classe: "e3", rang: "e4", golds: "e5", 
         neocoins: "e6", gift_box: "e7", coupons: "e8", np: "e9", talent: "e10",
         victoires: "e12", defaites: "e13", trophees: "e14", tos: "e15", awards: "e16",
-        cards: "e17", globes: "e22", pos: "e23", talent_extra: "e24", force: "e25", 
+        cards: "e17", globes: "e22", pos: "e23", talent: "e24", force: "e25", 
         close_combat: "e26", precision: "e27", speed: "e28" 
     };
 
