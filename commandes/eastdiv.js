@@ -148,7 +148,7 @@ add_fiche('eastadam👤', '7', 'https://files.catbox.moe/6z4kiy.jpg');
 add_fiche('eastjuuzo👤', '10', 'https://files.catbox.moe/x89mpn.jpg');
 
 
-//const { zokou } = require('../framework/zokou');
+// const { zokou } = require('../framework/zokou');
 
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -159,14 +159,21 @@ function formatTime(seconds) {
 zokou(
     { nomCom: "next", categorie: "Décompte⏳" },
     async (dest, zk, commandeOptions) => {
-        const { repondre } = commandeOptions;
+        const { repondre, attendreMessage } = commandeOptions;
 
         let countdownTime = 6 * 60;
         let extraTime = false;
+        let stopped = false;
 
         zk.sendMessage(dest, { text: "⏱️Latence Start" });
 
         const interval = setInterval(() => {
+            if (stopped) {
+                clearInterval(interval);
+                zk.sendMessage(dest, { text: "🛑 Décompte stoppé par l'utilisateur." });
+                return;
+            }
+
             countdownTime--;
 
             if (countdownTime <= 0 && !extraTime) {
@@ -180,5 +187,12 @@ zokou(
                 zk.sendMessage(dest, { text: `⏳ Temps restant : ${formatTime(countdownTime)}.` });
             }
         }, 1000);
+
+        // Écoute des messages pour stopper le décompte
+        attendreMessage(async (message) => {
+            if (message.body.toLowerCase() === "stop") {
+                stopped = true;
+            }
+        });
     }
 );
