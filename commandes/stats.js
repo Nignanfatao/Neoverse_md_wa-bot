@@ -5,7 +5,7 @@ const dbUrl = s.DB;
 
 async function stats(command, repondre) {
     const texte = command.trim().split(/\s+/);
-    if (texte.length === 4) {
+    if (texte[4]) {
         const [key, mention, operation, valueStr] = texte;
 
         const validKeys = [
