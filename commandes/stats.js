@@ -3,7 +3,7 @@ const users = require('../Id_ext/northdiv');
 const s = require("../set");
 const dbUrl = s.DB;
 
-async function stats(command, auteurMessage) {
+async function stats(command, repondre) {
     const texte = command.trim().split(/\s+/);
     if (texte.length === 4) {
         const [key, mention, operation, valueStr] = texte;
