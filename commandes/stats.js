@@ -6,7 +6,7 @@ const dbUrl = s.DB;
 async function stats(command, repondre) {
     const texte = command.toLowerCase();
     if (texte[4]) {
-        console.log('4');
+        console.log('texte reçu');
         const [key, mention, operation, valueStr] = texte;
 
         const validKeys = [
@@ -17,11 +17,14 @@ async function stats(command, repondre) {
                 ? `${mention.replace("@", "")}@s.whatsapp.net`
                 : null;
 
+            console.log('key validé');
             if (userId) {
                 const user = users.find(item => item.id === userId);
-
+console.log("userid:", userId);
                 if (user) {
+                    console.log('user trouvé');
                     if (["+", "-"].includes(operation)) {
+                        console.log('signe ok');
                         
                             const proConfig = {
                                 connectionString: dbUrl,
