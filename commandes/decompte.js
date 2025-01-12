@@ -9,7 +9,9 @@ function formatTime(seconds) {
 async function latence({ zk, texte, origineMessage }) {
     const neoTexte = texte.toLowerCase();
 
-    if (neoTexte === "stop" || neoTexte.startsWith("salut")) {
+    if (neoTexte === "stop" || neoTexte.startsWith(`.     ░▒▒░░ *⌬CONTROLLER📱*░▒▒░░
+                                ▔▔▔▔▔▔▔                                     
+🎧 \`𝗖𝗵𝗮𝘁\`:`)) {
         if (activeCountdowns[origineMessage]) {
             clearInterval(activeCountdowns[origineMessage]);
             delete activeCountdowns[origineMessage];
