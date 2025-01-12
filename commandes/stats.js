@@ -4,8 +4,9 @@ const s = require("../set");
 const dbUrl = s.DB;
 
 async function stats(command, repondre) {
-    const texte = command.trim().split(/\s+/);
+    const texte = command.toLowerCase();
     if (texte[4]) {
+        console.log('4');
         const [key, mention, operation, valueStr] = texte;
 
         const validKeys = [
