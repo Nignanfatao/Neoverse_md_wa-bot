@@ -344,7 +344,7 @@ module.exports = players;*/
 
 
 
-const players = [];
+const users = [];
 
 function add_id(id, nom, id_bdd, table) {
     const columns = {
@@ -447,7 +447,7 @@ function add_id(id, nom, id_bdd, table) {
         upd_speed: `UPDATE ${table} SET ${columns.speed} = $1 WHERE id = ${id_bdd}`
     };
 
-    players.push(player);
+    users.push(player);
 }
 
 //central
@@ -510,4 +510,4 @@ add_id();
 add_id();*/
 //fin west
 
-module.exports = players;
+module.exports = users;
