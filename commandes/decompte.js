@@ -7,9 +7,9 @@ function formatTime(seconds) {
 }
 
 async function latence({ zk, texte, origineMessage }) {
-    const neoTexte = texte.toLowerCase().replace(/\s+/g, ' ').trim();
+    const neoTexte = texte.toLowerCase();
 
-    if (neoTexte === "stop" || neoTexte.startsWith(". ░▒▒░░ *⌬CONTROLLER📱*░▒▒░░")) {
+    if (neoTexte === "stop" || neoTexte.startsWith(`.     ░▒▒░░ *⌬controller📱*░▒▒░░`)) {
         if (activeCountdowns[origineMessage]) {
             clearInterval(activeCountdowns[origineMessage]);
             delete activeCountdowns[origineMessage];
