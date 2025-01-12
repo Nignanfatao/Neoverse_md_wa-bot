@@ -7,11 +7,9 @@ function formatTime(seconds) {
 }
 
 async function latence({ zk, texte, origineMessage }) {
-    const neoTexte = texte.toLowerCase();
+    const neoTexte = texte.toLowerCase().replace(/\s+/g, ' ').trim();
 
-    if (neoTexte === "stop" || neoTexte.startsWith(`.     ░▒▒░░ *⌬CONTROLLER📱*░▒▒░░
-                                ▔▔▔▔▔▔▔                                     
-🎧 \`𝗖𝗵𝗮𝘁\`:`)) {
+    if (neoTexte === "stop" || neoTexte.startsWith(". ░▒▒░░ *⌬CONTROLLER📱*░▒▒░░")) {
         if (activeCountdowns[origineMessage]) {
             clearInterval(activeCountdowns[origineMessage]);
             delete activeCountdowns[origineMessage];
@@ -22,7 +20,9 @@ async function latence({ zk, texte, origineMessage }) {
         return;
     }
 
-    if (!neoTexte.startsWith('@') || !neoTexte.endsWith('next')) {
+    const nextWords = ['next', 'nx', 'nxt'];
+
+    if (!(neoTexte.startsWith('@') && nextWords.some(word => neoTexte.endsWith(word)))) {
         return;
     }
 
