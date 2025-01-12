@@ -4,10 +4,11 @@ const s = require("../set");
 const dbUrl = s.DB;
 
 async function stats(command, repondre) {
-    const texte = command.toLowerCase();
-    if (texte[4]) {
-        console.log('texte reçu');
+    const texte = command.trim().toLowerCase().split(/\s+/);
+    console.log('Texte reçu:', texte);
+    if (texte.length === 4) {
         const [key, mention, operation, valueStr] = texte;
+        console.log('Key:', key, 'Mention:', mention, 'Operation:', operation, 'ValueStr:', valueStr);
 
         const validKeys = [
             "force",  "talent", "precision", "speed", "close_combat"
@@ -16,51 +17,52 @@ async function stats(command, repondre) {
             const userId = mention.includes("@") 
                 ? `${mention.replace("@", "")}@s.whatsapp.net`
                 : null;
+            console.log('UserId:', userId);
 
-            console.log('key validé');
             if (userId) {
                 const user = users.find(item => item.id === userId);
-console.log("userid:", userId);
+                console.log('User trouvé:', user);
+
                 if (user) {
-                    console.log('user trouvé');
                     if (["+", "-"].includes(operation)) {
-                        console.log('signe ok');
-                        
-                            const proConfig = {
-                                connectionString: dbUrl,
-                                ssl: {
-                                    rejectUnauthorized: false,
-                                },
-                            };
+                        console.log('Signe valide');
 
-                            const pool = new Pool(proConfig);
-                            const client = await pool.connect();
+                        const proConfig = {
+                            connectionString: dbUrl,
+                            ssl: {
+                                rejectUnauthorized: false,
+                            },
+                        };
 
-                            try {
-                                const result = await client.query(user[`get_${key}`]);
-                                const oldValue = parseInt(result.rows[0][user[`cln_${key}`]]);
+                        const pool = new Pool(proConfig);
+                        const client = await pool.connect();
 
-                                const newValue = eval(`${oldValue} ${operation} ${value}`);
+                        try {
+                            const result = await client.query(user[`get_${key}`]);
+                            const oldValue = parseInt(result.rows[0][user[`cln_${key}`]]);
 
-                                await client.query(user[`upd_${key}`], [newValue]);
+                            const newValue = eval(`${oldValue} ${operation} ${valueStr}`);
+                            console.log('Ancienne valeur:', oldValue, 'Nouvelle valeur:', newValue);
 
-                                const message = `🔄 Mise à jour pour *${user.nom}*:\n\n`
-                                    + `⚙ Object: *${key}*\n`
-                                    + `💵 Ancienne Valeur: *${oldValue}*\n`
-                                    + `💵 Nouvelle Valeur: *${newValue}*`;
+                            await client.query(user[`upd_${key}`], [newValue]);
 
-                                console.log(message);
-                                await repondre(message);
-                            } catch (error) {
-                                console.error("❌ Erreur lors de la mise à jour de la base de données :", error);
-                            } finally {
-                                client.release();
-                            }
+                            const message = `🔄 Mise à jour pour *${user.nom}*:\n\n`
+                                + `⚙ Object: *${key}*\n`
+                                + `💵 Ancienne Valeur: *${oldValue}*\n`
+                                + `💵 Nouvelle Valeur: *${newValue}*`;
+
+                            console.log('Message:', message);
+                            await repondre(message);
+                        } catch (error) {
+                            console.error("❌ Erreur lors de la mise à jour de la base de données :", error);
+                        } finally {
+                            client.release();
                         }
                     }
                 }
             }
         }
+    }
 }
 
 module.exports = stats;
