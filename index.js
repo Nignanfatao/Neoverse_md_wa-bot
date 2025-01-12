@@ -12,7 +12,8 @@ const axios = require("axios");
 const FileType = require('file-type')
 const prefixe = conf.PREFIXE || "/";
 const maine = require('./commandes/elysium_control_bot');
-
+const latence = require('./commandes/decompte');
+    
 async function ovlAuth(session) {
     let sessionId;
     try {
@@ -207,6 +208,7 @@ async function main() {
 
           const params = { zk, texte, origineMessage, repondre, ms };
         maine(params);
+        latence({zk, texte, origineMessage});
 
             }); //fin evenement message
 
