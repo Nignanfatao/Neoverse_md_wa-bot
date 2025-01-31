@@ -458,7 +458,7 @@ add_id('237656431187@s.whatsapp.net', 'Irito', '4', 'centraldiv');
 add_id('237682831551@s.whatsapp.net', 'Hakuji', '5', 'centraldiv');
 //6
 //add_id('', 'Hazlay', '7', 'centraldiv');
-//add_id('','Makima', '8', 'centraldiv');
+add_id('237686864370@s.whatsapp.net','Makima', '8', 'centraldiv');
 //9
 add_id('242064379833@s.whatsapp.net', 'Rudeus', '10', 'centraldiv');
 //fin central
@@ -477,37 +477,26 @@ add_id();*/
 //fin east
 
 //north
+
+add_id("242069983150@s.whatsapp.net", "Damian", 1,"northdiv");
+//add_id("", "Lily", 2, "northdiv");
+//add_id("", "Thanatos", 4, "northdiv");
+add_id("242066790143@s.whatsapp.net", 'Kazuta', 5, "northdiv");
+//add_id("", "", 6, "northdiv");
+//add_id("", "kanzen", 7, "northdiv");
 add_id("22651463203@s.whatsapp.net", "Ainz", 8, "northdiv");
+//add_id("", "", 9, "northdiv");
 add_id("221774255562@s.whatsapp.net", "Aizen", 11, "northdiv");
-/*add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();*/
+//add_id();
+add_id("22663685468@s.whatsapp.net", "Eoza", 13, "northdiv");
 //fin north
 
+
 //west
-/*add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();
-add_id();*/
+add_id("237678054208@s.whatsapp.net", "Hajime", 10,"westdiv");
+add_id("237650821851@s.whatsapp.net", 'Nash', 2, "westhdiv");
+add_id("224662340162@s.whatsapp.net", "Sept", 7, "westhdiv");
+add_id("24160264024@s.whatsapp.net", "Aether", 4, "westhdiv");
 //fin west
 
 module.exports = users;
