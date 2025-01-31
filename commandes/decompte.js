@@ -42,8 +42,8 @@ async function latence({ zk, texte, origineMessage }) {
 
         // Envoie un message lorsqu'il reste 2 minutes
         if (countdownTime === 120 && !extraTime) {
-            const user = `${neoTexte[0]}@s.whatsapp.net`;
-            await zk.sendMessage(origineMessage, { text: `⚠️ @${neoTexte[0]} il ne reste plus que 2 minutes.`, mentions: [user]});
+            const user = `${neoTexte[0].replace("@", "")}@s.whatsapp.net`;
+            await zk.sendMessage(origineMessage, { text: `⚠️ ${neoTexte[0]} il ne reste plus que 2 minutes.`, mentions: [user]});
         }
 
         // Gestion du temps initial écoulé
