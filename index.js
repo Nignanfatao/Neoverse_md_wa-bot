@@ -302,7 +302,7 @@ Bienvenue à vous *${newMembers}* 😃💙👋🏻, ceci est le salon de Recrute
 ░░░░░░░░░░░░░░░░░░░
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 💙𝗡Ξ𝗢🙂🏆🎉`;
-            await ovl.sendMessage(data.id, { image: { url: groupPic }, caption: mek, mentions: data.participants });
+            await zk.sendMessage(data.id, { image: { url: groupPic }, caption: mek, mentions: data.participants });
         }
     } catch (error) {
         console.error("Erreur lors de la gestion des participants :", error);
