@@ -6,18 +6,23 @@ function formatTime(seconds) {
     return `${minutes}:${secs.toString().padStart(2, '0')}`;
 }
 
+// Fonction pour arrêter manuellement un décompte
+async function stopCountdown(zk, origineMessage) {
+    if (activeCountdowns[origineMessage]) {
+        clearInterval(activeCountdowns[origineMessage]);
+        delete activeCountdowns[origineMessage];
+        await zk.sendMessage(origineMessage, { text: "⏹️ Décompte arrêté manuellement." });
+    } else {
+        await zk.sendMessage(origineMessage, { text: "⚠️ Aucun décompte actif à arrêter." });
+    }
+}
+
 async function latence({ zk, texte, origineMessage }) {
     const neoTexte = texte.toLowerCase();
 
-    // Gestion de la commande "stop"
+    // Vérifie si l'utilisateur veut arrêter un décompte
     if (neoTexte === "stop" || neoTexte.startsWith(`.     ░▒▒░░ *⌬controller📱*░▒▒░░`)) {
-        if (activeCountdowns[origineMessage]) {
-            clearInterval(activeCountdowns[origineMessage]);
-            delete activeCountdowns[origineMessage];
-            //await zk.sendMessage(origineMessage, { text: "⏹️ Décompte arrêté." });
-        } else {
-            //await zk.sendMessage(origineMessage, { text: "⚠️ Aucun décompte actif à arrêter." });
-        }
+        await stopCountdown(zk, origineMessage);
         return;
     }
 
@@ -27,9 +32,8 @@ async function latence({ zk, texte, origineMessage }) {
         return;
     }
 
-    // Vérifie si un décompte est déjà actif
     if (activeCountdowns[origineMessage]) {
-     //   await zk.sendMessage(origineMessage, { text: "⚠️ Un décompte est déjà actif ici." });
+        await zk.sendMessage(origineMessage, { text: "⚠️ Un décompte est déjà actif ici." });
         return;
     }
 
@@ -37,13 +41,17 @@ async function latence({ zk, texte, origineMessage }) {
     let countdownTime = 6 * 60; // 6 minutes en secondes
     let extraTime = false; // Indicateur pour le temps supplémentaire
 
+    const userMatch = texte.match(/@(\d+)/);
+    const user = userMatch ? `${userMatch[1]}@s.whatsapp.net` : null;
+
+    await zk.sendMessage(origineMessage, { text: "⏱️ Début de la latence." });
+
     activeCountdowns[origineMessage] = setInterval(async () => {
         countdownTime--;
 
         // Envoie un message lorsqu'il reste 2 minutes
-        if (countdownTime === 120 && !extraTime) {
-            const user = `${neoTexte[0].replace("@", "")}@s.whatsapp.net`;
-            await zk.sendMessage(origineMessage, { text: `⚠️ ${neoTexte[0]} il ne reste plus que 2 minutes.`, mentions: [user]});
+        if (countdownTime === 120 && !extraTime && user) {
+            await zk.sendMessage(origineMessage, { text: `⚠️ @${userMatch[1]} il ne reste plus que 2 minutes.`, mentions: [user] });
         }
 
         // Gestion du temps initial écoulé
@@ -53,16 +61,12 @@ async function latence({ zk, texte, origineMessage }) {
             await zk.sendMessage(origineMessage, { text: "⚠️ Temps écoulé +1 min" });
         }
 
-        // Gestion du temps supplémentaire écoulé
         if (countdownTime <= 0 && extraTime) {
             clearInterval(activeCountdowns[origineMessage]);
             delete activeCountdowns[origineMessage];
             await zk.sendMessage(origineMessage, { text: "⚠️ Latence Out" });
         }
     }, 1000);
-
-    // Message de démarrage du décompte
-    //await zk.sendMessage(origineMessage, { text: "⏱️ Latence Start" });
 }
 
 module.exports = latence;
