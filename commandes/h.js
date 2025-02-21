@@ -150,23 +150,25 @@ zokou(
         const joueurId = arg[0].trim();
 
         await zk.sendMessage(dest, { text: 'Êtes-vous sûr de vouloir supprimer ce(s) duel(s) ? Répondez par "oui" ou "non".' }, { quoted: ms });
-
-        const reponse = await zk.waitForMessage(
-            dest,
-            (msg) => {
-                const texte = msg.text.toLowerCase().trim(); 
-                return texte === 'oui' || texte === 'non';
-            },
-            { timeout: 60000 } 
-        );
-
-        if (!reponse) {
+      
+        const rep = await zk.awaitForMessage({
+                        sender: auteurMessage,
+                        chatJid: dest,
+                        timeout: 60000
+                    });
+            
+                    let confirmation;
+                    try {
+                        confirmation = rep.message.extendedTextMessage.text;
+                    } catch {
+                        confirmation = rep.message.conversation;
+                    }
+            
+        if (!rep) {
             return repondre('Temps écoulé. Suppression annulée.');
         }
-
-        const confirmation = reponse.text.toLowerCase().trim(); // Normaliser la réponse
-
-        if (confirmation !== 'oui') {
+                
+        if (confirmation.toLowerCase() !== 'oui') {
             return repondre('Suppression annulée.');
         }
 
