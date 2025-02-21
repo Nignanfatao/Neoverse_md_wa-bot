@@ -151,9 +151,22 @@ zokou(
 
         await zk.sendMessage(dest, { text: 'Êtes-vous sûr de vouloir supprimer ce(s) duel(s) ? Répondez par "oui" ou "non".' }, { quoted: ms });
 
-        const reponse = await zk.waitForMessage(dest, (msg) => msg.text.toLowerCase() === 'oui' || msg.text.toLowerCase() === 'non', { timeout: 30000 });
+        const reponse = await zk.waitForMessage(
+            dest,
+            (msg) => {
+                const texte = msg.text.toLowerCase().trim(); 
+                return texte === 'oui' || texte === 'non';
+            },
+            { timeout: 60000 } 
+        );
 
-        if (!reponse || reponse.text.toLowerCase() !== 'oui') {
+        if (!reponse) {
+            return repondre('Temps écoulé. Suppression annulée.');
+        }
+
+        const confirmation = reponse.text.toLowerCase().trim(); // Normaliser la réponse
+
+        if (confirmation !== 'oui') {
             return repondre('Suppression annulée.');
         }
 
@@ -167,7 +180,7 @@ zokou(
             const duelKey = Object.keys(duelsEnCours).find(key => key.includes(joueurId));
             if (!duelKey) return repondre('Aucun duel trouvé pour ce joueur.');
 
-            delete duelsEnCours[duelKey]; 
+            delete duelsEnCours[duelKey];
             repondre(`✅ Duel ${duelKey} a été supprimé.`);
         }
     }
