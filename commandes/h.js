@@ -71,7 +71,7 @@ zokou(
             const areneT = tirerAr();
 
             const duelKey = `${equipe1Str} vs ${equipe2Str}`;
-            duelsEnCours[duelKey] = { equipe1, equipe2, statsCustom, arene: areneT };
+            duelsEnCours[duelKey] = { equipe1, equipe2, statsCustom: statsCustom || 'Aucune stat personnalisée', arene: areneT };
 
             const ficheDuel = generateFicheDuel(duelsEnCours[duelKey]);
             await zk.sendMessage(dest, { image: { url: areneT.image }, caption: ficheDuel }, { quoted: ms });
