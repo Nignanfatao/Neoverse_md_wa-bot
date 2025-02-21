@@ -1,10 +1,10 @@
 const { zokou } = require("../framework/zokou");
 
-const groupeFa_ID = "120363027511214270@g.us";
+const groupe_ID = "120363027511214270@g.us";
 
 zokou(
     {
-        nomCom: "map_fa",
+        nomCom: "map",
         reaction: '🗺️',
         categorie: "MAPS_ELYSIUM💠"
     },
@@ -13,7 +13,7 @@ zokou(
 
         try {
             
-            if (dest !== groupeFa_ID) {
+            if (dest !== groupe_ID) {
                 return repondre("⚠️Cette carte n'est pas disponible dans ce zone.");
             }
 
