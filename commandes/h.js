@@ -144,7 +144,7 @@ zokou(
 
 zokou(
     { nomCom: 'reset_duel', categorie: 'Other' },
-    async (dest, zk, { repondre, arg, ms }) => {
+    async (dest, zk, { repondre, arg, ms, auteurMessage }) => {
         if (arg.length < 1) return repondre('Format: @NomDuJoueur ou "all" pour réinitialiser tous les duels.');
 
         const joueurId = arg[0].trim();
