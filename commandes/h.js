@@ -23,7 +23,13 @@ function tirerAr() {
     return arenes[index];
 }
 
-// Fonction pour générer la fiche de duel
+function limiterStats(stats) {
+    stats.sta = Math.min(stats.sta, 100);
+    stats.energie = Math.min(stats.energie, 100);
+    stats.vie = Math.min(stats.vie, 100);
+    return stats;
+}
+
 function generateFicheDuel(duel) {
     return `*🆚𝗩𝗘𝗥𝗦𝗨𝗦 𝗔𝗥𝗘𝗡𝗔 𝗕𝗔𝗧𝗧𝗟𝗘🏆🎮*
 ░░░░░░░░░░░░░░░░░░░░
@@ -40,9 +46,7 @@ function generateFicheDuel(duel) {
 *🦶🏼𝐃𝐢𝐬𝐭𝐚𝐧𝐜𝐞 𝐢𝐧𝐢𝐭𝐢𝐚𝐥𝐞*📌: 5m
 *⌚𝐋𝐚𝐭𝐞𝐧𝐜𝐞*: 6mins+ 1⚠️
 *⭕𝐏𝐨𝐫𝐭𝐞́𝐞*: 10m
-▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-
-*⚠️Vous avez 🔟 tours max pour finir votre Adversaire! Sinon la victoire sera donnée par décision selon celui qui a dominé le combat ou qui a été le plus offensif !*`;
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔`;
 }
 
 zokou(
@@ -76,7 +80,6 @@ zokou(
     }
 );
 
-// Commande pour modifier les stats d'un joueur en duel
 zokou(
     { nomCom: 'duel_stats', categorie: 'Other' },
     (dest, zk, { repondre, arg, ms }) => {
@@ -94,8 +97,57 @@ zokou(
         if (!joueur || !['sta', 'energie', 'vie'].includes(stat)) return repondre('Stat invalide.');
 
         joueur.stats[stat] += (signe === '-' ? -valeur : valeur);
-        const ficheDuel = generateFicheDuel(duel);
+        joueur.stats = limiterStats(joueur.stats);
 
+        const ficheDuel = generateFicheDuel(duel);
         zk.sendMessage(dest, { image: { url: duel.arene.image }, caption: ficheDuel }, { quoted: ms });
+    }
+);
+
+zokou(
+    { nomCom: 'reset_stats', categorie: 'Other' },
+    (dest, zk, { repondre, arg, ms }) => {
+        if (arg.length < 1) return repondre('Format: @NomDuJoueur ou "all" pour réinitialiser tous les joueurs.');
+
+        const joueurId = arg[0].trim();
+        const duelKey = Object.keys(duelsEnCours).find(key => key.includes(joueurId));
+
+        if (!duelKey) return repondre('Joueur non trouvé ou aucun duel en cours.');
+
+        const duel = duelsEnCours[duelKey];
+
+        if (joueurId.toLowerCase() === 'all') {
+            duel.equipe1.forEach(joueur => {
+                joueur.stats = { sta: 100, energie: 100, vie: 100 };
+            });
+            duel.equipe2.forEach(joueur => {
+                joueur.stats = { sta: 100, energie: 100, vie: 100 };
+            });
+            repondre('Statistiques de tous les joueurs réinitialisées.');
+        } else {
+            const joueur = duel.equipe1.find(j => j.nom === joueurId) || duel.equipe2.find(j => j.nom === joueurId);
+            if (!joueur) return repondre('Joueur non trouvé.');
+
+            joueur.stats = { sta: 100, energie: 100, vie: 100 };
+            repondre(`Statistiques de ${joueurId} réinitialisées.`);
+        }
+
+        const ficheDuel = generateFicheDuel(duel);
+        zk.sendMessage(dest, { image: { url: duel.arene.image }, caption: ficheDuel }, { quoted: ms });
+    }
+);
+
+zokou(
+    { nomCom: 'reset_duel', categorie: 'Other' },
+    (dest, zk, { repondre, arg, ms }) => {
+        if (arg.length < 1) return repondre('Format: @NomDuJoueur pour réinitialiser le duel.');
+
+        const joueurId = arg[0].trim();
+        const duelKey = Object.keys(duelsEnCours).find(key => key.includes(joueurId));
+
+        if (!duelKey) return repondre('Aucun duel trouvé pour ce joueur.');
+
+        delete duelsEnCours[duelKey];
+        repondre(`Duel ${duelKey} a été réinitialisé.`);
     }
 );
