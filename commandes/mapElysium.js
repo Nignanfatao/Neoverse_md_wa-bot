@@ -5,7 +5,7 @@ const groupeFa_ID = "120363027511214270@g.us";
 zokou(
     {
         nomCom: "map_fa",
-        reaction: '🗺️",
+        reaction: '🗺️',
         categorie: "MAPS_ELYSIUM💠"
     },
     async (dest, zk, commandeOptions) => {
