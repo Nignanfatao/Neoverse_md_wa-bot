@@ -23,11 +23,12 @@ function tirerAr() {
     return arenes[index];
 }
 
-function limiterStats(stats) {
-    stats.sta = Math.min(stats.sta, 100);
-    stats.energie = Math.min(stats.energie, 100);
-    stats.vie = Math.min(stats.vie, 100);
-    return stats;
+function limiterStats(stats, stat, valeur) {
+    if (stats[stat] === 100 && valeur > 0) {
+        return { stats, message: '⚠️Stats déjà au maximum !' };
+    }
+    stats[stat] = Math.min(stats[stat] + valeur, 100);
+    return { stats, message: null };
 }
 
 function generateFicheDuel(duel) {
@@ -46,7 +47,9 @@ function generateFicheDuel(duel) {
 *🦶🏼𝐃𝐢𝐬𝐭𝐚𝐧𝐜𝐞 𝐢𝐧𝐢𝐭𝐢𝐚𝐥𝐞*📌: 5m
 *⌚𝐋𝐚𝐭𝐞𝐧𝐜𝐞*: 6mins+ 1⚠️
 *⭕𝐏𝐨𝐫𝐭𝐞́𝐞*: 10m
-▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔`;
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+
+*⚠️Vous avez 🔟 tours max pour finir votre Adversaire! Sinon la victoire sera donnée par décision selon celui qui a dominé le combat ou qui a été le plus offensif !*`;
 }
 
 zokou(
@@ -96,8 +99,12 @@ zokou(
         const joueur = duel.equipe1.find(j => j.nom === joueurId) || duel.equipe2.find(j => j.nom === joueurId);
         if (!joueur || !['sta', 'energie', 'vie'].includes(stat)) return repondre('Stat invalide.');
 
-        joueur.stats[stat] += (signe === '-' ? -valeur : valeur);
-        joueur.stats = limiterStats(joueur.stats);
+        const { stats, message } = limiterStats(joueur.stats, stat, (signe === '-' ? -valeur : valeur));
+        joueur.stats = stats;
+
+        if (message) {
+            repondre(message);
+        }
 
         const ficheDuel = generateFicheDuel(duel);
         zk.sendMessage(dest, { image: { url: duel.arene.image }, caption: ficheDuel }, { quoted: ms });
@@ -125,6 +132,7 @@ zokou(
             });
             repondre('Statistiques de tous les joueurs réinitialisées.');
         } else {
+            // Réinitialiser un joueur spécifique
             const joueur = duel.equipe1.find(j => j.nom === joueurId) || duel.equipe2.find(j => j.nom === joueurId);
             if (!joueur) return repondre('Joueur non trouvé.');
 
@@ -140,14 +148,22 @@ zokou(
 zokou(
     { nomCom: 'reset_duel', categorie: 'Other' },
     (dest, zk, { repondre, arg, ms }) => {
-        if (arg.length < 1) return repondre('Format: @NomDuJoueur pour réinitialiser le duel.');
+        if (arg.length < 1) return repondre('Format: @NomDuJoueur ou "all" pour réinitialiser tous les duels.');
 
         const joueurId = arg[0].trim();
-        const duelKey = Object.keys(duelsEnCours).find(key => key.includes(joueurId));
 
-        if (!duelKey) return repondre('Aucun duel trouvé pour ce joueur.');
+        if (joueurId.toLowerCase() === 'all') {
+            const nombreDuels = Object.keys(duelsEnCours).length;
+            if (nombreDuels === 0) return repondre('Aucun duel en cours.');
 
-        delete duelsEnCours[duelKey];
-        repondre(`Duel ${duelKey} a été réinitialisé.`);
+            Object.keys(duelsEnCours).forEach(key => delete duelsEnCours[key]);
+            repondre(`✅ Tous les duels (${nombreDuels}) ont été supprimés.`);
+        } else {
+            const duelKey = Object.keys(duelsEnCours).find(key => key.includes(joueurId));
+            if (!duelKey) return repondre('Aucun duel trouvé pour ce joueur.');
+
+            delete duelsEnCours[duelKey];
+            repondre(`✅ Duel ${duelKey} a été supprimé.`);
+        }
     }
 );
