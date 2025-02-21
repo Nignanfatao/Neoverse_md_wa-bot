@@ -65,33 +65,40 @@ zokou(
     categorie: "MAPS_ELYSIUM💠"
   },
   async (dest, zk, commandeOptions) => {
-    const { repondre, ms } = commandeOptions;
-    const message = ms.body;
+    try {
+      const { repondre, ms } = commandeOptions;
+      const message = ms.body;
 
-    const match = message.match(/🌍position:\s*(\d+)km/i);
-    if (!match) return repondre("❌ Position non détectée.");
+      console.log(message);
 
-    const distance = parseInt(match[1]);
+      const match = message.match(/🌍position:\s*(\d+)km/i);
+      if (!match) return repondre("❌Position non détectée.");
 
-    let groupMap = null;
-    for (const groupId in mapData) {
-      if (dest.includes(groupId)) { 
-        groupMap = mapData[groupId];
-        break;
+      const distance = parseInt(match[1]);
+
+      let groupMap = null;
+      for (const groupId in mapData) {
+        if (dest.includes(groupId)) { 
+          groupMap = mapData[groupId];
+          break;
+        }
       }
+
+      if (!groupMap) return repondre("❌Aucune carte trouvée pour ce groupe.");
+
+      let foundLocation = null;
+      for (const district of Object.values(groupMap)) {
+        foundLocation = district.find(zone => zone.distance === distance);
+        if (foundLocation) break;
+      }
+
+      if (!foundLocation) return repondre("❌Aucune localisation trouvée pour cette distance.");
+
+      const caption = `📍 *Vous êtes à :*\n🌍 ${foundLocation.location}`;
+      await zk.sendMessage(dest, { image: { url: foundLocation.image }, caption }, { quoted: ms });
+    } catch (error) {
+      console.error("Erreur lors de l'exécution :", error);
+      repondre("❌Une erreur s'est produite lors de l'exécution de la commande.");
     }
-
-    if (!groupMap) return repondre("❌ Aucune carte trouvée pour ce groupe.");
-
-    let foundLocation = null;
-    for (const district of Object.values(groupMap)) {
-      foundLocation = district.find(zone => zone.distance === distance);
-      if (foundLocation) break;
-    }
-
-    if (!foundLocation) return repondre("❌ Aucune localisation trouvée pour cette distance.");
-
-    const caption = `📍 *Vous êtes à :*\n🌍 ${foundLocation.location}`;
-    await zk.sendMessage(dest, { image: { url: foundLocation.image }, caption }, { quoted: ms });
   }
 );
