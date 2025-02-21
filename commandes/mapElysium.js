@@ -102,7 +102,7 @@ zokou(
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
                        ◻◻◻◻◻▢▢▢`;
 
-            const imageURL = "lien de l'image Ainz.jpg";
+            const imageURL = "https://files.catbox.moe/v79u4x.jpg";
 
             await zk.sendMessage(dest, { image: { url: imageURL }, caption: message }, { quoted: ms });
         } catch (error) {
