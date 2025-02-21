@@ -103,7 +103,7 @@ zokou(
         joueur.stats = stats;
 
         if (message) {
-            repondre(message);
+            repondre(message); 
         }
 
         const ficheDuel = generateFicheDuel(duel);
@@ -130,14 +130,11 @@ zokou(
             duel.equipe2.forEach(joueur => {
                 joueur.stats = { sta: 100, energie: 100, vie: 100 };
             });
-            repondre('Statistiques de tous les joueurs réinitialisées.');
         } else {
-            // Réinitialiser un joueur spécifique
             const joueur = duel.equipe1.find(j => j.nom === joueurId) || duel.equipe2.find(j => j.nom === joueurId);
             if (!joueur) return repondre('Joueur non trouvé.');
 
             joueur.stats = { sta: 100, energie: 100, vie: 100 };
-            repondre(`Statistiques de ${joueurId} réinitialisées.`);
         }
 
         const ficheDuel = generateFicheDuel(duel);
@@ -147,10 +144,18 @@ zokou(
 
 zokou(
     { nomCom: 'reset_duel', categorie: 'Other' },
-    (dest, zk, { repondre, arg, ms }) => {
+    async (dest, zk, { repondre, arg, ms }) => {
         if (arg.length < 1) return repondre('Format: @NomDuJoueur ou "all" pour réinitialiser tous les duels.');
 
         const joueurId = arg[0].trim();
+
+        await zk.sendMessage(dest, { text: 'Êtes-vous sûr de vouloir supprimer ce(s) duel(s) ? Répondez par "oui" ou "non".' }, { quoted: ms });
+
+        const reponse = await zk.waitForMessage(dest, (msg) => msg.text.toLowerCase() === 'oui' || msg.text.toLowerCase() === 'non', { timeout: 30000 });
+
+        if (!reponse || reponse.text.toLowerCase() !== 'oui') {
+            return repondre('Suppression annulée.');
+        }
 
         if (joueurId.toLowerCase() === 'all') {
             const nombreDuels = Object.keys(duelsEnCours).length;
@@ -162,7 +167,7 @@ zokou(
             const duelKey = Object.keys(duelsEnCours).find(key => key.includes(joueurId));
             if (!duelKey) return repondre('Aucun duel trouvé pour ce joueur.');
 
-            delete duelsEnCours[duelKey];
+            delete duelsEnCours[duelKey]; 
             repondre(`✅ Duel ${duelKey} a été supprimé.`);
         }
     }
