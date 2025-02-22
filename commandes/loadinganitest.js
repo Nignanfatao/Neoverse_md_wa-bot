@@ -44,6 +44,6 @@ zokou(
     async (dest, zk, commandeOptions) => {
         const { ms, repondre } = commandeOptions;
 
-        await simulateLoading(zk, ms);
+        await simulateLoading(zk, dest);
     }
 );
