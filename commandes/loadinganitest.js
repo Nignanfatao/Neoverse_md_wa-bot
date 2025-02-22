@@ -1,6 +1,6 @@
 const { zokou } = require('../framework/zokou');
 
-async function simulateLoading(zk, origineMessage) {
+async function simulateLoading(zk, origineMessage, ms) {
     const frames = [
         "`❪▬▭▭▭▭▭▭▭▭❫`",
         "`❪▬▬▭▭▭▭▭▭▭❫`",
@@ -44,6 +44,6 @@ zokou(
     async (dest, zk, commandeOptions) => {
         const { ms, repondre } = commandeOptions;
 
-        await simulateLoading(zk, dest);
+        await simulateLoading(zk, dest, ms);
     }
 );
