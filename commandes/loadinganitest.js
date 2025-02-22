@@ -21,14 +21,18 @@ async function simulateLoading(zk, origineMessage) {
             await new Promise((resolve) => setTimeout(resolve, 1000)); // Attendre 1 seconde
             await zk.sendMessage(origineMessage, {
                 text: frames[i],
-                edit: { id: loadingMessage.key.id, remoteJid: origineMessage.key.remoteJid, fromMe: true }
+                edit: loadingMessage.key,
             });
         }
 
         await zk.sendMessage(origineMessage, {
             text: "❪▬▬▬▬100%▬▬▬▬❫\nChargement terminé ! 🎉",
-            edit: { id: loadingMessage.key.id, remoteJid: origineMessage.key.remoteJid, fromMe: true }
+            edit: loadingMessage.key,
         });
+await zk.sendMessage(origineMessage, {
+            text: "Chargement test"}, 
+    {quoted: ms});
+
     } catch (error) {
         console.error("Erreur lors de la simulation du chargement :", error);
         await zk.sendMessage(origineMessage, { text: "Une erreur s'est produite lors du chargement. 😢" });
