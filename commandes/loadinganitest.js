@@ -1,4 +1,4 @@
-const activeTimers = {};
+const { zokou } = require('../framework/zokou');
 
 async function simulateLoading(zk, origineMessage) {
     const frames = [
@@ -35,12 +35,11 @@ async function simulateLoading(zk, origineMessage) {
     }
 }
 
-async function handleMessage({ zk, texte, origineMessage }) {
-    const neoTexte = texte.toLowerCase();
+zokou(
+    { nomCom: 'chargement', categorie: 'Other' }, 
+    async (dest, zk, commandeOptions) => {
+        const { ms, repondre } = commandeOptions;
 
-    if (neoTexte.includes("chargement")) {
-        await simulateLoading(zk, origineMessage);
+        await simulateLoading(zk, ms);
     }
-}
-
-module.exports = handleMessage;
+);
