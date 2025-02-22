@@ -18,7 +18,7 @@ async function handleLocation({ zk, texte, origineMessage }) {
     const positionMatch = neoTexte.match(/🌏position\s*:\s*(\d+)km/i);
 
     if (positionMatch) {
-        const distance = parseInt(positionMatch[1], 10); // Extrait la distance (X)
+        const distance = parseInt(positionMatch[1], 10); 
 
         if (!isNaN(distance)) {
             const distanceText = formatDistance(distance);
@@ -26,8 +26,6 @@ async function handleLocation({ zk, texte, origineMessage }) {
             await zk.sendMessage(origineMessage, {
                 text: `🌏 Bienvenue à Chinatown ! Vous êtes ${distanceText}. (Distance : ${distance} km)`,
             });
-
-            activeLocations[origineMessage] = { distance, timestamp: Date.now() };
         } else {
             await zk.sendMessage(origineMessage, {
                 text: "⚠️ Format de distance invalide. Utilisez '🌏position : Xkm'.",
