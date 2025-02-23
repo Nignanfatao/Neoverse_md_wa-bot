@@ -2,6 +2,37 @@ const { zokou } = require("../framework/zokou");
 
 const groupe_ID = "120363027511214270@g.us";
 
+async function simulateLoading(zk, origineMessage) {
+    const frames = [
+        "*`▓░░░░[10%]░░░░░`*",
+        "*`▓▓░░░[20%]░░░░░`*",
+        "*`▓▓▓░░[30%]░░░░░`*",
+        "*`▓▓▓▓░[40%]░░░░░`*",
+        "*`▓▓▓▓▓[50%]░░░░░`*",
+        "*`▓▓▓▓▓[60%]▓░░░░`*",
+        "*`▓▓▓▓▓[70%]▓▓░░░`*",
+        "*`▓▓▓▓▓[80%]▓▓▓░░`*",
+        "*`▓▓▓▓▓[90%]▓▓▓▓░`*",
+        "*`▓▓▓▓▓[100%]▓▓▓▓▓`*",
+    ];
+
+    try {
+        let loadingMessage = await zk.sendMessage(origineMessage, { text: frames[0] });
+
+        for (let i = 1; i < frames.length; i++) {
+            await new Promise((resolve) => setTimeout(resolve, 500)); // Délai de 0,5 seconde
+            await zk.sendMessage(origineMessage, {
+                text: frames[i],
+                edit: loadingMessage.key, // Mettre à jour le message existant
+            });
+        }
+
+    } catch (error) {
+        console.error("Erreur lors de la simulation du chargement :", error);
+        await zk.sendMessage(origineMessage, { text: "Une erreur s'est produite lors du chargement. 😢" });
+    }
+}
+
 zokou(
     {
         nomCom: "map",
@@ -12,10 +43,11 @@ zokou(
         const { repondre, ms } = commandeOptions;
 
         try {
-            
             if (dest !== groupe_ID) {
-                return repondre("⚠️Cette carte n'est pas disponible dans ce zone.");
+                return repondre("⚠️ Cette carte n'est pas disponible dans cette zone.");
             }
+
+            await simulateLoading(zk, dest);
 
             const message = `*\`♻️FALLEN ANGELES CITY🦩🎡\`*
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
@@ -36,13 +68,13 @@ zokou(
 🚸 *36𝗸𝗺*: Av. Eternity \`[Store🛒]\` 
 🚸 *35𝗸𝗺*: Av. Sunning \`[Neo Tech🩻]\`
 🚸 *34𝗸𝗺*: Av. liberty \`[LCD cars🚘]\` 
-🚸 *33𝗸𝗺*:Av. Métro \`[Station🚅🌍]\`
+🚸 *33𝗸𝗺*: Av. Métro \`[Station🚅🌍]\`
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 🛜 *Environment*:
-\`[voir description]\` 
-🛣️🚘 *Traffic intense*:
-\`[voir description]\`
-🚔: Point de contrôle de Police
+\`[Voir Description]\` 
+🛣️🚘 *Traffic Intense*:
+\`[Voir Description]\`
+🚔: Point de Contrôle de Police
 
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 🌃DISTRICT:*🍸𝗔𝗡𝗚𝗘𝗟𝗦 𝗩𝗜𝗖E⭐* [E] 
@@ -66,10 +98,10 @@ zokou(
 ♻️ *17𝗸𝗺*: Av. Xnes \`[Apparts 🏠]\`
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 🛜 *Environment*:
-\`[voir description]\` 
-🛣️🚘 *Traffic moyen*:
-\`[voir description]\` 
-🚔: Point de contrôle de Police
+\`[Voir Description]\` 
+🛣️🚘 *Traffic Moyen*:
+\`[Voir Description]\` 
+🚔: Point de Contrôle de Police
 
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
  🌃DISTRICT: *🎡𝗠𝗔𝗥𝗜𝗡𝗔🦩🌴* [S] 
@@ -88,26 +120,27 @@ zokou(
 ◼️ *6𝗸𝗺*: Av. Westshore sea
 ♻️ *5𝗸𝗺*: Av. Seattle \`[Apparts🏠]\`
 🚸 *4𝗸𝗺*: Av. Lust  \`[Red Club🔞]\`💋
-*🚸3𝗸𝗺*: Av. Playa🌴 \`[Havanah🍹]\`
-*◼️ 2𝗸𝗺*: La Marina🌴 \`[TheBay🏖️]\`
-*◼️ 1𝗸𝗺*: Long Beach🌴 \`[Plage🚤]\` 
+🚸 *3𝗸𝗺*: Av. Playa🌴 \`[Havanah🍹]\`
+◼️ *2𝗸𝗺*: La Marina🌴 \`[TheBay🏖️]\`
+◼️ *1𝗸𝗺*: Long Beach🌴 \`[Plage🚤]\` 
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
 🛜⚠️GANG:
-\`Tout marina beach est Le territoire du gang des EXOTICS💋\`
+\`Tout Marina Beach est Le territoire du Gang des EXOTICS💋\`
 🛜 *Environment*: 
-\`[voir description]\` 
-🛣️🚘 *Traffic moyen*:
- \`[voir description]\`
-🚔: Point de contrôle de Police
+\`[Voir Description]\` 
+🛣️🚘 *Traffic Moyen*:
+ \`[Voir Description]\`
+🚔: Point de Contrôle de Police
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
                        ◻◻◻◻◻▢▢▢`;
 
             const imageURL = "https://files.catbox.moe/v79u4x.jpg";
 
             await zk.sendMessage(dest, { image: { url: imageURL }, caption: message }, { quoted: ms });
+
         } catch (error) {
             console.error("Erreur lors de l'envoi de la carte:", error);
-            repondre("❌Une erreur est survenue lors de l'envoi de la carte.");
+            repondre("❌ Une erreur est survenue lors de l'envoi de la carte.");
         }
     }
 );
