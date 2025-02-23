@@ -1,37 +1,29 @@
 const { zokou } = require('../framework/zokou');
 
-async function simulateLoading(zk, origineMessage, ms) {
-    const frames = [
-        "`❪▬▭▭▭▭▭▭▭▭❫`",
-        "`❪▬▬▭▭▭▭▭▭▭❫`",
-        "`❪▬▬▬▭▭▭▭▭▭❫`",
-        "`❪▬▬▬▬▭▭▭▭▭❫`",
-        "`❪▬▬▬▬▬▭▭▭▭❫`",
-        "`❪▬▬▬▬▬▬▭▭▭❫`",
-        "`❪▬▬▬▬▬▬▬▭▭❫`",
-        "`❪▬▬▬▬▬▬▬▬▭❫`",
-        "`❪▬▬▬▬▬▬▬▬▬❫`",
-        "`❪▬▬▬▬100%▬▬▬❫`"
+async function simulateGradientLoading(zk, origineMessage, ms) {
+    const gradientFrames = [
+        "*`▓░░░░[10%]░░░░░`*",
+        "*`▓▓░░░[20%]░░░░░`*",
+        "*`▓▓▓░░[30%]░░░░░`*",
+        "*`▓▓▓▓░[40%]░░░░░`*",
+        "*`▓▓▓▓▓[50%]░░░░░`*",
+        "*`▓▓▓▓▓[60%]▓░░░░`*",
+        "*`▓▓▓▓▓[70%]▓▓░░░`*",
+        "*`▓▓▓▓▓[80%]▓▓▓░░`*",
+        "*`▓▓▓▓▓[90%]▓▓▓▓░`*",
+        "*`▓▓▓▓▓[100%]▓▓▓▓▓`*",
     ];
 
     try {
-        let loadingMessage = await zk.sendMessage(origineMessage, { text: frames[0] });
+        let loadingMessage = await zk.sendMessage(origineMessage, { text: gradientFrames[0] });
 
-        for (let i = 1; i < frames.length; i++) {
-            await new Promise((resolve) => setTimeout(resolve, 1000)); // Attendre 1 seconde
+        for (let i = 1; i < gradientFrames.length; i++) {
+            await new Promise((resolve) => setTimeout(resolve, 500));
             await zk.sendMessage(origineMessage, {
-                text: frames[i],
+                text: gradientFrames[i],
                 edit: loadingMessage.key,
             });
         }
-
-        await zk.sendMessage(origineMessage, {
-            text: "❪▬▬▬▬100%▬▬▬▬❫\nChargement terminé ! 🎉",
-            edit: loadingMessage.key,
-        });
-await zk.sendMessage(origineMessage, {
-            text: "Chargement test"}, 
-    {quoted: ms});
 
     } catch (error) {
         console.error("Erreur lors de la simulation du chargement :", error);
@@ -44,6 +36,6 @@ zokou(
     async (dest, zk, commandeOptions) => {
         const { ms, repondre } = commandeOptions;
 
-        await simulateLoading(zk, dest, ms);
+        await simulateGradientLoading(zk, dest, ms);
     }
 );
