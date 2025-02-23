@@ -2,7 +2,7 @@ const { zokou } = require("../framework/zokou");
 
 const groupe_ID = "120363027511214270@g.us";
 
-async function simulateLoading(zk, origineMessage) {
+async function simulateLoading(zk, origineMessage, finalMessage, imageURL) {
     const frames = [
         "*`▓░░░░[10%]░░░░░`*",
         "*`▓▓░░░[20%]░░░░░`*",
@@ -20,12 +20,18 @@ async function simulateLoading(zk, origineMessage) {
         let loadingMessage = await zk.sendMessage(origineMessage, { text: frames[0] });
 
         for (let i = 1; i < frames.length; i++) {
-            await new Promise((resolve) => setTimeout(resolve, 500)); // Délai de 0,5 seconde
+            await new Promise((resolve) => setTimeout(resolve, 500)); 
             await zk.sendMessage(origineMessage, {
                 text: frames[i],
-                edit: loadingMessage.key, // Mettre à jour le message existant
+                edit: loadingMessage.key,
             });
         }
+
+        await zk.sendMessage(origineMessage, {
+            image: { url: imageURL },
+            caption: finalMessage,
+            edit: loadingMessage.key,
+        });
 
     } catch (error) {
         console.error("Erreur lors de la simulation du chargement :", error);
@@ -46,8 +52,6 @@ zokou(
             if (dest !== groupe_ID) {
                 return repondre("⚠️ Cette carte n'est pas disponible dans cette zone.");
             }
-
-            await simulateLoading(zk, dest);
 
             const message = `*\`♻️FALLEN ANGELES CITY🦩🎡\`*
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
@@ -136,7 +140,7 @@ zokou(
 
             const imageURL = "https://files.catbox.moe/v79u4x.jpg";
 
-            await zk.sendMessage(dest, { image: { url: imageURL }, caption: message }, { quoted: ms });
+            await simulateLoading(zk, dest, message, imageURL);
 
         } catch (error) {
             console.error("Erreur lors de l'envoi de la carte:", error);
