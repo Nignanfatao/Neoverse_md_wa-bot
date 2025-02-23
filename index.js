@@ -11,7 +11,7 @@ let { reagir } = require(__dirname + "/framework/app");
 const axios = require("axios");
 const FileType = require('file-type')
 const prefixe = conf.PREFIXE || "/";
-const maine = require('./commandes/elysium_control_bot');
+//const maine = require('./commandes/elysium_control_bot');
 const latence = require('./commandes/decompte');
 const stats = require('./commandes/stats');
 
@@ -208,7 +208,7 @@ async function main() {
                         }};
 
           const params = { zk, texte, origineMessage, repondre, ms };
-        maine(params);
+      //  maine(params);
         latence({zk, texte, origineMessage});
         stats(texte, repondre);
 
