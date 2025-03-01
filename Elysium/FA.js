@@ -52,7 +52,7 @@ const map_fa = [
 
 let lastPosition = null;
 
-function handleLocation({ texte, repondre }) {
+function loca_test({ texte, repondre }) {
     if (typeof texte === "string" && texte.toLowerCase().startsWith("💠i n t e r f a c e\n▔▔▔▔▔▔▔▔▔▔▔▔▔■■■■■\n🌍position")) {
         
         const regex = /🌍position:\s*([🦶🏾🚗🚲🚆]?)\s*(\d+)km/i;
@@ -89,4 +89,4 @@ function handleLocation({ texte, repondre }) {
     }
 }
 
-module.exports = handleLocation;
+module.exports = loca_test;
