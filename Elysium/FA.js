@@ -1,3 +1,4 @@
+
 const map_fa = [
     { km: 48, lieu: "Av. Kings [Museum🗿]" },
     { km: 47, lieu: "Av. Federal [NC Bank🏦]" },
@@ -49,3 +50,43 @@ const map_fa = [
     { km: 1, lieu: "Long Beach🌴 [Plage🚤]" }
 ];
 
+let lastPosition = null;
+
+function handleLocation({ texte, repondre }) {
+    if (typeof texte === "string" && texte.toLowerCase().startsWith("💠i n t e r f a c e\n▔▔▔▔▔▔▔▔▔▔▔▔▔■■■■■\n🌍position")) {
+        
+        const regex = /🌍position:\s*([🦶🏾🚗🚲🚆]?)\s*(\d+)km/i;
+        const match = texte.match(regex);
+
+        if (match) {
+            const modeTransport = match[1];
+            const currentPosition = parseInt(match[2], 10);
+
+            if (lastPosition !== null && lastPosition !== currentPosition) {
+                const distance = Math.abs(currentPosition - lastPosition);
+
+                if (modeTransport === "🦶🏾" && distance > 1) {
+                    repondre("🚶🏾‍♂️ Vous ne pouvez pas parcourir autant de distance à pied !\n🚖 Voulez-vous prendre un taxi ? (Oui/Non)");
+                    return;
+                }
+
+                let oldLocation = map_fa.find(loc => loc.km === lastPosition);
+                let newLocation = map_fa.find(loc => loc.km === currentPosition);
+                
+                let oldName = oldLocation ? oldLocation.lieu : "Lieu inconnu";
+                let newName = newLocation ? newLocation.lieu : "Lieu inconnu";
+
+                console.log(`Ancienne position: ${lastPosition}, Nouvelle: ${currentPosition}`);
+                repondre(`📍 Ancienne position : *${oldName}*\n📍 Nouvelle position : *${newName}*`);
+
+            } else {
+                console.log(`Position inchangée: ${currentPosition}`);
+                repondre("📍 Position inchangée");
+            }
+
+            lastPosition = currentPosition;
+        }
+    }
+}
+
+module.exports = handleLocation;
