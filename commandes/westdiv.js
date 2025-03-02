@@ -47,7 +47,7 @@ function add_fiche(nom_joueur, data_id, image_oc) {
 ⌬ *\`Precision\`* ▒▒▨▨▧■■■: ${data.e27} 
 ⌬ *\`Speed\`*▒▨▨▧■■■: ${data.e28}
 
-░▒▒▒▒░░▒░ \`CARDS\`🎴 [ 10 ]
+░▒▒▒▒░░▒░ \`CARDS\`🎴 [ 15 ]
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔                                      
 ${data.e17}
 ░░░░░░░░░░░░░░░░░░░
@@ -137,14 +137,14 @@ async function updatePlayerData(updates, client, data_id) {
 
 
 //add_fiche(nom_joueur, data_id, image_oc)
-add_fiche('westvanitas👤', '1', 'https://files.catbox.moe/dueik1.jpg');
-add_fiche('westnash👤', '2', 'https://files.catbox.moe/0nj3ez.jpg');
-//3
-add_fiche('westaether👤', '4', 'https://files.catbox.moe/kxz403.jpg');
+//add_fiche('westvanitas👤', '1', 'https://files.catbox.moe/dueik1.jpg');
+add_fiche('westnash👤', '2', 'https://files.catbox.moe/w4sso3.jpg');
+add_fiche('westindra👤', '2', 'https://files.catbox.moe/dgkvph.jpg');
+add_fiche('westaether👤', '4', 'https://files.catbox.moe/yjvd63.jpg');
 //5
-add_fiche('westsolomoe👤', '6', 'https://files.catbox.moe/xvbz5o.jpg');
+//add_fiche('westsolomoe👤', '6', 'https://files.catbox.moe/xvbz5o.jpg');
 add_fiche('westsept👤', '7', 'https://files.catbox.moe/uev2zx.jpg');
-add_fiche('westtempest👤', '8', 'https://files.catbox.moe/u1v994.jpg');
-//add_fiche('westwilliam👤', '9', 'https://telegra.ph/file/be3d0132f284a14d972c6.jpg');
-add_fiche('westhajime👤', '10', 'https://files.catbox.moe/lm5ank.jpg');
+//add_fiche('westtempest👤', '8', 'https://files.catbox.moe/u1v994.jpg');
+add_fiche('westinferno👤', '9', 'https://files.catbox.moe/i909hi.jpg');
+add_fiche('westhajime👤', '10', 'https://files.catbox.moe/4pxl7h.jpg');
 //add_fiche('westregulus👤', '11', 'https://telegra.ph/file/ffb64bf678bb1107cca18.jpg');
