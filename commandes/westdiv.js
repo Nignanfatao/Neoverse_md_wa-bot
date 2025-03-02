@@ -145,6 +145,6 @@ add_fiche('westaether👤', '4', 'https://files.catbox.moe/yjvd63.jpg');
 //add_fiche('westsolomoe👤', '6', 'https://files.catbox.moe/xvbz5o.jpg');
 add_fiche('westsept👤', '7', 'https://files.catbox.moe/uev2zx.jpg');
 //add_fiche('westtempest👤', '8', 'https://files.catbox.moe/u1v994.jpg');
-add_fiche('westinferno👤', '9', 'https://files.catbox.moe/i909hi.jpg');
+add_fiche('westinferno👤', '9', 'https://files.catbox.moe/dv23bc.jpg');
 add_fiche('westhajime👤', '10', 'https://files.catbox.moe/4pxl7h.jpg');
 //add_fiche('westregulus👤', '11', 'https://telegra.ph/file/ffb64bf678bb1107cca18.jpg');
