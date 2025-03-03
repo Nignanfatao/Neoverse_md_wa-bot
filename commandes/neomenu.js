@@ -551,15 +551,15 @@ zokou(
 
         if (!arg || arg.length === 0)  {
            // const lien = '';
-            const msg = `.     ░▒▒░░ *⌬CONTROLLER📱*░▒▒░░
+            const msg = `.  ░░▒░░ *⌬CONTROLLER📱*░░▒░
                                 ▔▔▔▔▔▔▔                                     
-🎧 \`𝗖𝗵𝗮𝘁\`:
+🎧 \`𝗖𝗵𝗮𝘁\`: 
       ░▒▒▒▒░░▒░▔▔▔▔▔▔▔▔▔
 
 🎮 *\`Actions\`*:
 ⌬ 
  
-⌬                    
+⌬           
           ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
                                   ░▒▒░░
                                  🔷𝗡Ξ𝗢25`;
