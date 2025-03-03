@@ -47,7 +47,7 @@ function add_fiche(nom_joueur, data_id, image_oc) {
 ⌬ *\`Precision\`* ▒▒▨▨▧■■■: ${data.e27} 
 ⌬ *\`Speed\`*▒▨▨▧■■■: ${data.e28}
 
-░▒▒▒▒░░▒░ \`CARDS\`🎴 [ 10 ]
+░▒▒▒▒░░▒░ \`CARDS\`🎴 [ 15 ]
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔                                      
 ${data.e17}
 ░░░░░░░░░░░░░░░░░░░
@@ -137,17 +137,17 @@ async function updatePlayerData(updates, client, data_id) {
 
 
 //add_fiche(nom_joueur, data_id, image_oc)
-add_fiche('northdamian👤', '1', 'https://files.catbox.moe/p0t686.jpg');
-add_fiche('northlily👤', '2', 'https://files.catbox.moe/lnd2qg.jpg');
+add_fiche('northdamian👤', '1', 'https://files.catbox.moe/6ywtez.jpg');
+//add_fiche('northlily👤', '2', 'https://files.catbox.moe/lnd2qg.jpg');
 //add_fiche('northadorieru👤', '3', 'https://telegra.ph/file/33d75752a2f4d645f836a.jpg');
-add_fiche('norththanatos👤', '4', 'https://files.catbox.moe/i0zsrp.jpg');
-add_fiche('northkazuta👤', '5', 'https://files.catbox.moe/vs1kcb.jpg');
-//6
+//add_fiche('norththanatos👤', '4', 'https://files.catbox.moe/i0zsrp.jpg');
+add_fiche('northkazuta👤', '5', 'https://files.catbox.moe/9fv70i.jpg');
+add_fiche('northomnimoh👤', '6', 'https://files.catbox.moe/lvs0ek.jpg');
 //add_fiche('northkanzen👤', '7', 'https://telegra.ph/file/e521acd5939414d8d12c5.jpg');
 add_fiche('northainz👤', '8', 'https://files.catbox.moe/69zjvs.jpg');
-//9
+add_fiche('northaizen👤', '9', 'https://files.catbox.moe/5j00wn.jpg');
 //add_fiche('northrukia👤', '10', 'https://telegra.ph/file/1979a11043529f6ce2bc5.jpg');
-add_fiche('northor👤', '11', 'https://files.catbox.moe/7795py.jpg');
-//add_fiche('northaruto👤', '12', 'https://telegra.ph/file/219e7e8d796b7b4e1ec9d.jpg');
+//add_fiche('northor👤', '11', 'https://files.catbox.moe/7795py.jpg');
+add_fiche('northakashi👤', '12', 'https://files.catbox.moe/7l84zf.jpg');
 add_fiche('northeoza👤', '13', 'https://files.catbox.moe/dmzuki.jpg');
-//add_fiche('northlone👤', '14', 'https://telegra.ph/file/5901ab31b72ad80f1c498.jpg');
+add_fiche('northregulus👤', '14', 'https://files.catbox.moe/le0ws1.jpg');
