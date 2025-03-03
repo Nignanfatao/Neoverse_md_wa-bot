@@ -449,11 +449,13 @@ zokou(
         const { repondre, arg, ms } = commandeOptions;
 
         if (!arg || arg.length === 0)  {
-            const liena = 'https://files.catbox.moe/l64bai.jpg';
-            const lienb = 'https://files.catbox.moe/ra29dr.jpg';
+            const liena = 'https://files.catbox.moe/c68iv8.jpg';
+            const lienb = 'https://files.catbox.moe/2r5jjo.jpg';
+            const lienc = 'https://files.catbox.moe/sbfzg6.jpg';
             const msg = ``;
             zk.sendMessage(dest, { image: { url: liena }, caption: msg }, { quoted: ms });
             zk.sendMessage(dest, { image: { url: lienb }, caption: msg }, { quoted: ms });
+            zk.sendMessage(dest, { image: { url: lienc }, caption: msg }, { quoted: ms });
             
         }
     }
