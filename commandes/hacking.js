@@ -2,27 +2,27 @@ const { zokou } = require('../framework/zokou');
 
 async function simulateHacking(zk, origineMessage, ms) {
     const frames = [
-        "🛜...⏐",
-        "🛜E...⏐",
-        "🛜g...⏐",
-        "🛜...⏐",
-        "🛜H...⏐",
-        "🛜Hac...⏐",
-        "🛜Hacking...⏐",
-        "🛜Ha...⏐",
-        "🛜Hacking_&...⏐",
-        "🛜Hacking_$...⏐",
-        "🛜Hacking_R...⏐",
-        "🛜Hacking_Réus...⏐",
-        "🛜Hacking_Réussi⏐",
-        "🛜Hacking_Réussi✅"
+        "`🛜...⏐`",
+        "`🛜E...⏐`",
+        "`🛜g...⏐`",
+        "`🛜...⏐`",
+        "`🛜H...⏐`",
+        "`🛜Hac...⏐`",
+        "`🛜Hacking...⏐`",
+        "`🛜Ha...⏐`",
+        "`🛜Hacking_&...⏐`",
+        "`🛜Hacking_$...⏐`",
+        "`🛜Hacking_R...⏐`",
+        "`🛜Hacking_Réus...⏐`",
+        "`🛜Hacking_Réussi⏐`",
+        "`🛜Hacking_Réussi✅`"
     ];
 
     try {
         let hackingMessage = await zk.sendMessage(origineMessage, { text: frames[0] });
 
         for (let i = 1; i < frames.length; i++) {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             await zk.sendMessage(origineMessage, {
                 text: frames[i],
                 edit: hackingMessage.key,
