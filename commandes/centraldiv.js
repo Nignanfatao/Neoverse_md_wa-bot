@@ -47,7 +47,7 @@ function add_fiche(nom_joueur, data_id, image_oc) {
 ⌬ *\`Precision\`* ▒▒▨▨▧■■■: ${data.e27} 
 ⌬ *\`Speed\`*▒▨▨▧■■■: ${data.e28}
 
-░▒▒▒▒░░▒░ \`CARDS\`🎴 [ 10 ]
+░▒▒▒▒░░▒░ \`CARDS\`🎴 [ 15 ]
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔                                      
 ${data.e17}
 ░░░░░░░░░░░░░░░░░░░
@@ -138,12 +138,12 @@ async function updatePlayerData(updates, client, data_id) {
 
 //add_fiche(nom_joueur, data_id, image_oc)
 //add_fiche('centralabdiel👤', '1', 'https://i.ibb.co/d4vspyP/image.jpg');
-add_fiche('centraldabi👤', '2', 'https://files.catbox.moe/zws3nf.jpg');
-add_fiche('centralyuan👤', '3', 'https://files.catbox.moe/ns1bav.jpg');
-add_fiche('centralirito👤', '4', 'https://files.catbox.moe/9jdiyb.jpg');
-add_fiche('centralhakuji👤', '5', 'https://files.catbox.moe/qp97rq.jpg');
-//6
-add_fiche('centralajax👤', '7', 'https://files.catbox.moe/avx1rl.jpg');
-add_fiche('centralmakima👤', '8', 'https://telegra.ph/file/fdd73d041d1cd05d82aa2.jpg');
-//9
-add_fiche('centralrudeus👤', '10', 'https://files.catbox.moe/ycq62s.jpg');
+add_fiche('centraldabi👤', '2', 'https://files.catbox.moe/yb8xd8.jpg');
+add_fiche('centralyuan👤', '3', 'https://files.catbox.moe/jwpahj.jpg');
+add_fiche('centralirito👤', '4', 'https://files.catbox.moe/mptbqh.jpg');
+add_fiche('centralhakuji👤', '5', 'https://files.catbox.moe/mfs5sg.jpg');
+add_fiche('centralana👤', '6', 'https://files.catbox.moe/08se2s.jpg');
+//add_fiche('centralajax👤', '7', 'https://files.catbox.moe/avx1rl.jpg');
+//add_fiche('centralmakima👤', '8', 'https://telegra.ph/file/fdd73d041d1cd05d82aa2.jpg');
+add_fiche('centralarthur👤', '9', 'https://files.catbox.moe/houno9.jpg');
+//add_fiche('centralrudeus👤', '10', 'https://files.catbox.moe/ycq62s.jpg');
