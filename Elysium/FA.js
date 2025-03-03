@@ -1,90 +1,93 @@
-
 const map_fa = [
-    { km: 48, lieu: "Av. Kings [Museum🗿]" },
-    { km: 47, lieu: "Av. Federal [NC Bank🏦]" },
-    { km: 46, lieu: "Av. Collins [Parking🚘]" },
-    { km: 45, lieu: "Av. Telsa [Metro🚄]" },
-    { km: 44, lieu: "Av. Fain [GrandHôtel🏨]" },
-    { km: 43, lieu: "Av. SAT [Blue fish🐠🍽️]" },
-    { km: 42, lieu: "Av. Fortuna [JacobsCo🔑]" },
-    { km: 41, lieu: "Av. Temple [Business&🏢]" },
-    { km: 40, lieu: "Av. Rocknorth 🚔" },
-    { km: 39, lieu: "Av. Freetown [Hôpital🏨]" },
-    { km: 38, lieu: "Av. Swan [Memorata👛🛍️]" },
-    { km: 37, lieu: "Av. Sparks [Apparts🏠]" },
-    { km: 36, lieu: "Av. Eternity [Store🛒]" },
-    { km: 35, lieu: "Av. Sunning [Neo Tech🩻]" },
-    { km: 34, lieu: "Av. Liberty [LCD cars🚘]" },
-    { km: 33, lieu: "Av. Métro [Station🚅🌍]" },
-    { km: 32, lieu: "Av. Montana [Parking🚘]" },
-    { km: 31, lieu: "Av. Arktown 🚔" },
-    { km: 30, lieu: "Av. Sharp [Bank ATM🏪]" },
-    { km: 29, lieu: "Av. Eywood [StarGym🏋🏽‍♂️]" },
-    { km: 28, lieu: "Av. Véronica [Carshop🛠️]" },
-    { km: 27, lieu: "Av. Loksfort [EFood🍕]" },
-    { km: 26, lieu: "Av. Nevada [Casino🎰]" },
-    { km: 25, lieu: "Av. Fairy [EVOstyle👕🛍️]" },
-    { km: 24, lieu: "Av. Dixies [Store🛒]" },
-    { km: 23, lieu: "Av. Staples [Cinema🍿🎞️]" },
-    { km: 22, lieu: "Av. Liberty Town" },
-    { km: 21, lieu: "Av. Lux [ClubVenus🪩🍸]" },
-    { km: 20, lieu: "Av. Freeland [GameHome🕹️]" },
-    { km: 19, lieu: "Av. Shine [MGStage🎤🪩]" },
-    { km: 18, lieu: "Av. Red miles [Metro🚄]" },
-    { km: 17, lieu: "Av. Xnes [Apparts 🏠]" },
-    { km: 16, lieu: "Av. Tropica [Store🛒]" },
-    { km: 15, lieu: "Av. Santana [Stadium🏟️]" },
-    { km: 14, lieu: "Av. Blue Bay [Parking🚘]" },
-    { km: 13, lieu: "Av. Santa Veronica🦩" },
-    { km: 12, lieu: "Av. Seas [Playground🏀]" },
-    { km: 11, lieu: "Av. Haleywood [Metro🚄]" },
-    { km: 10, lieu: "Av. Miles [Joytown🎢🎠]" },
-    { km: 9, lieu: "Av. Los Flores🦩" },
-    { km: 8, lieu: "Av. Reds [Paradise👠🔞]" },
-    { km: 7, lieu: "Av. Maryland [Races🏁]" },
-    { km: 6, lieu: "Av. Westshore sea" },
-    { km: 5, lieu: "Av. Seattle [Apparts🏠]" },
-    { km: 4, lieu: "Av. Lust [Red Club🔞]💋" },
-    { km: 3, lieu: "Av. Playa🌴 [Havanah🍹]" },
-    { km: 2, lieu: "La Marina🌴 [TheBay🏖️]" },
-    { km: 1, lieu: "Long Beach🌴 [Plage🚤]" }
+    { km: 48, lieu: "Av. Kings \`[Museum🗿]\`", image: "https://example.com/images/museum.jpg" },
+    { km: 47, lieu: "Av. Federal \`[NC Bank🏦]\`", image: "https://example.com/images/bank.jpg" },
+    { km: 46, lieu: "Av. Collins \`[Parking🚘]\`", image: "https://example.com/images/parking.jpg" },
+    { km: 45, lieu: "Av. Telsa \`[Metro🚄]\`", image: "https://example.com/images/metro.jpg" },
+    { km: 44, lieu: "Av. Fain \`[GrandHôtel🏨]\`", image: "https://example.com/images/hotel.jpg" },
+    { km: 43, lieu: "Av. SAT \`[Blue fish🐠🍽️]\`", image: "https://example.com/images/restaurant.jpg" },
+    { km: 42, lieu: "Av. Fortuna \`[JacobsCo🔑]\`", image: "https://example.com/images/office.jpg" },
+    { km: 41, lieu: "Av. Temple \`[Business&🏢]\`", image: "https://example.com/images/business.jpg" },
+    { km: 40, lieu: "Av. Rocknorth 🚔", image: "https://example.com/images/police.jpg" },
+    { km: 39, lieu: "Av. Freetown \`[Hôpital🏨]\`", image: "https://example.com/images/hospital.jpg" },
+    { km: 38, lieu: "Av. Swan \`[Memorata👛🛍️]\`", image: "https://example.com/images/shopping.jpg" },
+    { km: 37, lieu: "Av. Sparks \`[Apparts🏠]\`", image: "https://example.com/images/apartments.jpg" },
+    { km: 36, lieu: "Av. Eternity \`[Store🛒]\`", image: "https://example.com/images/store.jpg" },
+    { km: 35, lieu: "Av. Sunning \`[Neo Tech🩻]\`", image: "https://example.com/images/tech.jpg" },
+    { km: 34, lieu: "Av. Liberty \`[LCD cars🚘]\`", image: "https://example.com/images/cars.jpg" },
+    { km: 33, lieu: "Av. Métro \`[Station🚅🌍]\`", image: "https://example.com/images/metro_station.jpg" },
+    { km: 32, lieu: "Av. Montana \`[Parking🚘]\`", image: "https://example.com/images/parking2.jpg" },
+    { km: 31, lieu: "Av. Arktown 🚔", image: "https://example.com/images/police2.jpg" },
+    { km: 30, lieu: "Av. Sharp \`[Bank ATM🏪]\`", image: "https://example.com/images/atm.jpg" },
+    { km: 29, lieu: "Av. Eywood \`[StarGym🏋🏽‍♂️]\`", image: "https://example.com/images/gym.jpg" },
+    { km: 28, lieu: "Av. Véronica \`[Carshop🛠️]\`", image: "https://example.com/images/carshop.jpg" },
+    { km: 27, lieu: "Av. Loksfort \`[EFood🍕]\`", image: "https://example.com/images/food.jpg" },
+    { km: 26, lieu: "Av. Nevada \`[Casino🎰]\`", image: "https://example.com/images/casino.jpg" },
+    { km: 25, lieu: "Av. Fairy \`[EVOstyle👕🛍️]\`", image: "https://example.com/images/fashion.jpg" },
+    { km: 24, lieu: "Av. Dixies \`[Store🛒]\`", image: "https://example.com/images/store2.jpg" },
+    { km: 23, lieu: "Av. Staples \`[Cinema🍿🎞️]\`", image: "https://example.com/images/cinema.jpg" },
+    { km: 22, lieu: "Av. Liberty Town", image: "https://example.com/images/liberty_town.jpg" },
+    { km: 21, lieu: "Av. Lux \`[ClubVenus🪩🍸]\`", image: "https://example.com/images/club.jpg" },
+    { km: 20, lieu: "Av. Freeland \`[GameHome🕹️]\`", image: "https://example.com/images/gaming.jpg" },
+    { km: 19, lieu: "Av. Shine \`[MGStage🎤🪩]\`", image: "https://example.com/images/stage.jpg" },
+    { km: 18, lieu: "Av. Red miles \`[Metro🚄]\`", image: "https://example.com/images/metro2.jpg" },
+    { km: 17, lieu: "Av. Xnes \`[Apparts 🏠]\`", image: "https://example.com/images/apartments2.jpg" },
+    { km: 16, lieu: "Av. Tropica \`[Store🛒]\`", image: "https://example.com/images/store3.jpg" },
+    { km: 15, lieu: "Av. Santana \`[Stadium🏟️]\`", image: "https://example.com/images/stadium.jpg" },
+    { km: 14, lieu: "Av. Blue Bay \`[Parking🚘]\`", image: "https://example.com/images/parking3.jpg" },
+    { km: 13, lieu: "Av. Santa Veronica🦩", image: "https://example.com/images/santa_veronica.jpg" },
+    { km: 12, lieu: "Av. Seas \`[Playground🏀]\`", image: "https://example.com/images/playground.jpg" },
+    { km: 11, lieu: "Av. Haleywood \`[Metro🚄]\`", image: "https://example.com/images/metro3.jpg" },
+    { km: 10, lieu: "Av. Miles \`[Joytown🎢🎠]\`", image: "https://example.com/images/joytown.jpg" },
+    { km: 9, lieu: "Av. Los Flores🦩", image: "https://example.com/images/los_flores.jpg" },
+    { km: 8, lieu: "Av. Reds \`[Paradise👠🔞]\`", image: "https://example.com/images/paradise.jpg" },
+    { km: 7, lieu: "Av. Maryland \`[Races🏁]\`", image: "https://example.com/images/races.jpg" },
+    { km: 6, lieu: "Av. Westshore Sea", image: "https://example.com/images/westshore.jpg" },
+    { km: 5, lieu: "Av. Seattle \`[Apparts🏠]\`", image: "https://example.com/images/apartments3.jpg" },
+    { km: 4, lieu: "Av. Lust \`[Red Club🔞💋]\`", image: "https://example.com/images/red_club.jpg" },
+    { km: 3, lieu: "Av. Playa🌴 \`[Havanah🍹]\`", image: "https://example.com/images/playa.jpg" },
+    { km: 2, lieu: "La Marina🌴 \`[TheBay🏖️]\`", image: "https://example.com/images/marina.jpg" },
+    { km: 1, lieu: "Long Beach🌴 \`[Plage🚤]\`", image: "https://example.com/images/beach.jpg" }
 ];
 
 let lastPosition = null;
 
 function loca_test({ texte, repondre }) {
-    if (typeof texte === "string" && texte.toLowerCase().startsWith("💠i n t e r f a c e\n▔▔▔▔▔▔▔▔▔▔▔▔▔■■■■■\n🌍position")) {
+    if (typeof texte === "string" && texte.toLowerCase().startsWith("*`💠I N T E R F A C E`*
+▔▔▔▔▔▔▔▔▔▔▔▔▔■■■■■
+🌍position:")) {
         
-        const regex = /🌍position:\s*([🦶🏾🚗🚲🚆]?)\s*(\d+)km/i;
+        const regex = /🌍position:\s*(\d+)km\s*([>]{1,2})\s*(\d+)km/i;
         const match = texte.match(regex);
 
         if (match) {
-            const modeTransport = match[1];
-            const currentPosition = parseInt(match[2], 10);
+            const startPosition = parseInt(match[1], 10);
+            const guillemets = match[2]; // ">" ou ">>"
+            const endPosition = parseInt(match[3], 10);
 
-            if (lastPosition !== null && lastPosition !== currentPosition) {
-                const distance = Math.abs(currentPosition - lastPosition);
+            const distance = Math.abs(endPosition - startPosition);
 
-                if (modeTransport === "🦶🏾" && distance > 1) {
-                    repondre("🚶🏾‍♂️ Vous ne pouvez pas parcourir autant de distance à pied !\n🚖 Voulez-vous prendre un taxi ? (Oui/Non)");
-                    return;
-                }
-
-                let oldLocation = map_fa.find(loc => loc.km === lastPosition);
-                let newLocation = map_fa.find(loc => loc.km === currentPosition);
-                
-                let oldName = oldLocation ? oldLocation.lieu : "Lieu inconnu";
-                let newName = newLocation ? newLocation.lieu : "Lieu inconnu";
-
-                console.log(`Ancienne position: ${lastPosition}, Nouvelle: ${currentPosition}`);
-                repondre(`📍 Ancienne position : *${oldName}*\n📍 Nouvelle position : *${newName}*`);
-
-            } else {
-                console.log(`Position inchangée: ${currentPosition}`);
-                repondre("📍 Position inchangée");
+            if (guillemets === ">" && distance > 1) {
+                repondre("🚶‍♂️ Vous ne pouvez pas parcourir autant de distance à pied !");
+                return;
+            } else if (guillemets === ">>" && distance > 2) {
+                repondre("🚗 Vous ne pouvez pas parcourir autant de distance en voiture !");
+                return;
             }
 
-            lastPosition = currentPosition;
+            let startLocation = map_fa.find(loc => loc.km === startPosition);
+            let endLocation = map_fa.find(loc => loc.km === endPosition);
+
+            let startName = startLocation ? startLocation.lieu : "Lieu inconnu";
+            let endName = endLocation ? endLocation.lieu : "Lieu inconnu";
+
+            console.log(`Départ: ${startPosition}, Arrivée: ${endPosition}`);
+            repondre(`📍 Départ : *${startName}*\n📍 Arrivée : *${endName}*`);
+
+            if (endLocation && endLocation.image) {
+                repondre({ image: endLocation.image });
+            }
+
+            lastPosition = endPosition;
         }
     }
 }
