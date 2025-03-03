@@ -145,9 +145,9 @@ add_fiche('northkazuta👤', '5', 'https://files.catbox.moe/9fv70i.jpg');
 add_fiche('northomnimoh👤', '6', 'https://files.catbox.moe/lvs0ek.jpg');
 //add_fiche('northkanzen👤', '7', 'https://telegra.ph/file/e521acd5939414d8d12c5.jpg');
 add_fiche('northainz👤', '8', 'https://files.catbox.moe/69zjvs.jpg');
-add_fiche('northaizen👤', '9', 'https://files.catbox.moe/5j00wn.jpg');
+//9
 //add_fiche('northrukia👤', '10', 'https://telegra.ph/file/1979a11043529f6ce2bc5.jpg');
-//add_fiche('northor👤', '11', 'https://files.catbox.moe/7795py.jpg');
+add_fiche('northaizen👤', '11', 'https://files.catbox.moe/5j00wn.jpg');
 add_fiche('northakashi👤', '12', 'https://files.catbox.moe/7l84zf.jpg');
 add_fiche('northeoza👤', '13', 'https://files.catbox.moe/dmzuki.jpg');
 add_fiche('northregulus👤', '14', 'https://files.catbox.moe/le0ws1.jpg');
