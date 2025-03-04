@@ -53,7 +53,7 @@ let lastPosition = null;
 
 function loca_test({ texte, repondre }) {
     // Vérifie si le texte commence par la séquence spécifique
-    if (typeof texte === "string" && texte.toLowerCase().startsWith("*`💠i n t e r f a ce`* \n▔▔▔▔▔▔▔▔▔▔▔▔▔■■■■■\n🌍position")) {
+    if (typeof texte === "string" && texte.toLowerCase().startsWith("*`💠interface`*\n▔▔▔▔▔▔▔▔▔▔▔▔▔■■■■■\n🌍position:")) {
         
         // Expression régulière pour extraire les positions et les guillemets
         const regex = /🌍position:\s*(\d+)km\s*([>]{1,2})\s*(\d+)km/i;
