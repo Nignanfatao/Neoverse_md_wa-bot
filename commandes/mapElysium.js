@@ -16,11 +16,11 @@ async function sendImageWithFrames(zk, origineMessage) {
         "*`■■■■■᚜100%᚛■■■■■♻️`*",
     ];
 
-    const imageUrl = 'https://files.catbox.moe/28ucpr.mp4';
+    const videoUrl = 'https://files.catbox.moe/28ucpr.mp4';
 
     try {
         const imageMessage = await zk.sendMessage(origineMessage, {
-            image: { url: imageUrl },
+            video: { url: videoUrl },
             caption: frames[0],
         });
 
