@@ -52,7 +52,7 @@ zokou(
                 return repondre("⚠️ Cette carte n'est pas disponible dans cette zone.");
             }
 
-            await simulateLoading(zk, dest);
+            await sendImageWithFrames(zk, dest);
 
             const message = `*\`♻️FALLEN ANGELES CITY🦩🎡\`*
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
