@@ -146,4 +146,4 @@ add_fiche('centralana👤', '6', 'https://files.catbox.moe/08se2s.jpg');
 //add_fiche('centralajax👤', '7', 'https://files.catbox.moe/avx1rl.jpg');
 //add_fiche('centralmakima👤', '8', 'https://telegra.ph/file/fdd73d041d1cd05d82aa2.jpg');
 add_fiche('centralarthur👤', '9', 'https://files.catbox.moe/houno9.jpg');
-//add_fiche('centralrudeus👤', '10', 'https://files.catbox.moe/ycq62s.jpg');
+add_fiche('centralrudeus👤', '10', 'https://files.catbox.moe/ycq62s.jpg');
