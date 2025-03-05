@@ -2,33 +2,38 @@ const { zokou } = require("../framework/zokou");
 
 const groupe_ID = "120363027511214270@g.us";
 
-async function simulateLoading(zk, origineMessage) {
+async function sendImageWithFrames(zk, origineMessage) {
     const frames = [
-        "*`▓░░░░[10%]░░░░░`*",
-        "*`▓▓░░░[20%]░░░░░`*",
-        "*`▓▓▓░░[30%]░░░░░`*",
-        "*`▓▓▓▓░[40%]░░░░░`*",
-        "*`▓▓▓▓▓[50%]░░░░░`*",
-        "*`▓▓▓▓▓[60%]▓░░░░`*",
-        "*`▓▓▓▓▓[70%]▓▓░░░`*",
-        "*`▓▓▓▓▓[80%]▓▓▓░░`*",
-        "*`▓▓▓▓▓[90%]▓▓▓▓░`*",
-        "*`▓▓▓▓▓[100%]▓▓▓▓▓`*",
+        "*`■□□□□᚜10%᚛□□□□□♻️`*",
+        "*`■■□□□᚜20%᚛□□□□□♻️`*",
+        "*`■■■□□᚜30%᚛□□□□□♻️`*",
+        "*`■■■■□᚜40%᚛□□□□□♻️`*",
+        "*`■■■■■᚜50%᚛□□□□□♻️`*",
+        "*`■■■■■᚜60%᚛■□□□□♻️`*",
+        "*`■■■■■᚜70%᚛■■□□□♻️`*",
+        "*`■■■■■᚜80%᚛■■■□□♻️`*",
+        "*`■■■■■᚜90%᚛■■■■□♻️`*",
+        "*`■■■■■᚜100%᚛■■■■■♻️`*",
     ];
 
+    const imageUrl = 'https://files.catbox.moe/28ucpr.mp4';
+
     try {
-        let loadingMessage = await zk.sendMessage(origineMessage, { text: frames[0] });
+        const imageMessage = await zk.sendMessage(origineMessage, {
+            image: { url: imageUrl },
+            caption: frames[0],
+        });
 
         for (let i = 1; i < frames.length; i++) {
-            await new Promise((resolve) => setTimeout(resolve, 500)); // Délai de 0,5 seconde
+            await new Promise((resolve) => setTimeout(resolve, 500));
             await zk.sendMessage(origineMessage, {
                 text: frames[i],
-                edit: loadingMessage.key, // Mettre à jour le message existant
+                edit: imageMessage.key,
             });
         }
 
     } catch (error) {
-        console.error("Erreur lors de la simulation du chargement :", error);
+        console.error("Erreur lors de l'envoi de l'image avec les frames :", error);
         await zk.sendMessage(origineMessage, { text: "Une erreur s'est produite lors du chargement. 😢" });
     }
 }
