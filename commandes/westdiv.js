@@ -139,7 +139,7 @@ async function updatePlayerData(updates, client, data_id) {
 //add_fiche(nom_joueur, data_id, image_oc)
 //add_fiche('westvanitas👤', '1', 'https://files.catbox.moe/dueik1.jpg');
 add_fiche('westnash👤', '2', 'https://files.catbox.moe/w4sso3.jpg');
-add_fiche('westindra👤', '2', 'https://files.catbox.moe/dgkvph.jpg');
+add_fiche('westindra👤', '3', 'https://files.catbox.moe/dgkvph.jpg');
 add_fiche('westaether👤', '4', 'https://files.catbox.moe/yjvd63.jpg');
 //5
 //add_fiche('westsolomoe👤', '6', 'https://files.catbox.moe/xvbz5o.jpg');
