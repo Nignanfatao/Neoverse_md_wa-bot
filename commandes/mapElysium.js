@@ -22,13 +22,14 @@ async function sendImageWithFrames(zk, origineMessage) {
         const imageMessage = await zk.sendMessage(origineMessage, {
             video: { url: videoUrl },
             caption: frames[0],
+            gifPlayback: true
         });
-
+  
         for (let i = 1; i < frames.length; i++) {
             await new Promise((resolve) => setTimeout(resolve, 500));
             await zk.sendMessage(origineMessage, {
                 text: frames[i],
-                edit: imageMessage.key,
+                edit: imageMessage.caption.key,
             });
         }
 
