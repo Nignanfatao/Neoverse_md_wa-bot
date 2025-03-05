@@ -21,7 +21,7 @@ async function latence({ zk, texte, origineMessage }) {
     const neoTexte = texte.toLowerCase();
 
     // Vérifie si l'utilisateur veut arrêter un décompte
-    if (neoTexte === "stop" || neoTexte.startsWith(`.  ░░▒░░ *⌬controller📱*░░▒░`)) {
+    if (neoTexte === "stop" || neoTexte.startsWith(`.   ░▒░ *⌬controller📱*░▒░`)) {
         await stopCountdown(zk, origineMessage);
         return;
     }
