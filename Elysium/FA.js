@@ -65,10 +65,10 @@ function loca_test({ texte, repondre }) {
             const distance = Math.abs(endPosition - startPosition);
 
             if (guillemets === ">" && distance > 1) {
-                repondre("*`💠S Y S T È ME🌐`*▔▔▔▔▔▔▔▔▔▔▔▔▔■■■■■▪️Vous ne pouvez pas parcourir autant de distance à pied 🚶‍♂️!■■■■■▔▔▔▔▔▔▔▔▔▔▔▔");
+                repondre("*`💠S Y S T È ME🌐`*▔▔▔▔▔▔▔▔▔▔▔▔▔■■■■■▪️Vous ne pouvez pas parcourir autant de distance à pied 🚶‍♂️! Le maximum de Km à pieds est de 1km Max !■■■■■▔▔▔▔▔▔▔▔▔▔▔▔");
                 return;
-            } else if (guillemets === ">>" && distance > 2) {
-                repondre("*`💠S Y S T È ME🌐`*▔▔▔▔▔▔▔▔▔▔▔▔▔■■■■■▪️Vous ne pouvez pas parcourir autant de distance en voiture 🚗!■■■■■▔▔▔▔▔▔▔▔▔▔▔▔");
+            } else if (guillemets === ">>" && distance > 4) {
+                repondre("*`💠S Y S T È ME🌐`*▔▔▔▔▔▔▔▔▔▔▔▔▔■■■■■▪️Vous ne pouvez pas parcourir autant de distance en voiture 🚗! Le maximum de Km en voiture est de 4km Max !■■■■■▔▔▔▔▔▔▔▔▔▔▔▔");
                 return;
             }
 
