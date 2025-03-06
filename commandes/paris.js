@@ -21,7 +21,7 @@ function afficherFiche(parieur, data) {
 ▔▔▔▔▔▔▔▔▔▔▔▔▔░▒▒▒▒░░▒░
 *👥Parieur*: ${parieur}
 *🛡️Modérateur*: ${moderateur}
-*💰Somme misée*: ${somme_misee}
+*💰Somme misée*: ${somme_misee}🧭
 
 📜 Liste des paris placés :
 ${listeParis}
@@ -44,36 +44,41 @@ zokou(
             return repondre('Cette commande est uniquement disponible dans un groupe spécifique.');
         }
 
-        if (arg.length < 1) return repondre('Format: neobet <parieur=|modo=|mise=|pari=> [valeurs]');
+        if (arg.length < 1) return repondre('Format: neobet <parieur = |modo = |mise = |pari1 = |pari2 = |...> [valeurs] ou neobet <nom_du_parieur>');
 
-        const commande = arg[0].toLowerCase();
+        const commandes = arg.join(' ').split(/(?<!\w)\s*=\s*/); // Sépare les commandes et les valeurs
+        const nomParieur = commandes[0].trim(); // Le premier élément est toujours le nom du parieur
 
-        if (!commande.includes('=')) {
-            return repondre('Format incorrect. Utilisez "=" pour séparer la commande des valeurs. Exemple: neobet parieur=JohnDoe');
+        if (commandes.length === 1) {
+            const data = await getData(nomParieur);
+            if (!data) return repondre(`Aucun pari trouvé pour le parieur ${nomParieur}.`);
+            repondre(afficherFiche(nomParieur, data));
+            return;
         }
 
-        const [cmd, valeur] = commande.split('=');
+        for (let i = 1; i < commandes.length; i++) {
+            const [cmd, valeur] = commandes[i].split(/\s+(.*)/); // Sépare la commande et la valeur
+            const cmdNormalisee = cmd.trim().toLowerCase();
 
-        if (cmd === 'parieur') {
-            const nomParieur = valeur.trim();
-            await insertParieur(nomParieur);
-            repondre(`Parieur ${nomParieur} ajouté.`);
-        } else if (cmd === 'modo') {
-            const nomModerateur = valeur.trim();
-            await updateModerateur(arg[1], nomModerateur);
-            repondre(`Modérateur ${nomModerateur} ajouté pour ${arg[1]}.`);
-        } else if (cmd === 'mise') {
-            const sommeMisee = parseFloat(valeur.trim());
-            await updateSommeMisee(arg[1], sommeMisee);
-            repondre(`Somme misée ${sommeMisee} ajoutée pour ${arg[1]}.`);
-        } else if (cmd === 'pari') {
-            const [nomPari, cote] = valeur.trim().split(' ');
-            await addPari(arg[1], nomPari, parseFloat(cote));
-            repondre(`Pari ${nomPari} ×${cote} ajouté pour ${arg[1]}.`);
-        } else {
-            const data = await getData(arg[1]);
-            if (!data) return repondre('Aucun pari trouvé pour ce parieur.');
-            repondre(afficherFiche(arg[1], data));
+            if (cmdNormalisee === 'parieur') {
+                const nomParieur = valeur.trim();
+                await insertParieur(nomParieur);
+                repondre(`Parieur ${nomParieur} ajouté.`);
+            } else if (cmdNormalisee === 'modo') {
+                const nomModerateur = valeur.trim();
+                await updateModerateur(nomParieur, nomModerateur);
+                repondre(`Modérateur ${nomModerateur} ajouté pour ${nomParieur}.`);
+            } else if (cmdNormalisee === 'mise') {
+                const sommeMisee = parseFloat(valeur.trim());
+                await updateSommeMisee(nomParieur, sommeMisee);
+                repondre(`Somme misée ${sommeMisee} ajoutée pour ${nomParieur}.`);
+            } else if (cmdNormalisee.startsWith('pari')) {
+                const [nomPari, cote] = valeur.trim().split(/\s+(.*)/);
+                await addPari(nomParieur, nomPari, parseFloat(cote));
+                repondre(`Pari ${nomPari} ×${cote} ajouté pour ${nomParieur}.`);
+            } else {
+                repondre(`Commande "${cmdNormalisee}" non reconnue.`);
+            }
         }
     }
 );
