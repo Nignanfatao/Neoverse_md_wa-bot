@@ -18,8 +18,8 @@ async function afficherFiche(parieur) {
 
   const gains = calculerGains(fiche.mise, [fiche.cote1, fiche.cote2, fiche.cote3]);
 
-  return `
-⌬𝗡Ξ𝗢𝘃𝗲𝗿𝘀𝗲 𝗕𝗘𝗧🎰 ▔▔▔▔▔▔▔▔▔▔▔▔▔░▒▒▒▒░░▒░
+  return `.
+*⌬𝗡Ξ𝗢𝘃𝗲𝗿𝘀𝗲 𝗕𝗘𝗧🎰* ▔▔▔▔▔▔▔▔▔▔▔▔▔░▒▒▒▒░░▒░
 👥Parieur: ${fiche.parieur}
 🛡️Modérateur: ${fiche.modo}
 💰Somme misée: ${fiche.mise}🧭
@@ -33,15 +33,17 @@ async function afficherFiche(parieur) {
 
 ⌬Statut Final: ${fiche.statut_final}
 
-═══════════░▒▒▒▒░░▒░ 🔷𝗡Ξ𝗢𝗚𝗮𝗺𝗶𝗻𝗴 2025🎮
+═══════════░▒▒▒▒░░▒░ *\`🔷𝗡Ξ𝗢𝗚𝗮𝗺𝗶𝗻𝗴 2025🎮\`*
     `;
 }
 
 // Fonction pour analyser les arguments
 function analyserArguments(arg) {
-  // Si l'argument contient "=", on le divise en deux parties
-  if (arg.includes('=')) {
-    const [action, valeur] = arg.split('=').map(part => part.trim());
+  const args = arg.join(' ').split(' '); // Convertir les arguments en tableau
+  console.log('Arguments reçus:', args); // Log pour déboguer
+
+  if (args.includes('=')) {
+    const [action, valeur] = arg.join(' ').split('=').map(part => part.trim());
     if (action === 'parieur') {
       return { action, parieur: valeur };
     } else if (action === 'modo') {
@@ -49,8 +51,7 @@ function analyserArguments(arg) {
     }
   }
 
-  // Sinon, on traite les arguments normalement
-  const [action, parieur, operation, valeur] = arg;
+  const [action, parieur, operation, valeur] = args;
 
   if (action === 'mise' && (operation === '+' || operation === '-' || operation === '=')) {
     return { action, parieur, signe: operation, montant: parseFloat(valeur) };
@@ -124,11 +125,12 @@ zokou(
   async (dest, zk, { repondre, arg, ms, superUser }) => {
     if (!arg || arg.length === 0) return repondre('Format: neobet <parieur> <operation> <valeur>');
 
-    const args = analyserArguments(arg.join(' ')); // Convertir les arguments en une chaîne unique
+    const args = analyserArguments(arg); // Analyser les arguments
 
     try {
       if (args.action === 'parieur') {
-        await updatePlayerData([{ colonneObjet: 'parieur', newValue: args.parieur }], args.parieur);
+        // Insérer un nouveau parieur dans la base de données
+        await pool.query('INSERT INTO neobet (parieur) VALUES ($1) ON CONFLICT (parieur) DO NOTHING', [args.parieur]);
         repondre(`🎰 Parieur ${args.parieur} ajouté avec succès.`);
       } else if (args.action === 'modo') {
         await updatePlayerData([{ colonneObjet: 'modo', newValue: args.modo }], args.parieur);
@@ -201,10 +203,10 @@ zokou(
     try {
       if (parieur.toLowerCase() === 'all') {
         await supprimerToutesLesFiches();
-        repondre('🧹 ✅ Toutes les fiches de pari ont été supprimées.');
+        repondre('✅ Toutes les fiches de pari ont été supprimées.');
       } else {
         await supprimerFiche(parieur);
-        repondre(`🧹 ✅ Fiche de pari de ${parieur} supprimée.`);
+        repondre(`✅ Fiche de pari de ${parieur} supprimée.`);
       }
     } catch (error) {
       console.error('Erreur lors de la suppression:', error);
