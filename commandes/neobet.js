@@ -5,7 +5,7 @@ const dbUrl = s.DB;
 const { Pool } = require('pg');
 
 zokou(
-  { nomCom: 'neobet', categorie: 'NEO_GAMES🎰' },
+  { nomCom: 'neobet', reaction: '🎰', categorie: 'NEO_GAMES🎰' },
   async (dest, zk, { repondre, arg, ms, superUser }) => {
     const [action, parieur, operation, ...values] = arg;
 
@@ -80,7 +80,7 @@ zokou(
 );
 
 zokou(
-  { nomCom: 'clear_bet', categorie: 'NEO_GAMES🎰' },
+  { nomCom: 'clear_bet', reaction: '🧹', categorie: 'Other' },
   async (dest, zk, { repondre, arg, ms, auteurMessage }) => {
     if (arg.length < 1) return repondre('Format: clear_bet [nom du parieur ou ID] ou "all" pour tout supprimer.');
 
