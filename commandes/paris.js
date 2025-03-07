@@ -33,6 +33,62 @@ ${listeParis}
     `;
 }
 
+async function processUpdates(arg, nomParieur) {
+    const updates = [];
+    let i = 0;
+
+    while (i < arg.length) {
+        const [object, signe, valeur] = [arg[i], arg[i + 1], arg[i + 2]];
+        let texte = [];
+        i += 2;
+
+        while (i < arg.length && !['modo', 'mise', 'pari'].includes(arg[i])) {
+            texte.push(arg[i]);
+            i++;
+        }
+
+        const newValue = await calculateNewValue(object, signe, valeur, texte, nomParieur);
+        updates.push({ object, newValue });
+    }
+
+    return updates;
+}
+
+async function calculateNewValue(object, signe, valeur, texte, nomParieur) {
+    const data = await getData(nomParieur);
+    let newValue;
+
+    if (object === 'modo') {
+        if (signe === '=') {
+            newValue = texte.join(' ');
+            await updateModerateur(nomParieur, newValue);
+        } else {
+            throw new Error('Opération non supportée pour le modérateur.');
+        }
+    } else if (object === 'mise') {
+        const sommeMisee = data.somme_misee || 0;
+        if (signe === '+') {
+            newValue = sommeMisee + parseFloat(valeur);
+        } else if (signe === '-') {
+            newValue = sommeMisee - parseFloat(valeur);
+        } else if (signe === '=') {
+            newValue = parseFloat(valeur);
+        } else {
+            throw new Error('Opération non supportée pour la mise.');
+        }
+        await updateSommeMisee(nomParieur, newValue);
+    } else if (object === 'pari') {
+        const nomPari = texte.join(' ');
+        const cote = parseFloat(valeur);
+        await addPari(nomParieur, nomPari, cote);
+        newValue = `Pari ${nomPari} ×${cote} ajouté`;
+    } else {
+        throw new Error('Commande non reconnue.');
+    }
+
+    return newValue;
+}
+
 zokou(
   { 
     nomCom: "neobet", 
@@ -44,41 +100,24 @@ zokou(
             return repondre('Cette commande est uniquement disponible dans un groupe spécifique.');
         }
 
-        if (arg.length < 1) return repondre('Format: neobet <parieur = |modo = |mise = |pari1 = |pari2 = |...> [valeurs] ou neobet <nom_du_parieur>');
+        if (arg.length < 1) return repondre('Format: neobet <parieur> [modo <opération> <valeur>] [mise <opération> <valeur>] [pari <nom_du_pari> <cote>]');
 
-        const commandes = arg.join(' ').split(/(?<!\w)\s*=\s*/); // Sépare les commandes et les valeurs
-        const nomParieur = commandes[0].trim(); // Le premier élément est toujours le nom du parieur
+        const nomParieur = arg[0];
+        const commandes = arg.slice(1);
 
-        if (commandes.length === 1) {
+        if (commandes.length === 0) {
             const data = await getData(nomParieur);
             if (!data) return repondre(`Aucun pari trouvé pour le parieur ${nomParieur}.`);
             repondre(afficherFiche(nomParieur, data));
             return;
         }
 
-        for (let i = 1; i < commandes.length; i++) {
-            const [cmd, valeur] = commandes[i].split(/\s+(.*)/); // Sépare la commande et la valeur
-            const cmdNormalisee = cmd.trim().toLowerCase();
-
-            if (cmdNormalisee === 'parieur') {
-                const nomParieur = valeur.trim();
-                await insertParieur(nomParieur);
-                repondre(`Parieur ${nomParieur} ajouté.`);
-            } else if (cmdNormalisee === 'modo') {
-                const nomModerateur = valeur.trim();
-                await updateModerateur(nomParieur, nomModerateur);
-                repondre(`Modérateur ${nomModerateur} ajouté pour ${nomParieur}.`);
-            } else if (cmdNormalisee === 'mise') {
-                const sommeMisee = parseFloat(valeur.trim());
-                await updateSommeMisee(nomParieur, sommeMisee);
-                repondre(`Somme misée ${sommeMisee} ajoutée pour ${nomParieur}.`);
-            } else if (cmdNormalisee.startsWith('pari')) {
-                const [nomPari, cote] = valeur.trim().split(/\s+(.*)/);
-                await addPari(nomParieur, nomPari, parseFloat(cote));
-                repondre(`Pari ${nomPari} ×${cote} ajouté pour ${nomParieur}.`);
-            } else {
-                repondre(`Commande "${cmdNormalisee}" non reconnue.`);
-            }
+        try {
+            const updates = await processUpdates(commandes, nomParieur);
+            const messages = updates.map(update => `⚙ ${update.object}: ${update.newValue}`).join('\n');
+            repondre(`Données mises à jour pour ${nomParieur}:\n${messages}`);
+        } catch (error) {
+            repondre(`Erreur: ${error.message}`);
         }
     }
 );
