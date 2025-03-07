@@ -2,7 +2,6 @@ const { zokou } = require('../framework/zokou');
 const { getData, calculerStatutFinal, updatePlayerData, supprimerFiche, supprimerToutesLesFiches } = require('../bdd/neobet');
 const s = require('../set');
 
-// Fonction pour normaliser le texte
 function normalizeText(text) {
   return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
@@ -58,6 +57,54 @@ function analyserArguments(arg) {
   } else {
     return { action: 'afficher', parieur: action };
   }
+}
+
+// Fonction pour traiter les mises à jour
+async function processUpdates(arg, parieur) {
+  const colonnesJoueur = {
+    parieur: "parieur", modo: "modo", mise: "mise",
+    pari1: "pari1", cote1: "cote1", statut1: "statut1",
+    pari2: "pari2", cote2: "cote2", statut2: "statut2",
+    pari3: "pari3", cote3: "cote3", statut3: "statut3"
+  };
+
+  const updates = [];
+  let i = 0;
+
+  while (i < arg.length) {
+    const [object, signe, valeur] = [arg[i], arg[i+1], arg[i+2]];
+    const colonneObjet = colonnesJoueur[object];
+    let texte = [];
+    i += 2;
+
+    while (i < arg.length && !colonnesJoueur[arg[i]]) {
+      texte.push(arg[i]);
+      i++;
+    }
+
+    const { oldValue, newValue } = await calculateNewValue(colonneObjet, signe, valeur, texte, parieur);
+    updates.push({ colonneObjet, newValue, oldValue, object, texte });
+  }
+
+  return updates;
+}
+
+// Fonction pour calculer la nouvelle valeur
+async function calculateNewValue(colonneObjet, signe, valeur, texte, parieur) {
+  const query = `SELECT ${colonneObjet} FROM neobet WHERE parieur = $1`;
+  const result = await pool.query(query, [parieur]);
+  const oldValue = result.rows[0][colonneObjet];
+  let newValue;
+
+  if (signe === '+' || signe === '-') {
+    newValue = eval(`${oldValue} ${signe} ${valeur}`);
+  } else if (signe === '=' || signe === 'add' || signe === 'supp') {
+    if (signe === '=') newValue = texte.join(' ');
+    else if (signe === 'add') newValue = oldValue + ' ' + texte.join(' ');
+    else if (signe === 'supp') newValue = oldValue.replace(new RegExp(`\\b${normalizeText(texte.join(' '))}\\b`, 'gi'), '').trim();
+  }
+
+  return { oldValue, newValue };
 }
 
 // Commande neobet
