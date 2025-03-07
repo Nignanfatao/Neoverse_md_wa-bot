@@ -41,39 +41,12 @@ async function getData(parieur) {
   const client = await pool.connect();
   try {
     const query = 'SELECT * FROM neobet WHERE parieur = $1';
+    console.log(`Exécution de la requête : ${query} avec la valeur : [${parieur}]`);
     const result = await client.query(query, [parieur]);
     return result.rows[0];
   } catch (error) {
     console.error('Erreur lors de la récupération des données:', error);
     return null;
-  } finally {
-    client.release();
-  }
-}
-
-// Fonction pour calculer le statut final
-async function calculerStatutFinal(parieur) {
-  const client = await pool.connect();
-  try {
-    const query = 'SELECT statut1, statut2, statut3 FROM neobet WHERE parieur = $1';
-    const result = await client.query(query, [parieur]);
-    const { statut1, statut2, statut3 } = result.rows[0];
-
-    // Si au moins un pari est en échec, le statut final est "Perdu❌"
-    if (statut1 === '❌' || statut2 === '❌' || statut3 === '❌') {
-      return 'Perdu❌';
-    }
-    // Si tous les paris sont en victoire, le statut final est "Victoire✅"
-    else if (statut1 === '✅' && statut2 === '✅' && statut3 === '✅') {
-      return 'Victoire✅';
-    }
-    // Sinon, le statut final reste "aucun"
-    else {
-      return 'aucun';
-    }
-  } catch (error) {
-    console.error('Erreur lors du calcul du statut final:', error);
-    return 'aucun';
   } finally {
     client.release();
   }
@@ -86,14 +59,11 @@ async function updatePlayerData(updates, parieur) {
     await client.query('BEGIN');
     for (const update of updates) {
       const query = `UPDATE neobet SET ${update.colonneObjet} = $1 WHERE parieur = $2`;
+      console.log(`Exécution de la requête : ${query} avec les valeurs : [${update.newValue}, ${parieur}]`);
       await client.query(query, [update.newValue, parieur]);
     }
-
-    // Mettre à jour le statut final
-    const statutFinal = await calculerStatutFinal(parieur);
-    await client.query('UPDATE neobet SET statut_final = $1 WHERE parieur = $2', [statutFinal, parieur]);
-
     await client.query('COMMIT');
+    console.log(`Données mises à jour pour le parieur : ${parieur}`);
   } catch (error) {
     await client.query('ROLLBACK');
     console.error('Erreur lors de la mise à jour des données:', error);
@@ -131,7 +101,6 @@ async function supprimerToutesLesFiches() {
 module.exports = {
   createNeobetTable,
   getData,
-  calculerStatutFinal,
   updatePlayerData,
   supprimerFiche,
   supprimerToutesLesFiches,
