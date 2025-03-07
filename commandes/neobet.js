@@ -1,5 +1,5 @@
 const { zokou } = require('../framework/zokou');
-const { getData, calculerStatutFinal, updatePlayerData, supprimerFiche, supprimerToutesLesFiches } = require('../bdd/neobet');
+const { getData, calculerStatutFinal, updatePlayerData, supprimerFiche, supprimerToutesLesFiches, pool } = require('../bdd/neobet');
 const s = require('../set');
 
 function normalizeText(text) {
@@ -39,13 +39,20 @@ async function afficherFiche(parieur) {
 
 // Fonction pour analyser les arguments
 function analyserArguments(arg) {
+  // Si l'argument contient "=", on le divise en deux parties
+  if (arg.includes('=')) {
+    const [action, valeur] = arg.split('=').map(part => part.trim());
+    if (action === 'parieur') {
+      return { action, parieur: valeur };
+    } else if (action === 'modo') {
+      return { action, parieur: null, modo: valeur };
+    }
+  }
+
+  // Sinon, on traite les arguments normalement
   const [action, parieur, operation, valeur] = arg;
 
-  if (action === 'parieur' && operation === '=') {
-    return { action, parieur: valeur };
-  } else if (action === 'modo' && operation === '=') {
-    return { action, parieur, modo: valeur };
-  } else if (action === 'mise' && (operation === '+' || operation === '-' || operation === '=')) {
+  if (action === 'mise' && (operation === '+' || operation === '-' || operation === '=')) {
     return { action, parieur, signe: operation, montant: parseFloat(valeur) };
   } else if (action.startsWith('pari')) {
     const pariNum = action.replace('pari', '');
@@ -117,19 +124,19 @@ zokou(
   async (dest, zk, { repondre, arg, ms, superUser }) => {
     if (!arg || arg.length === 0) return repondre('Format: neobet <parieur> <operation> <valeur>');
 
-    const args = analyserArguments(arg);
+    const args = analyserArguments(arg.join(' ')); // Convertir les arguments en une chaîne unique
 
     try {
       if (args.action === 'parieur') {
         await updatePlayerData([{ colonneObjet: 'parieur', newValue: args.parieur }], args.parieur);
-        repondre(`Parieur ${args.parieur} ajouté avec succès.`);
+        repondre(`🎰 Parieur ${args.parieur} ajouté avec succès.`);
       } else if (args.action === 'modo') {
         await updatePlayerData([{ colonneObjet: 'modo', newValue: args.modo }], args.parieur);
-        repondre(`Modérateur ${args.modo} ajouté pour ${args.parieur}.`);
+        repondre(`🎰 Modérateur ${args.modo} ajouté pour ${args.parieur}.`);
       } else if (args.action === 'mise') {
         const query = args.signe === '=' ? 'UPDATE neobet SET mise = $1 WHERE parieur = $2' : `UPDATE neobet SET mise = mise ${args.signe} $1 WHERE parieur = $2`;
         await updatePlayerData([{ colonneObjet: 'mise', newValue: args.montant }], args.parieur);
-        repondre(`Mise de ${args.parieur} mise à jour.`);
+        repondre(`🎰 Mise de ${args.parieur} mise à jour.`);
       } else if (args.action === 'pari') {
         await updatePlayerData(
           [
@@ -138,10 +145,10 @@ zokou(
           ],
           args.parieur
         );
-        repondre(`Pari ${args.pariNum} de ${args.parieur} mis à jour.`);
+        repondre(`🎰 Pari ${args.pariNum} de ${args.parieur} mis à jour.`);
       } else if (args.action === 'statut') {
         await updatePlayerData([{ colonneObjet: `statut${args.pariNum}`, newValue: args.statut === 'victoire' ? '✅' : '❌' }], args.parieur);
-        repondre(`Statut du pari ${args.pariNum} de ${args.parieur} mis à jour.`);
+        repondre(`🎰 Statut du pari ${args.pariNum} de ${args.parieur} mis à jour.`);
       } else if (args.action === 'afficher') {
         const fiche = await afficherFiche(args.parieur);
         repondre(fiche);
@@ -194,10 +201,10 @@ zokou(
     try {
       if (parieur.toLowerCase() === 'all') {
         await supprimerToutesLesFiches();
-        repondre('✅ Toutes les fiches de pari ont été supprimées.');
+        repondre('🧹 ✅ Toutes les fiches de pari ont été supprimées.');
       } else {
         await supprimerFiche(parieur);
-        repondre(`✅ Fiche de pari de ${parieur} supprimée.`);
+        repondre(`🧹 ✅ Fiche de pari de ${parieur} supprimée.`);
       }
     } catch (error) {
       console.error('Erreur lors de la suppression:', error);
