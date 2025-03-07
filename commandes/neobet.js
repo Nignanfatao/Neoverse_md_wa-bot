@@ -2,6 +2,7 @@ const { zokou } = require('../framework/zokou');
 const { getData, calculerStatutFinal, updatePlayerData, supprimerFiche, supprimerToutesLesFiches, pool } = require('../bdd/neobet');
 const s = require('../set');
 
+// Fonction pour normaliser le texte
 function normalizeText(text) {
   return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
@@ -18,8 +19,8 @@ async function afficherFiche(parieur) {
 
   const gains = calculerGains(fiche.mise, [fiche.cote1, fiche.cote2, fiche.cote3]);
 
-  return `.
-*⌬𝗡Ξ𝗢𝘃𝗲𝗿𝘀𝗲 𝗕𝗘𝗧🎰* ▔▔▔▔▔▔▔▔▔▔▔▔▔░▒▒▒▒░░▒░
+  return `
+⌬𝗡Ξ𝗢𝘃𝗲𝗿𝘀𝗲 𝗕𝗘𝗧🎰 ▔▔▔▔▔▔▔▔▔▔▔▔▔░▒▒▒▒░░▒░
 👥Parieur: ${fiche.parieur}
 🛡️Modérateur: ${fiche.modo}
 💰Somme misée: ${fiche.mise}🧭
@@ -33,17 +34,17 @@ async function afficherFiche(parieur) {
 
 ⌬Statut Final: ${fiche.statut_final}
 
-═══════════░▒▒▒▒░░▒░ *\`🔷𝗡Ξ𝗢𝗚𝗮𝗺𝗶𝗻𝗴 2025🎮\`*
+═══════════░▒▒▒▒░░▒░ 🔷𝗡Ξ𝗢𝗚𝗮𝗺𝗶𝗻𝗴 2025🎮
     `;
 }
 
 // Fonction pour analyser les arguments
 function analyserArguments(arg) {
-  const args = arg.join(' ').split(' '); // Convertir les arguments en tableau
-  console.log('Arguments reçus:', args); // Log pour déboguer
+  console.log('Arguments reçus:', arg); // Log pour déboguer
 
-  if (args.includes('=')) {
-    const [action, valeur] = arg.join(' ').split('=').map(part => part.trim());
+  if (arg.includes('=')) {
+    const [action, valeur] = arg.split('=').map(part => part.trim());
+    console.log('Action et valeur:', action, valeur); // Log pour déboguer
     if (action === 'parieur') {
       return { action, parieur: valeur };
     } else if (action === 'modo') {
@@ -51,7 +52,8 @@ function analyserArguments(arg) {
     }
   }
 
-  const [action, parieur, operation, valeur] = args;
+  const [action, parieur, operation, valeur] = arg.split(' ');
+  console.log('Arguments analysés:', action, parieur, operation, valeur); // Log pour déboguer
 
   if (action === 'mise' && (operation === '+' || operation === '-' || operation === '=')) {
     return { action, parieur, signe: operation, montant: parseFloat(valeur) };
@@ -67,54 +69,6 @@ function analyserArguments(arg) {
   }
 }
 
-// Fonction pour traiter les mises à jour
-async function processUpdates(arg, parieur) {
-  const colonnesJoueur = {
-    parieur: "parieur", modo: "modo", mise: "mise",
-    pari1: "pari1", cote1: "cote1", statut1: "statut1",
-    pari2: "pari2", cote2: "cote2", statut2: "statut2",
-    pari3: "pari3", cote3: "cote3", statut3: "statut3"
-  };
-
-  const updates = [];
-  let i = 0;
-
-  while (i < arg.length) {
-    const [object, signe, valeur] = [arg[i], arg[i+1], arg[i+2]];
-    const colonneObjet = colonnesJoueur[object];
-    let texte = [];
-    i += 2;
-
-    while (i < arg.length && !colonnesJoueur[arg[i]]) {
-      texte.push(arg[i]);
-      i++;
-    }
-
-    const { oldValue, newValue } = await calculateNewValue(colonneObjet, signe, valeur, texte, parieur);
-    updates.push({ colonneObjet, newValue, oldValue, object, texte });
-  }
-
-  return updates;
-}
-
-// Fonction pour calculer la nouvelle valeur
-async function calculateNewValue(colonneObjet, signe, valeur, texte, parieur) {
-  const query = `SELECT ${colonneObjet} FROM neobet WHERE parieur = $1`;
-  const result = await pool.query(query, [parieur]);
-  const oldValue = result.rows[0][colonneObjet];
-  let newValue;
-
-  if (signe === '+' || signe === '-') {
-    newValue = eval(`${oldValue} ${signe} ${valeur}`);
-  } else if (signe === '=' || signe === 'add' || signe === 'supp') {
-    if (signe === '=') newValue = texte.join(' ');
-    else if (signe === 'add') newValue = oldValue + ' ' + texte.join(' ');
-    else if (signe === 'supp') newValue = oldValue.replace(new RegExp(`\\b${normalizeText(texte.join(' '))}\\b`, 'gi'), '').trim();
-  }
-
-  return { oldValue, newValue };
-}
-
 // Commande neobet
 zokou(
   { 
@@ -125,21 +79,31 @@ zokou(
   async (dest, zk, { repondre, arg, ms, superUser }) => {
     if (!arg || arg.length === 0) return repondre('Format: neobet <parieur> <operation> <valeur>');
 
-    const args = analyserArguments(arg); // Analyser les arguments
+    console.log('Commande neobet appelée avec les arguments:', arg); // Log pour déboguer
+
+    const args = analyserArguments(arg.join(' ')); // Convertir les arguments en une chaîne unique
+    console.log('Arguments analysés:', args); // Log pour déboguer
 
     try {
       if (args.action === 'parieur') {
+        console.log('Tentative d\'ajout du parieur:', args.parieur); // Log pour déboguer
         // Insérer un nouveau parieur dans la base de données
         await pool.query('INSERT INTO neobet (parieur) VALUES ($1) ON CONFLICT (parieur) DO NOTHING', [args.parieur]);
+        console.log('Parieur ajouté avec succès:', args.parieur); // Log pour déboguer
         repondre(`🎰 Parieur ${args.parieur} ajouté avec succès.`);
       } else if (args.action === 'modo') {
+        console.log('Tentative d\'ajout du modérateur:', args.modo); // Log pour déboguer
         await updatePlayerData([{ colonneObjet: 'modo', newValue: args.modo }], args.parieur);
+        console.log('Modérateur ajouté avec succès:', args.modo); // Log pour déboguer
         repondre(`🎰 Modérateur ${args.modo} ajouté pour ${args.parieur}.`);
       } else if (args.action === 'mise') {
+        console.log('Tentative de mise à jour de la mise:', args.montant); // Log pour déboguer
         const query = args.signe === '=' ? 'UPDATE neobet SET mise = $1 WHERE parieur = $2' : `UPDATE neobet SET mise = mise ${args.signe} $1 WHERE parieur = $2`;
         await updatePlayerData([{ colonneObjet: 'mise', newValue: args.montant }], args.parieur);
+        console.log('Mise mise à jour avec succès:', args.montant); // Log pour déboguer
         repondre(`🎰 Mise de ${args.parieur} mise à jour.`);
       } else if (args.action === 'pari') {
+        console.log('Tentative d\'ajout du pari:', args.pari, args.cote); // Log pour déboguer
         await updatePlayerData(
           [
             { colonneObjet: `pari${args.pariNum}`, newValue: args.pari },
@@ -147,70 +111,24 @@ zokou(
           ],
           args.parieur
         );
+        console.log('Pari ajouté avec succès:', args.pari, args.cote); // Log pour déboguer
         repondre(`🎰 Pari ${args.pariNum} de ${args.parieur} mis à jour.`);
       } else if (args.action === 'statut') {
+        console.log('Tentative de mise à jour du statut:', args.statut); // Log pour déboguer
         await updatePlayerData([{ colonneObjet: `statut${args.pariNum}`, newValue: args.statut === 'victoire' ? '✅' : '❌' }], args.parieur);
+        console.log('Statut mis à jour avec succès:', args.statut); // Log pour déboguer
         repondre(`🎰 Statut du pari ${args.pariNum} de ${args.parieur} mis à jour.`);
       } else if (args.action === 'afficher') {
+        console.log('Tentative d\'affichage de la fiche:', args.parieur); // Log pour déboguer
         const fiche = await afficherFiche(args.parieur);
         repondre(fiche);
       } else {
+        console.log('Commande non reconnue:', args.action); // Log pour déboguer
         repondre('Commande non reconnue.');
       }
     } catch (error) {
-      console.error('Erreur lors de l\'exécution de la commande:', error);
+      console.error('Erreur lors de l\'exécution de la commande:', error); // Log pour déboguer
       repondre('Une erreur est survenue.');
-    }
-  }
-);
-
-// Commande clear_bet
-zokou(
-  { 
-    nomCom: "clear_bet", 
-    reaction: "🧹", 
-    categorie: "Other" 
-  },
-  async (dest, zk, { repondre, arg, ms, auteurMessage }) => {
-    if (arg.length < 1) return repondre('Format: clear_bet <nom_du_parieur> ou "all" pour supprimer toutes les fiches.');
-
-    const parieur = arg[0].trim();
-
-    // Demande de confirmation
-    await zk.sendMessage(dest, { text: 'Êtes-vous sûr de vouloir supprimer cette fiche de pari ? Répondez par "oui" ou "non".' }, { quoted: ms });
-
-    const rep = await zk.awaitForMessage({
-      sender: auteurMessage,
-      chatJid: dest,
-      timeout: 60000,
-    });
-
-    let confirmation;
-    try {
-      confirmation = rep.message.extendedTextMessage.text;
-    } catch {
-      confirmation = rep.message.conversation;
-    }
-
-    if (!rep) {
-      return repondre('Temps écoulé. Suppression annulée.');
-    }
-
-    if (confirmation.toLowerCase() !== 'oui') {
-      return repondre('Suppression annulée.');
-    }
-
-    try {
-      if (parieur.toLowerCase() === 'all') {
-        await supprimerToutesLesFiches();
-        repondre('✅ Toutes les fiches de pari ont été supprimées.');
-      } else {
-        await supprimerFiche(parieur);
-        repondre(`✅ Fiche de pari de ${parieur} supprimée.`);
-      }
-    } catch (error) {
-      console.error('Erreur lors de la suppression:', error);
-      repondre('Une erreur est survenue lors de la suppression.');
     }
   }
 );
