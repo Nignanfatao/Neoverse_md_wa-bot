@@ -1,8 +1,8 @@
 const { zokou } = require('../framework/zokou');
 
-zokou({ nomCom: 'ticket_bet', reaction: '🎫', categorie: 'NEO_GAMES🎰' }, async (dest, zk, { repondre }) => {
+zokou({ nomCom: 'ticketbet', reaction: '🎫', categorie: 'NEO_GAMES🎰' }, async (dest, zk, { repondre }) => {
     const ticket = `.            *⌬𝗡Ξ𝗢𝘃𝗲𝗿𝘀𝗲 𝗕𝗘𝗧🎰*
-▔▔▔▔▔▔▔▔▔▔▔▔▔░▒▒▒▒░░▒░
+▔▔▔▔▔▔▔▔▔▔▔▔░▒▒▒▒░░▒░
 
 *👥Parieur*: [Nom du parieur]
 *🛡️Modérateur*: [Nom du modérateur]
