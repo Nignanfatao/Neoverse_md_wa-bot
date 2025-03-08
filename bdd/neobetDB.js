@@ -8,47 +8,74 @@ const proConfig = {
 };
 const pool = new Pool(proConfig);
 
-async function createNeoBetsTable() {
+// Créer les tables au démarrage
+async function createTables() {
     const client = await pool.connect();
     try {
+        // Table pour les parieurs
+        await client.query(`
+            CREATE TABLE IF NOT EXISTS parieurs (
+                id SERIAL PRIMARY KEY,
+                nom TEXT NOT NULL UNIQUE
+            );
+        `);
+
+        // Table pour les paris
         await client.query(`
             CREATE TABLE IF NOT EXISTS neobets (
                 id SERIAL PRIMARY KEY,
-                parieur TEXT NOT NULL,
+                parieur_id INTEGER REFERENCES parieurs(id),
                 moderateur TEXT DEFAULT 'aucun',
                 mise INTEGER DEFAULT 0,
                 paris JSONB DEFAULT '[]',
                 gains_possibles INTEGER DEFAULT 0
             );
         `);
-        console.log('Table neobets créée avec succès.');
     } catch (error) {
-        console.error('Erreur lors de la création de la table neobets:', error);
+        console.error('Erreur lors de la création des tables:', error);
     } finally {
         client.release();
     }
 }
 
+// Normaliser le texte (supprimer les accents)
 function normalizeText(text) {
     return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-async function addOrUpdateBet(parieur, moderateur, mise, paris) {
+// Ajouter ou mettre à jour un pari
+async function addOrUpdateBet(parieurNom, moderateur, mise, paris) {
     const client = await pool.connect();
     try {
+        // Vérifier si le parieur existe
+        let parieur = await client.query('SELECT id FROM parieurs WHERE nom = $1', [parieurNom]);
+        if (parieur.rows.length === 0) {
+            // Créer un nouveau parieur s'il n'existe pas
+            parieur = await client.query('INSERT INTO parieurs (nom) VALUES ($1) RETURNING id', [parieurNom]);
+        } else {
+            parieur = parieur.rows[0];
+        }
+
+        const parieurId = parieur.id;
+
+        // Calculer les gains possibles
         const gains = paris.reduce((acc, pari) => acc * pari.cote, mise);
-        const existingBet = await client.query('SELECT * FROM neobets WHERE parieur = $1', [parieur]);
+
+        // Vérifier si le pari existe déjà
+        const existingBet = await client.query('SELECT * FROM neobets WHERE parieur_id = $1', [parieurId]);
         if (existingBet.rows.length > 0) {
+            // Mettre à jour le pari existant
             await client.query(`
                 UPDATE neobets
                 SET moderateur = $1, mise = $2, paris = $3, gains_possibles = $4
-                WHERE parieur = $5
-            `, [moderateur, mise, JSON.stringify(paris), gains, parieur]);
+                WHERE parieur_id = $5
+            `, [moderateur, mise, JSON.stringify(paris), gains, parieurId]);
         } else {
+            // Ajouter un nouveau pari
             await client.query(`
-                INSERT INTO neobets (parieur, moderateur, mise, paris, gains_possibles)
+                INSERT INTO neobets (parieur_id, moderateur, mise, paris, gains_possibles)
                 VALUES ($1, $2, $3, $4, $5)
-            `, [parieur, moderateur, mise, JSON.stringify(paris), gains]);
+            `, [parieurId, moderateur, mise, JSON.stringify(paris), gains]);
         }
     } catch (error) {
         console.error('Erreur lors de l\'ajout ou de la mise à jour du pari:', error);
@@ -57,10 +84,16 @@ async function addOrUpdateBet(parieur, moderateur, mise, paris) {
     }
 }
 
-async function getBet(parieur) {
+// Récupérer les informations d'un pari
+async function getBet(parieurNom) {
     const client = await pool.connect();
     try {
-        const result = await client.query('SELECT * FROM neobets WHERE parieur = $1', [parieur]);
+        const result = await client.query(`
+            SELECT neobets.*, parieurs.nom AS parieur
+            FROM neobets
+            JOIN parieurs ON neobets.parieur_id = parieurs.id
+            WHERE parieurs.nom = $1
+        `, [parieurNom]);
         return result.rows[0];
     } catch (error) {
         console.error('Erreur lors de la récupération du pari:', error);
@@ -69,10 +102,11 @@ async function getBet(parieur) {
     }
 }
 
-async function updateTextValue(parieur, colonne, signe, texte) {
+// Mettre à jour une valeur textuelle
+async function updateTextValue(parieurNom, colonne, signe, texte) {
     const client = await pool.connect();
     try {
-        const bet = await getBet(parieur);
+        const bet = await getBet(parieurNom);
         if (!bet) return 'Aucun pari trouvé pour ce parieur.';
 
         const oldValue = bet[colonne];
@@ -88,19 +122,21 @@ async function updateTextValue(parieur, colonne, signe, texte) {
             return 'Signe non reconnu. Utilisez =, add, ou supp.';
         }
 
-        await client.query(`UPDATE neobets SET ${colonne} = $1 WHERE parieur = $2`, [newValue, parieur]);
+        await client.query(`UPDATE neobets SET ${colonne} = $1 WHERE parieur_id = $2`, [newValue, bet.parieur_id]);
         return `✅ ${colonne} mis à jour : ${oldValue} → ${newValue}.`;
     } catch (error) {
         console.error('Erreur lors de la mise à jour de la valeur:', error);
+        return 'Erreur lors de la mise à jour de la valeur.';
     } finally {
         client.release();
     }
 }
 
-async function updateNumericValue(parieur, colonne, signe, valeur) {
+// Mettre à jour une valeur numérique
+async function updateNumericValue(parieurNom, colonne, signe, valeur) {
     const client = await pool.connect();
     try {
-        const bet = await getBet(parieur);
+        const bet = await getBet(parieurNom);
         if (!bet) return 'Aucun pari trouvé pour ce parieur.';
 
         const oldValue = bet[colonne];
@@ -116,19 +152,21 @@ async function updateNumericValue(parieur, colonne, signe, valeur) {
             return 'Signe non reconnu. Utilisez =, +, ou -.';
         }
 
-        await client.query(`UPDATE neobets SET ${colonne} = $1 WHERE parieur = $2`, [newValue, parieur]);
+        await client.query(`UPDATE neobets SET ${colonne} = $1 WHERE parieur_id = $2`, [newValue, bet.parieur_id]);
         return `✅ ${colonne} mis à jour : ${oldValue} → ${newValue}.`;
     } catch (error) {
         console.error('Erreur lors de la mise à jour de la valeur:', error);
+        return 'Erreur lors de la mise à jour de la valeur.';
     } finally {
         client.release();
     }
 }
 
-async function updatePari(parieur, pariIndex, valeur, cote, statut) {
+// Mettre à jour un pari
+async function updatePari(parieurNom, pariIndex, valeur, cote, statut) {
     const client = await pool.connect();
     try {
-        const bet = await getBet(parieur);
+        const bet = await getBet(parieurNom);
         if (!bet) return 'Aucun pari trouvé pour ce parieur.';
 
         const paris = bet.paris;
@@ -138,34 +176,40 @@ async function updatePari(parieur, pariIndex, valeur, cote, statut) {
         if (cote) paris[pariIndex].cote = parseFloat(cote);
         if (statut) paris[pariIndex].statut = statut;
 
-        await client.query('UPDATE neobets SET paris = $1 WHERE parieur = $2', [JSON.stringify(paris), parieur]);
+        await client.query('UPDATE neobets SET paris = $1 WHERE parieur_id = $2', [JSON.stringify(paris), bet.parieur_id]);
         return `✅ Pari ${pariIndex + 1} mis à jour.`;
     } catch (error) {
         console.error('Erreur lors de la mise à jour du pari:', error);
+        return 'Erreur lors de la mise à jour du pari.';
     } finally {
         client.release();
     }
 }
 
-async function clearBet(parieur) {
+// Supprimer un pari
+async function clearBet(parieurNom) {
     const client = await pool.connect();
     try {
-        if (parieur.toLowerCase() === 'all') {
+        if (parieurNom.toLowerCase() === 'all') {
             await client.query('DELETE FROM neobets');
             return '✅ Tous les paris ont été supprimés.';
         } else {
-            await client.query('DELETE FROM neobets WHERE parieur = $1', [parieur]);
-            return `✅ Le pari de ${parieur} a été supprimé.`;
+            const parieur = await client.query('SELECT id FROM parieurs WHERE nom = $1', [parieurNom]);
+            if (parieur.rows.length === 0) return 'Aucun parieur trouvé.';
+
+            await client.query('DELETE FROM neobets WHERE parieur_id = $1', [parieur.rows[0].id]);
+            return `✅ Le pari de ${parieurNom} a été supprimé.`;
         }
     } catch (error) {
         console.error('Erreur lors de la suppression du pari:', error);
+        return 'Erreur lors de la suppression du pari.';
     } finally {
         client.release();
     }
 }
 
 module.exports = {
-    createNeoBetsTable,
+    createTables,
     addOrUpdateBet,
     getBet,
     updateTextValue,
