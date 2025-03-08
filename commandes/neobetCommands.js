@@ -22,24 +22,28 @@ Sous-commandes disponibles :
 
     switch (sousCommande) {
         case 'parieur': {
-            if (args.length < 2) return repondre('Format: neobet parieur add/supp <nom_parieur>');
-            const [action, nomParieur] = args;
-            try {
-                if (action === 'add') {
-                    await addOrUpdateBet(nomParieur, 'aucun', 0, []);
-                    repondre(`✅ Parieur ${nomParieur} ajouté.`);
-                } else if (action === 'supp') {
-                    await clearBet(nomParieur);
-                    repondre(`✅ Parieur ${nomParieur} supprimé.`);
-                } else {
-                    repondre('Action non reconnue. Utilisez add ou supp.');
-                }
-            } catch (error) {
-                repondre('Erreur lors de la gestion du parieur.');
-            }
-            break;
+    if (args.length < 2) return repondre('Format: neobet parieur add/supp/update <nom_parieur> [nouveau_nom]');
+    const [action, nomParieur, nouveauNom] = args;
+    try {
+        if (action === 'add') {
+            // Ajouter un nouveau parieur avec un pari par défaut
+            await addOrUpdateBet(nomParieur, 'aucun', 0, []);
+            repondre(`✅ Parieur ${nomParieur} ajouté avec un pari par défaut.`);
+        } else if (action === 'supp') {
+            await clearBet(nomParieur);
+            repondre(`✅ Parieur ${nomParieur} supprimé.`);
+        } else if (action === 'update') {
+            if (!nouveauNom) return repondre('Format: neobet parieur update <ancien_nom> <nouveau_nom>');
+            const result = await updateParieurName(nomParieur, nouveauNom);
+            repondre(result);
+        } else {
+            repondre('Action non reconnue. Utilisez add, supp, ou update.');
         }
-
+    } catch (error) {
+        repondre('Erreur lors de la gestion du parieur.');
+    }
+    break;
+}
         case 'modo': {
             if (args.length < 3) return repondre('Format: neobet modo <nom_parieur> =/add/supp <nom_moderateur>');
             const [parieurModo, signeModo, ...texteModo] = args;
@@ -123,7 +127,7 @@ ${parisList}
         }
 
         default:
-            repondre('Sous-commande non reconnue. Utilisez "neobet help" pour voir les sous-commandes disponibles.');
+            repondre('Sous-commande non reconnue. Utilisez "neobet" pour voir les sous-commandes disponibles.');
             break;
     }
 });
