@@ -1,8 +1,8 @@
-const { zokou } = require('../framework/zokou'); // Assurez-vous que le chemin est correct
-const { createNeoBetsTable, addOrUpdateBet, getBet, updateTextValue, updateNumericValue, updatePari, clearBet } = require('../bdd/neobetDB');
+const { zokou } = require('../framework/zokou');
+const { createTables, addOrUpdateBet, getBet, updateTextValue, updateNumericValue, updatePari, clearBet } = require('../bdd/neobetDB');
 
-// Créer la table au démarrage
-createNeoBetsTable();
+// Créer les tables au démarrage
+createTables();
 
 // Commande principale pour gérer les paris
 zokou({ nomCom: 'neobet', reaction: '🎰', categorie: 'NEO_GAMES🎰' }, async (dest, zk, { repondre, arg, ms }) => {
@@ -10,7 +10,7 @@ zokou({ nomCom: 'neobet', reaction: '🎰', categorie: 'NEO_GAMES🎰' }, async 
         return repondre(`Format: neobet <sous-commande> [arguments]
         
 Sous-commandes disponibles :
-• parieur =/add/supp <nom_parieur> : Gérer les parieurs
+• parieur add/supp <nom_parieur> : Gérer les parieurs
 • modo <nom_parieur> =/add/supp <nom_moderateur> : Gérer les modérateurs
 • mise <nom_parieur> =/+/- <montant> : Gérer les mises
 • pari <nom_parieur> pari1 =/add/supp <valeur> <cote> : Gérer les paris
@@ -22,14 +22,20 @@ Sous-commandes disponibles :
 
     switch (sousCommande) {
         case 'parieur': {
-            if (args.length < 2) return repondre('Format: neobet parieur =/add/supp <nom_parieur>');
-            const [signe, ...texte] = args;
+            if (args.length < 2) return repondre('Format: neobet parieur add/supp <nom_parieur>');
+            const [action, nomParieur] = args;
             try {
-                const result = await updateTextValue(texte.join(' '), 'parieur', signe, texte);
-                repondre(result);
+                if (action === 'add') {
+                    await addOrUpdateBet(nomParieur, 'aucun', 0, []);
+                    repondre(`✅ Parieur ${nomParieur} ajouté.`);
+                } else if (action === 'supp') {
+                    await clearBet(nomParieur);
+                    repondre(`✅ Parieur ${nomParieur} supprimé.`);
+                } else {
+                    repondre('Action non reconnue. Utilisez add ou supp.');
+                }
             } catch (error) {
-                repondre('Erreur lors de la mise à jour du parieur.');
-                console.error(error);
+                repondre('Erreur lors de la gestion du parieur.');
             }
             break;
         }
@@ -42,7 +48,6 @@ Sous-commandes disponibles :
                 repondre(result);
             } catch (error) {
                 repondre('Erreur lors de la mise à jour du modérateur.');
-                console.error(error);
             }
             break;
         }
@@ -55,7 +60,6 @@ Sous-commandes disponibles :
                 repondre(result);
             } catch (error) {
                 repondre('Erreur lors de la mise à jour de la mise.');
-                console.error(error);
             }
             break;
         }
@@ -69,7 +73,6 @@ Sous-commandes disponibles :
                 repondre(result);
             } catch (error) {
                 repondre('Erreur lors de la mise à jour du pari.');
-                console.error(error);
             }
             break;
         }
@@ -83,7 +86,6 @@ Sous-commandes disponibles :
                 repondre(result);
             } catch (error) {
                 repondre('Erreur lors de la mise à jour du statut du pari.');
-                console.error(error);
             }
             break;
         }
@@ -100,21 +102,22 @@ Sous-commandes disponibles :
                     return `➤ ${statut} ${p.valeur} × ${p.cote}`;
                 }).join('\n');
 
-                const message = `.        *⌬𝗡Ξ𝗢𝘃𝗲𝗿𝘀𝗲 𝗕𝗘𝗧🎰*
-        ▔▔▔▔▔▔▔▔▔▔▔▔▔░▒▒▒▒░░▒░
-        *👥Parieur*: ${bet.parieur}
-        *🛡️Modérateur*: ${bet.moderateur}
-        *💰Somme misée*: ${bet.mise}🧭
+                const message = `.            *⌬𝗡Ξ𝗢𝘃𝗲𝗿𝘀𝗲 𝗕𝗘𝗧🎰*
+▔▔▔▔▔▔▔▔▔▔▔▔▔░▒▒▒▒░░▒░
 
-        📜 Liste des paris placés :
-        ${parisList}
+*👥Parieur*: ${bet.parieur}
+*🛡️Modérateur*: ${bet.moderateur}
+*💰Somme misée*: ${bet.mise}🧭
 
-        *💰Gains Possibles*: ${bet.gains_possibles}🧭
-        ═══════════░▒▒▒▒░░▒░        *🔷𝗡Ξ𝗢𝗚𝗮𝗺𝗶𝗻𝗴🎮*`;
+*📜Liste des paris placés*:
+${parisList}
+
+*💰Gains Possibles*: ${bet.gains_possibles}🧭
+═══════════░▒▒▒▒░░▒░
+                  *🔷𝗡Ξ𝗢𝗚𝗮𝗺𝗶𝗻𝗴🎮*`;
                 repondre(message);
             } catch (error) {
                 repondre('Erreur lors de la récupération des informations du pari.');
-                console.error(error);
             }
             break;
         }
@@ -149,6 +152,5 @@ zokou({ nomCom: 'clear_bet', reaction: '🧹', categorie: 'Other' }, async (dest
         repondre(result);
     } catch (error) {
         repondre('Erreur lors de la suppression du pari.');
-        console.error(error);
     }
 });
