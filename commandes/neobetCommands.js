@@ -1,10 +1,3 @@
-const { zokou } = require('../framework/zokou');
-const { createNeoBetsTable, addOrUpdateBet, getBet, updateTextValue, updateNumericValue, updatePari, clearBet } = require('./neobetDB');
-
-// Créer la table au démarrage
-createNeoBetsTable();
-
-// Commande principale pour gérer les paris
 zokou({ nomCom: 'neobet', reaction: '🎰', categorie: 'NEO_GAMES🎰' }, async (dest, zk, { repondre, arg, ms }) => {
     if (arg.length < 1) {
         return repondre(`Format: neobet <sous-commande> [arguments]
@@ -21,7 +14,7 @@ Sous-commandes disponibles :
     const [sousCommande, ...args] = arg;
 
     switch (sousCommande) {
-        case 'parieur':
+        case 'parieur': {
             if (args.length < 2) return repondre('Format: neobet parieur =/add/supp <nom_parieur>');
             const [signe, ...texte] = args;
             try {
@@ -32,10 +25,11 @@ Sous-commandes disponibles :
                 console.error(error);
             }
             break;
+        }
 
-        case 'modo':
+        case 'modo': {
             if (args.length < 3) return repondre('Format: neobet modo <nom_parieur> =/add/supp <nom_moderateur>');
-            const [parieurModo, _, signeModo, ...texteModo] = args;
+            const [parieurModo, signeModo, ...texteModo] = args;
             try {
                 const result = await updateTextValue(parieurModo, 'moderateur', signeModo, texteModo);
                 repondre(result);
@@ -44,10 +38,11 @@ Sous-commandes disponibles :
                 console.error(error);
             }
             break;
+        }
 
-        case 'mise':
+        case 'mise': {
             if (args.length < 3) return repondre('Format: neobet mise <nom_parieur> =/+/- <montant>');
-            const [parieurMise, _, signeMise, valeurMise] = args;
+            const [parieurMise, signeMise, valeurMise] = args;
             try {
                 const result = await updateNumericValue(parieurMise, 'mise', signeMise, valeurMise);
                 repondre(result);
@@ -56,8 +51,9 @@ Sous-commandes disponibles :
                 console.error(error);
             }
             break;
+        }
 
-        case 'pari':
+        case 'pari': {
             if (args.length < 4) return repondre('Format: neobet pari <nom_parieur> pari1 =/add/supp <valeur> <cote>');
             const [parieurPari, pariIndexStr, signePari, valeurPari, cotePari] = args;
             const pariIndex = parseInt(pariIndexStr.replace('pari', '')) - 1;
@@ -69,10 +65,11 @@ Sous-commandes disponibles :
                 console.error(error);
             }
             break;
+        }
 
-        case 'statut':
+        case 'statut': {
             if (args.length < 4) return repondre('Format: neobet statut <nom_parieur> pari1 =/add/supp echec/victoire');
-            const [parieurStatut, pariIndexStrStatut, _, signeStatut, statut] = args;
+            const [parieurStatut, pariIndexStrStatut, signeStatut, statut] = args;
             const pariIndexStatut = parseInt(pariIndexStrStatut.replace('pari', '')) - 1;
             try {
                 const result = await updatePari(parieurStatut, pariIndexStatut, null, null, statut);
@@ -82,8 +79,9 @@ Sous-commandes disponibles :
                 console.error(error);
             }
             break;
+        }
 
-        case 'afficher':
+        case 'afficher': {
             if (args.length < 1) return repondre('Format: neobet afficher <nom_parieur>');
             const parieurAfficher = args[0].trim();
             try {
@@ -112,37 +110,10 @@ Sous-commandes disponibles :
                 console.error(error);
             }
             break;
+        }
 
         default:
             repondre('Sous-commande non reconnue. Utilisez "neobet help" pour voir les sous-commandes disponibles.');
             break;
-    }
-});
-
-// Commande pour supprimer un pari
-zokou({ nomCom: 'clear_bet', reaction: '🧹', categorie: 'Other' }, async (dest, zk, { repondre, arg, ms, auteurMessage }) => {
-    if (arg.length < 1) return repondre('Format: clear_bet <nom_parieur> ou clear_bet all');
-
-    const parieur = arg[0].trim();
-    await zk.sendMessage(dest, { text: 'Êtes-vous sûr de vouloir supprimer ce(s) pari(s) ? Répondez par "oui" ou "non".' }, { quoted: ms });
-
-    const rep = await zk.awaitForMessage({ sender: auteurMessage, chatJid: dest, timeout: 60000 });
-    let confirmation;
-    try {
-        confirmation = rep.message.extendedTextMessage.text;
-    } catch {
-        confirmation = rep.message.conversation;
-    }
-
-    if (!rep || confirmation.toLowerCase() !== 'oui') {
-        return repondre('Suppression annulée.');
-    }
-
-    try {
-        const result = await clearBet(parieur);
-        repondre(result);
-    } catch (error) {
-        repondre('Erreur lors de la suppression du pari.');
-        console.error(error);
     }
 });
