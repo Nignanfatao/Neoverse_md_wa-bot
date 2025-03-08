@@ -71,11 +71,11 @@ async function addOrUpdateBet(parieurNom, moderateur, mise, paris) {
                 WHERE parieur_id = $5
             `, [moderateur, mise, JSON.stringify(paris), gains, parieurId]);
         } else {
-            // Ajouter un nouveau pari
+            // Ajouter un nouveau pari avec des valeurs par défaut
             await client.query(`
                 INSERT INTO neobets (parieur_id, moderateur, mise, paris, gains_possibles)
                 VALUES ($1, $2, $3, $4, $5)
-            `, [parieurId, moderateur, mise, JSON.stringify(paris), gains]);
+            `, [parieurId, moderateur || 'aucun', mise || 0, JSON.stringify(paris || []), gains || 0]);
         }
     } catch (error) {
         console.error('Erreur lors de l\'ajout ou de la mise à jour du pari:', error);
@@ -208,6 +208,27 @@ async function clearBet(parieurNom) {
     }
 }
 
+// Mettre à jour le nom d'un parieur
+async function updateParieurName(oldName, newName) {
+    const client = await pool.connect();
+    try {
+        // Vérifier si le parieur existe
+        const parieur = await client.query('SELECT id FROM parieurs WHERE nom = $1', [oldName]);
+        if (parieur.rows.length === 0) {
+            return 'Aucun parieur trouvé avec ce nom.';
+        }
+
+        // Mettre à jour le nom du parieur
+        await client.query('UPDATE parieurs SET nom = $1 WHERE id = $2', [newName, parieur.rows[0].id]);
+        return `✅ Nom du parieur mis à jour : ${oldName} → ${newName}.`;
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du nom du parieur:', error);
+        return 'Erreur lors de la mise à jour du nom du parieur.';
+    } finally {
+        client.release();
+    }
+}
+
 module.exports = {
     createTables,
     addOrUpdateBet,
@@ -215,5 +236,6 @@ module.exports = {
     updateTextValue,
     updateNumericValue,
     updatePari,
-    clearBet
+    clearBet,
+    updateParieurName
 };
