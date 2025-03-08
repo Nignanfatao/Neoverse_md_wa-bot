@@ -1,5 +1,5 @@
 const { zokou } = require('../framework/zokou'); // Assurez-vous que le chemin est correct
-const { createNeoBetsTable, addOrUpdateBet, getBet, updateTextValue, updateNumericValue, updatePari, clearBet } = require('./neobetDB');
+const { createNeoBetsTable, addOrUpdateBet, getBet, updateTextValue, updateNumericValue, updatePari, clearBet } = require('../bdd/neobetDB');
 
 // Créer la table au démarrage
 createNeoBetsTable();
