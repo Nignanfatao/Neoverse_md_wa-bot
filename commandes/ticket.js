@@ -9,7 +9,7 @@ zokou({ nomCom: 'ticket_bet', reaction: '🎫', categorie: 'NEO_GAMES🎰' }, as
 *💰Somme misée*: [Montant de la mise]🧭
 
 *📜Liste des paris placés*:
- ➤ [Valeur du pari 1] × [Cote du pari 1]
+➤ [Valeur du pari 1] × [Cote du pari 1]
 ➤ [Valeur du pari 2] × [Cote du pari 2]
 ➤ [Valeur du pari 3] × [Cote du pari 3]
 
