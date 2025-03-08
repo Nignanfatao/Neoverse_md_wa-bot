@@ -1,3 +1,10 @@
+const { zokou } = require('../framework/zokou'); // Assurez-vous que le chemin est correct
+const { createNeoBetsTable, addOrUpdateBet, getBet, updateTextValue, updateNumericValue, updatePari, clearBet } = require('./neobetDB');
+
+// Créer la table au démarrage
+createNeoBetsTable();
+
+// Commande principale pour gérer les paris
 zokou({ nomCom: 'neobet', reaction: '🎰', categorie: 'NEO_GAMES🎰' }, async (dest, zk, { repondre, arg, ms }) => {
     if (arg.length < 1) {
         return repondre(`Format: neobet <sous-commande> [arguments]
@@ -115,5 +122,33 @@ Sous-commandes disponibles :
         default:
             repondre('Sous-commande non reconnue. Utilisez "neobet help" pour voir les sous-commandes disponibles.');
             break;
+    }
+});
+
+// Commande indépendante pour supprimer un pari
+zokou({ nomCom: 'clear_bet', reaction: '🧹', categorie: 'Other' }, async (dest, zk, { repondre, arg, ms, auteurMessage }) => {
+    if (arg.length < 1) return repondre('Format: clear_bet <nom_parieur> ou clear_bet all');
+
+    const parieur = arg[0].trim();
+    await zk.sendMessage(dest, { text: 'Êtes-vous sûr de vouloir supprimer ce(s) pari(s) ? Répondez par "oui" ou "non".' }, { quoted: ms });
+
+    const rep = await zk.awaitForMessage({ sender: auteurMessage, chatJid: dest, timeout: 60000 });
+    let confirmation;
+    try {
+        confirmation = rep.message.extendedTextMessage.text;
+    } catch {
+        confirmation = rep.message.conversation;
+    }
+
+    if (!rep || confirmation.toLowerCase() !== 'oui') {
+        return repondre('Suppression annulée.');
+    }
+
+    try {
+        const result = await clearBet(parieur);
+        repondre(result);
+    } catch (error) {
+        repondre('Erreur lors de la suppression du pari.');
+        console.error(error);
     }
 });
