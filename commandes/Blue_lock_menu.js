@@ -28,8 +28,7 @@ zokou(
 
             try {
                 let imageMessage = await zk.sendMessage(dest, {
-                    image: { url: lienImage },
-                    caption: frames[0]
+                     text: frames[0]
                 }, { quoted: ms });
 
                 for (let i = 1; i < frames.length; i++) {
