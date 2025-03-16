@@ -140,7 +140,7 @@ add_fiche('eastwhite👤', '1', 'https://files.catbox.moe/4qygb4.jpg');
 //add_fiche('eastkemael👤', '2', 'https://telegra.ph/file/638f67854ccfaa1ee1a8a.jpg');
 //add_fiche('eastaltheos👤', '3', 'https://telegra.ph/file/5ecddffc7c18e84861bf2.jpg');
 add_fiche('eastgoldy👤', '4', 'https://files.catbox.moe/n8eopv.jpg');
-add_fiche('eastsofiane👤', '5', 'https://files.catbox.moe/prz9mc.jpg');
+//add_fiche('eastsofiane👤', '5', 'https://files.catbox.moe/prz9mc.jpg');
 //add_fiche('eastatsushi👤', '6', 'https://files.catbox.moe/uzu7vu.jpg');
 add_fiche('eastadam👤', '7', 'https://files.catbox.moe/xmr932.jpg');
 add_fiche('easttoge👤', '8', 'https://files.catbox.moe/6bx3sl.jpg');
