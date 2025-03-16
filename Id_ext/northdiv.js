@@ -157,11 +157,11 @@ add_id("243835216861@s.whatsapp.net", "Regulus", 14, "northdiv");
 
 //west
 add_id("237678054208@s.whatsapp.net", "Hajime", 10,"westdiv");
-add_id("237650821851@s.whatsapp.net", 'Nash', 2, "westhdiv");
-add_id("242065797565@s.whatsapp.net", "Indra", 3, "westhdiv");
-add_id("224662340162@s.whatsapp.net", "Sept", 7, "westhdiv");
-add_id("2250720536250@s.whatsapp.net", "Inferno", 9, "westhdiv");    
-add_id("24160264024@s.whatsapp.net", "Aether", 4, "westhdiv");
+add_id("237650821851@s.whatsapp.net", 'Nash', 2, "westdiv");
+add_id("242065797565@s.whatsapp.net", "Indra", 3, "westdiv");
+add_id("224662340162@s.whatsapp.net", "Sept", 7, "westdiv");
+add_id("2250720536250@s.whatsapp.net", "Inferno", 9, "westdiv");    
+add_id("24160264024@s.whatsapp.net", "Aether", 4, "westdiv");
 //fin west
 
 module.exports = users;
