@@ -30,13 +30,17 @@ zokou(
                 let imageMessage = await repondre(frames[0]);
 
                 for (let i = 1; i < frames.length; i++) {
-                    await new Promise(resolve => setTimeout(resolve, 50));
+                    await new Promise(resolve => setTimeout(resolve, 500));
                     await zk.sendMessage(dest, {
                         text: frames[i],
                         edit: imageMessage.key,
                     });
                 }
 
+                // On attend un petit moment pour que l'effet soit visible
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                // On envoie maintenant le GIF et l'image
                 await zk.sendMessage(dest, {
                     video: { url: lienGif },
                     gifPlayback: true,
@@ -55,6 +59,7 @@ zokou(
         }
     }
 );
+
 
 
 zokou(
