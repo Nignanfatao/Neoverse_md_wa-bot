@@ -50,12 +50,12 @@ zokou(
           
           // Exécuter la requête pour récupérer les valeurs souhaitées
           const result_np = await client.query(user.get_np);
-          const result_nc = await client.query(user.get_nc);
+          const result_nc = await client.query(user.get_neocoins);
           const result_golds = await client.query(user.get_golds);
           const result_coupons = await client.query(user.get_coupons);
 
           let valeur_np = result_np.rows[0][user.cln_np];
-          let valeur_nc = result_nc.rows[0][user.cln_nc];
+          let valeur_nc = result_nc.rows[0][user.cln_neocoins];
           let valeur_golds = result_golds.rows[0][user.cln_golds];
           let valeur_coupons = result_coupons.rows[0][user.cln_coupons];
 
@@ -187,7 +187,7 @@ jouez à la roulette des chiffres et obtenez une récompense pour le bon numéro
 
               switch (reward) {
                 case '10🔷':
-                  await client.query(user.upd_nc, [valeur_nc + 10]);
+                  await client.query(user.upd_neocoins, [valeur_nc + 10]);
                   break;
                 case '50.000 G🧭':
                   await client.query(user.upd_golds, [valeur_golds + 50000]);
