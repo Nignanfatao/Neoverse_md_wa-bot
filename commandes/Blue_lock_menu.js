@@ -27,7 +27,7 @@ zokou(
             ];
 
             try {
-                let imageMessage = await repondre(frames[0]);
+                let imageMessage = await zk.sendMessage(dest, { text: frames[0] });
 
                 for (let i = 1; i < frames.length; i++) {
                     await new Promise(resolve => setTimeout(resolve, 500));
