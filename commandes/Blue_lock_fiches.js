@@ -91,11 +91,13 @@ async function add_fiche(nom_zone, zone, db, ep1, ep2, ep3, ep4, ep5, ep6, ep7, 
                     client = await pool.connect();
 
                     if (superUser) {
-                        const updates = await processUpdates(arg, client, db);
+                        const updates = await processUpdates(arg, client, db, ep1, ep2, ep3, ep4, ep5, ep6, ep7, ep8);
                         await updatePlayerData(updates, client);
 
-                        const messages = updates.map(update => `⚙ Object: ${update.object}\n💵 Ancienne Valeur: ${update.oldValue}\n💵 Nouvelle Valeur: ${update.newValue}`).join('\n\n');
-                        await repondre(`Données du joueur mises à jour:\n\n${messages}`);
+                        const messages = updates.map(update => {
+                            return `⚽Équipe: ${update.teamName}\n🔵Object: ${update.object}\n🟢Valeur: ${update.oldValue} → ${update.newValue}`;
+                        }).join('\n\n');
+                        await repondre(`Mises à jour:\n\n${messages}`);
                     } else {
                         repondre('Seul les Membres de la NS peuvent modifier cette fiche');
                     }
@@ -110,16 +112,16 @@ async function add_fiche(nom_zone, zone, db, ep1, ep2, ep3, ep4, ep5, ep6, ep7, 
     );
 }
 
-async function processUpdates(arg, client, db) {
+async function processUpdates(arg, client, db, ep1, ep2, ep3, ep4, ep5, ep6, ep7, ep8) {
     const equipes = {
-        ep1: { player: "e1", fonds: "e9", coupes: "e10", championnats: "e11", wins: "e12", draws: "e13", losses: "e14" },
-        ep2: { player: "e2", fonds: "e15", coupes: "e16", championnats: "e17", wins: "e18", draws: "e19", losses: "e20" },
-        ep3: { player: "e3", fonds: "e21", coupes: "e22", championnats: "e23", wins: "e24", draws: "e25", losses: "e26" },
-        ep4: { player: "e4", fonds: "e27", coupes: "e28", championnats: "e29", wins: "e30", draws: "e31", losses: "e32" },
-        ep5: { player: "e5", fonds: "e33", coupes: "e34", championnats: "e35", wins: "e36", draws: "e37", losses: "e38" },
-        ep6: { player: "e6", fonds: "e39", coupes: "e40", championnats: "e41", wins: "e42", draws: "e43", losses: "e44" },
-        ep7: { player: "e7", fonds: "e45", coupes: "e46", championnats: "e47", wins: "e48", draws: "e49", losses: "e50" },
-        ep8: { player: "e8", fonds: "e51", coupes: "e52", championnats: "e53", wins: "e54", draws: "e55", losses: "e56" }
+        ep1: { player: "e1", fonds: "e9", coupes: "e10", championnats: "e11", wins: "e12", draws: "e13", losses: "e14", name: ep1 },
+        ep2: { player: "e2", fonds: "e15", coupes: "e16", championnats: "e17", wins: "e18", draws: "e19", losses: "e20", name: ep2 },
+        ep3: { player: "e3", fonds: "e21", coupes: "e22", championnats: "e23", wins: "e24", draws: "e25", losses: "e26", name: ep3 },
+        ep4: { player: "e4", fonds: "e27", coupes: "e28", championnats: "e29", wins: "e30", draws: "e31", losses: "e32", name: ep4 },
+        ep5: { player: "e5", fonds: "e33", coupes: "e34", championnats: "e35", wins: "e36", draws: "e37", losses: "e38", name: ep5 },
+        ep6: { player: "e6", fonds: "e39", coupes: "e40", championnats: "e41", wins: "e42", draws: "e43", losses: "e44", name: ep6 },
+        ep7: { player: "e7", fonds: "e45", coupes: "e46", championnats: "e47", wins: "e48", draws: "e49", losses: "e50", name: ep7 },
+        ep8: { player: "e8", fonds: "e51", coupes: "e52", championnats: "e53", wins: "e54", draws: "e55", losses: "e56", name: ep8 }
     };
 
     const equipe = equipes[arg[0]];
@@ -141,11 +143,12 @@ async function processUpdates(arg, client, db) {
 
         if (colonneObjet) {
             const { oldValue, newValue } = await calculateNewValue(colonneObjet, signe, valeur, texte, db, client);
-            updates.push({ colonneObjet, newValue, oldValue, object, texte });
+            updates.push({ colonneObjet, newValue, oldValue, object, texte, teamName: equipe.name });
         }
     }
     return updates;
 }
+
 
 async function calculateNewValue(colonneObjet, signe, valeur, texte, db, client) {
     const query = `SELECT ${colonneObjet} FROM ${db} WHERE id = 1`;
