@@ -92,7 +92,7 @@ async function add_fiche(nom_zone, zone, db, ep1, ep2, ep3, ep4, ep5, ep6, ep7, 
 
                     if (superUser) {
                         const updates = await processUpdates(arg, client, db, ep1, ep2, ep3, ep4, ep5, ep6, ep7, ep8);
-                        await updatePlayerData(updates, client);
+                        await updatePlayerData(updates, client, db);
 
                         const messages = updates.map(update => {
                             return `⚽Équipe: ${update.teamName}\n🔵Object: ${update.object}\n🟢Valeur: ${update.oldValue} → ${update.newValue}`;
@@ -165,6 +165,15 @@ async function calculateNewValue(colonneObjet, signe, valeur, texte, db, client)
     }
 
     return { oldValue, newValue };
+}
+
+async function updatePlayerData(updates, client, db) {
+    await client.query('BEGIN');
+    for (const update of updates) {
+        const query = `UPDATE ${db} SET ${update.colonneObjet} = $1 WHERE id = 1`;
+        await client.query(query, [update.newValue]);
+    }
+    await client.query('COMMIT');
 }
 
 add_fiche("zonea", "A", "blue_lock_db1", "⚪Real Madrid🇪🇸", "🔵🔴Barcha🇪🇸", "⚫🔴Bastard Munchen🇩🇪", "🔵PXG🇫🇷", "🟡⚫Berserk Dortmund🇩🇪", "⚪⚫Juventus Ubers🇮🇹", "🩵⚪Manshine City🏴", "🔴⚪ARS🏴");
