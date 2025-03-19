@@ -13,7 +13,7 @@ async function createTable(tableName, columnCount = 50) {
     const columns = `
       id SERIAL PRIMARY KEY,
       e1 TEXT DEFAULT 'aucun', e2 TEXT DEFAULT 'aucun', e3 TEXT DEFAULT 'aucun', e4 TEXT DEFAULT 'aucun',
-      e5 INTEGER DEFAULT 'aucun', e6 INTEGER DEFAULT 'aucun', e7 INTEGER DEFAULT 'aucun', e8 INTEGER DEFAULT 'aucun',
+      e5 TEXT DEFAULT 'aucun', e6 TEXT DEFAULT 'aucun', e7 TEXT DEFAULT 'aucun', e8 TEXT DEFAULT 'aucun',
       ${Array.from({ length: columnCount }, (_, i) => `e${i + 9} INTEGER DEFAULT 0`).join(",\n      ")}
     `;
 
