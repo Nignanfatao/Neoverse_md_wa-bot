@@ -50,7 +50,8 @@ async function getData(tableName, id) {
 // 📌 Création et exécution pour plusieurs tables
 async function init() {
   await createTable("blue_lock_db1", 50);
-  await createTable("blue_lock_db2", 50); 
+  await createTable("blue_lock_db2", 50);
+  await createTable("blue_lock_db3", 50);
 }
 
 init();
