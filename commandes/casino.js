@@ -47,17 +47,15 @@ zokou(
           const { Pool } = require('pg');
           const pool = new Pool(proConfig);
           client = await pool.connect();
-          
           // Exécuter la requête pour récupérer les valeurs souhaitées
           const result_np = await client.query(user.get_np);
           const result_nc = await client.query(user.get_neocoins);
           const result_golds = await client.query(user.get_golds);
           const result_coupons = await client.query(user.get_coupons);
-
-          let valeur_np = result_np.rows[0][user.cln_np];
-          let valeur_nc = result_nc.rows[0][user.cln_neocoins];
-          let valeur_golds = result_golds.rows[0][user.cln_golds];
-          let valeur_coupons = result_coupons.rows[0][user.cln_coupons];
+          let valeur_np = parseInt(result_np.rows[0][user.cln_np]);
+          let valeur_nc = parseInt(result_nc.rows[0][user.cln_neocoins]);
+          let valeur_golds = parseInt(result_golds.rows[0][user.cln_golds]);
+          let valeur_coupons = parseInt(result_coupons.rows[0][user.cln_coupons]);
 
           let numbers = generateRandomNumbers(0, 50, 50);
           let winningNumbers = generateRandomNumbers(0, 50, 3);
