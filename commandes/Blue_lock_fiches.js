@@ -1,5 +1,5 @@
 const { zokou } = require('../framework/zokou');
-const { getData } = require('../bdd/blue_lock_db.js');
+const { getData } = require('../bdd/blue_lock_db');
 const s = require("../set");
 const dbUrl = s.DB;
 const { Pool } = require('pg');
