@@ -64,6 +64,7 @@ function loca_test({ texte, repondre }) {
 
             const distance = Math.abs(endPosition - startPosition);
 
+            // Vérifie les limites de distance
             if (guillemets === ">" && distance > 1) {
                 repondre("*`💠S Y S T È ME🌐`*▔▔▔▔▔▔▔▔▔▔▔▔▔■■■■■▪️Vous ne pouvez pas parcourir autant de distance à pied 🚶‍♂️! Le maximum de Km à pieds est de 1km Max !■■■■■▔▔▔▔▔▔▔▔▔▔▔▔");
                 return;
@@ -72,18 +73,24 @@ function loca_test({ texte, repondre }) {
                 return;
             }
 
+            // Trouve les lieux de départ et d'arrivée
             let startLocation = map_fa.find(loc => loc.km === startPosition);
             let endLocation = map_fa.find(loc => loc.km === endPosition);
 
             let startName = startLocation ? startLocation.lieu : "Lieu inconnu";
             let endName = endLocation ? endLocation.lieu : "Lieu inconnu";
 
-            console.log(`Départ: ${startPosition}, Arrivée: ${endPosition}`);
-            repondre(`📍 Départ : *${startName}*\n📍 Arrivée : *${endName}*`);
+            // Message de localisation
+            const message = `📍 Départ : *${startName}*\n📍 Arrivée : *${endName}*`;
 
-            // Envoie l'image associée à la position d'arrivée
+            // Envoie le message et l'image
             if (endLocation && endLocation.image) {
-                repondre({ image: endLocation.image });
+                repondre({
+                    text: message,
+                    image: endLocation.image,
+                });
+            } else {
+                repondre(message); // Envoie uniquement le message si l'image est manquante
             }
 
             // Met à jour la dernière position
