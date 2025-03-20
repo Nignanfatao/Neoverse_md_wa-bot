@@ -16,7 +16,7 @@ function add_fiche(nom_joueur, data_id, image_oc) {
             let client;
 
             try {
-                const data = await getData(Blue_lock_Individuel_fiche, data_id);
+                const data = await getData('Blue_lock_Individuel_fiche', data_id);
 
                 if (!arg.length) {
                     const mesg = `*⚽🔷BLUE LOCK NEO🥅*
@@ -62,7 +62,7 @@ function add_fiche(nom_joueur, data_id, image_oc) {
                         const messages = updates.map(update => {
                             return `🔵Object: ${update.object}\n🟢Valeur: ${update.oldValue} → ${update.newValue}`;
                         }).join('\n\n');
-                        await repondre(Mises à jour:\n\n${messages});
+                        await repondre(`Mises à jour:\n\n${messages}`);
                     } else {
                         repondre('Seul les Membres de la NS peuvent modifier cette fiche');
                     }
