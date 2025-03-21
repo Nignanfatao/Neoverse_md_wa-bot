@@ -56,8 +56,8 @@ zokou(
           let valeur_nc = parseInt(result_nc.rows[0][user.cln_neocoins]);
           let valeur_golds = parseInt(result_golds.rows[0][user.cln_golds]);
           let valeur_coupons = parseInt(result_coupons.rows[0][user.cln_coupons]);
-
-          let numbers = generateRandomNumbers(0, 50, 50);
+console.log({ result_np, result_nc, result_golds, result_coupons, valeur_coupons, valeur_golds, valeur_nc, valeur_np });
+let numbers = generateRandomNumbers(0, 50, 50);
           let winningNumbers = generateRandomNumbers(0, 50, 3);
           let rewards = generateRewards();
           //repondre(winningNumbers.join(', '));
