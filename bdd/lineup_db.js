@@ -81,14 +81,18 @@ async function updatePlayers(userId, updates) {
 }
 
 // 📌 Mise à jour d'une statistique spécifique
-async function updateStats(userId, statKey, newValue) {
+async function updateStats(userId, statKey, signe, newValue) {
   const client = await pool.connect();
   try {
     const existingData = await getUserData(userId);
     if (!existingData) return "⚠️ Joueur introuvable.";
 
-    await client.query(`UPDATE blue_lock_stats SET ${statKey} = $2 WHERE id = $1`, [userId, newValue]);
-    return `✅ ${statKey.replace("stat", "Statistique ")} mis à jour pour ${existingData.nom}`;
+    const oldValue = existingData[statKey] || 0; // Prend 0 si aucune valeur existante
+    const updatedValue = signe === "+" ? oldValue + newValue : oldValue - newValue;
+
+    await client.query(`UPDATE blue_lock_stats SET ${statKey} = $2 WHERE id = $1`, [userId, updatedValue]);
+
+    return `✅ ${statKey.replace("stat", "Statistique ")} mise à jour : ${oldValue} ${signe} ${newValue} = ${updatedValue} pour ${existingData.nom}`;
   } catch (error) {
     console.error("❌ Erreur mise à jour stats:", error);
     return "❌ Une erreur est survenue lors de la mise à jour.";
