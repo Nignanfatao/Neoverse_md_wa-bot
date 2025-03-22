@@ -108,4 +108,4 @@ async function stats_lineup(tex, repondre) {
   }
 }
 
-module.exports = { stats_lineup };
+module.exports = stats_lineup;
