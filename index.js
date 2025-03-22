@@ -15,6 +15,7 @@ const prefixe = conf.PREFIXE || "/";
 const latence = require('./commandes/decompte');
 const stats = require('./commandes/stats');
 const loca_test = require('./Elysium/FA');
+const stats_lineup = require('./commandes/lineup');
 
 async function ovlAuth(session) {
     let sessionId;
@@ -213,6 +214,7 @@ async function main() {
         loca_test({texte, repondre});
         latence({zk, texte, origineMessage});
         stats(texte, repondre);
+        stats_lineup(texte, repondre);
 
 
             }); //fin evenement message
